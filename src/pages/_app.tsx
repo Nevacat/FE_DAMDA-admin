@@ -1,11 +1,11 @@
-import "@/styles/globals.css";
-import theme from "@/styles/theme";
-import { ThemeProvider } from "@emotion/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CookiesProvider } from "react-cookie";
-import { AppProps } from "next/app";
-import GlobalHead from "@/components/common/Layout/GlobalHead";
-import Layout from "@/components/common/Layout";
+import '@/styles/globals.css';
+import theme from '@/styles/theme';
+import { ThemeProvider } from '@emotion/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CookiesProvider } from 'react-cookie';
+import { AppProps } from 'next/app';
+import GlobalHead from '@/components/common/GlobalHead';
+import Layout from '@/components/common/Layout';
 
 const queryClient = new QueryClient({
   defaultOptions: {

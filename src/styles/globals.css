@@ -1,5 +1,5 @@
-@import "./reset.css";
-@import "./pretendard.css";
+@import './reset.css';
+@import './pretendard.css';
 
 html {
   font-size: 10px;
@@ -10,8 +10,8 @@ html {
 }
 
 body {
-  overflow: hidden;
-  font-family: "Pretendard";
+  overflow-y: scroll;
+  font-family: 'Pretendard';
   font-size: 1.4rem;
 }
 
