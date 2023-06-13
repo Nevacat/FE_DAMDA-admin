@@ -8,5 +8,5 @@ export const Layout = styled.div`
 export const Main = styled.div`
   padding: 25px;
   flex-grow: 1;
-  min-height: 100vh;
+  min-height: 200vh;
 `;
