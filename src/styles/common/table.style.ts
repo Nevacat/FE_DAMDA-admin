@@ -14,15 +14,16 @@ export const Tr = styled.tr`
 `;
 export const Th = styled.th`
   ${theme.font.bold_14}
-  padding: 2px 4px;
+  padding: 5px 20px;
+  height: 72px;
   color: #718096;
   font-size: 14px;
   text-align: left;
-  line-height: 72px;
+  vertical-align: middle;
   white-space: nowrap;
 `;
 export const Td = styled.td`
-  padding: 2px 4px;
+  padding: 5px 20px;
   max-width: 220px;
   height: 80px;
   font-weight: 500;

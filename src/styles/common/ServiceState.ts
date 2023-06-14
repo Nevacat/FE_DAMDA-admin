@@ -10,6 +10,7 @@ export const StateButton = styled.div<{ state: ServiceState | Colors }>`
   width: max-content;
   height: 32px;
   border-radius: 8px;
+  cursor: default;
 
   ${({ state }) =>
     //주황색
