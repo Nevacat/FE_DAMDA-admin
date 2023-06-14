@@ -3,6 +3,7 @@ import React from 'react';
 import * as S from '@/styles/pages/login.style';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { instance } from '@/api/instance';
 
 function Login() {
   const router = useRouter();
@@ -12,9 +13,14 @@ function Login() {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  const submitLogin = (data: FieldValues) => {
+  const submitLogin = async (data: FieldValues) => {
     console.log(data);
-    router.push('/');
+    const res = await instance.post('/admin/login', {
+      username: 'admin',
+      password: '1234',
+    });
+    console.log(res);
+    // router.push('/');
   };
 
   return (
