@@ -6,7 +6,7 @@ function UserLayout() {
   return (
     <S.UserPageContainer>
       <S.PageTitle>고객관리</S.PageTitle>
-      <UserTable></UserTable>
+      <UserTable />
     </S.UserPageContainer>
   );
 }
