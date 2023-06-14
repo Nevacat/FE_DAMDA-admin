@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { ServiceState } from '@/types/serviceState';
 import theme from '../theme';
 
-export const StateButton = styled.div<{ state: ServiceState }>`
+export const StateButton = styled.div<{ state: ServiceState | Colors }>`
   display: flex;
   align-items: center;
   padding: 5px 15px;
@@ -13,7 +13,7 @@ export const StateButton = styled.div<{ state: ServiceState }>`
 
   ${({ state }) =>
     //주황색
-    state === ServiceState.matching &&
+    (state === ServiceState.WAITING_FOR_MANAGER_REQUEST || state === 'orange') &&
     css`
       color: #fe964a;
       background-color: #fff0e6;
@@ -21,7 +21,7 @@ export const StateButton = styled.div<{ state: ServiceState }>`
 
   ${({ state }) =>
     //보라색
-    state === ServiceState.wating &&
+    (state === ServiceState.WAITING_FOR_ACCEPT_MATCHING || state === 'purple') &&
     css`
       color: #8c62ff;
       background-color: #f4f0ff;
@@ -29,7 +29,7 @@ export const StateButton = styled.div<{ state: ServiceState }>`
 
   ${({ state }) =>
     //파란색
-    state === ServiceState.confirmation &&
+    (state === ServiceState.MANAGER_MATCHING_COMPLETED || state === 'blue') &&
     css`
       color: ${theme.colors.main_blue};
       background-color: ${theme.colors.sub_blue_4};
@@ -37,7 +37,7 @@ export const StateButton = styled.div<{ state: ServiceState }>`
 
   ${({ state }) =>
     //초록색
-    state === ServiceState.completed &&
+    (state === ServiceState.SERVICE_COMPLETED || state === 'green') &&
     css`
       color: #0caf60;
       background-color: #e7f7ef;
@@ -45,9 +45,11 @@ export const StateButton = styled.div<{ state: ServiceState }>`
 
   ${({ state }) =>
     //빨간색
-    state === ServiceState.cancellation &&
+    (state === ServiceState.RESERVATION_CANCELLATION || state === 'red') &&
     css`
       color: #fd6a6a;
       background-color: #fff0f0;
     `}
 `;
+
+type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red';

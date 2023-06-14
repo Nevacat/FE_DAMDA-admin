@@ -10,13 +10,15 @@ function UserItem() {
       <T.Td>010-0000-0000</T.Td>
       <T.Td>서울 동대문구</T.Td>
       <T.Td>
-        <StateButton state={ServiceState.completed}>{ServiceState.completed}</StateButton>
+        <StateButton state={ServiceState.WAITING_FOR_ACCEPT_MATCHING}>
+          {ServiceState.WAITING_FOR_ACCEPT_MATCHING}
+        </StateButton>
       </T.Td>
       <T.Td>2023-05-21 14:23</T.Td>
       <T.Td>최대여덟글자메모</T.Td>
       <T.Td>ASDE9B</T.Td>
       <T.Td>
-        <StateButton state={ServiceState.confirmation}>예약내역</StateButton>
+        <StateButton state={'blue'}>예약내역</StateButton>
       </T.Td>
     </T.Tr>
   );
