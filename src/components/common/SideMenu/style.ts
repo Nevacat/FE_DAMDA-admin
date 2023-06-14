@@ -5,6 +5,7 @@ export const SideBar = styled.div`
   position: sticky;
   top: 0;
   left: 0;
+  flex-shrink: 0;
   height: 100vh;
   width: 200px;
   padding: 20px 10px;
