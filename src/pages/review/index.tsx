@@ -1,8 +1,8 @@
 import React from 'react';
-import * as S from '@/styles/pages/review.style';
+import ReviewLayout from '@/components/review/ReviewLayout';
 
 function ReviewPage() {
-  return <div></div>;
+  return <ReviewLayout />;
 }
 
 export default ReviewPage;

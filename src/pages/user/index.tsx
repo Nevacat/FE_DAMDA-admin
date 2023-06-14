@@ -1,8 +1,8 @@
+import UserLayout from '@/components/user/UserLayout';
 import React from 'react';
-import * as S from '@/styles/pages/user.style';
 
 function UserPage() {
-  return <div>고객관리</div>;
+  return <UserLayout />;
 }
 
 export default UserPage;
