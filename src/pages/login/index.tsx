@@ -1,43 +1,57 @@
-import { getToken } from '@/api/auth';
-import { handleLogin } from '@/utils/handleLogin';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { useForm, FieldValues } from 'react-hook-form';
+import React from 'react';
 import * as S from '@/styles/pages/login.style';
-import { useAuth } from '@/hook/useAuth';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 function Login() {
   const router = useRouter();
-  const getUserData = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm();
 
-  const handleRedirect = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-
-    if (code) {
-      await getToken(code);
-      // getUserData();
-      router.push('/');
-    } else {
-      handleLogin();
-    }
+  const submitLogin = (data: FieldValues) => {
+    console.log(data);
+    router.push('/');
   };
-
-  useEffect(() => {
-    handleRedirect();
-  }, []);
 
   return (
     <S.LoginPage>
-      <h2>
-        3초 후 <br /> 열다 카카오톡 서비스로 이동합니다 :)
-      </h2>
+      <S.Logo>
+        <Image src="/icons/Yolda_logo.svg" alt="열다" width={147} height={69} />
+        <p>관리자 페이지</p>
+      </S.Logo>
 
-      <div className="login_button">
-        <p>기다려도 로그인이 되지 않는다면?</p>
-        <button className="ir-text" onClick={handleLogin}>
-          Kakao 로그인
-        </button>
-      </div>
+      <S.Form onSubmit={handleSubmit((data) => submitLogin(data))}>
+        <S.Input htmlFor="id" className={errors.id ? 'alert' : ''}>
+          <div>
+            아이디
+            {errors.id && <span>{String(errors.id.message)}</span>}
+          </div>
+          <input
+            id="id"
+            type="text"
+            placeholder="관리자아이디"
+            {...register('id', { required: '아이디를 입력해주세요.' })}
+          />
+        </S.Input>
+        <S.Input htmlFor="password" className={errors.password ? 'alert' : ''}>
+          <div>
+            비밀번호
+            {errors.password && <span>{String(errors.password.message)}</span>}
+          </div>
+          <input
+            id="password"
+            type="password"
+            placeholder="관리자비밀번호"
+            {...register('password', { required: '비밀번호를 입력해주세요.' })}
+          />
+        </S.Input>
+
+        <S.Button disabled={isSubmitting}>로그인</S.Button>
+      </S.Form>
     </S.LoginPage>
   );
 }

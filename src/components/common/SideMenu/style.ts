@@ -9,7 +9,9 @@ export const SideBar = styled.div`
   height: 100vh;
   width: 200px;
   padding: 20px 10px;
+  background-color: #fff;
   border-right: 1px solid;
+  z-index: 1;
 `;
 
 export const Nav = styled.nav`
