@@ -33,7 +33,15 @@ function ManagerLayout() {
       </S.ButtonGroup>
 
       {/* 필터링 버튼에 따라 다른 데이터 전달 */}
-      <ManagerTable />
+      {category === 'all' && <ManagerTable data="waiting" category={category} />}
+      {category === 'all' && <ManagerTable data="pending" category={category} />}
+      {category === 'all' && <ManagerTable data="inactive" category={category} />}
+
+      {category === 'waiting' && <ManagerTable data="waiting" category={category} />}
+
+      {category === 'pending' && <ManagerTable data="pending" category={category} />}
+
+      {category === 'inactive' && <ManagerTable data="inactive" category={category} />}
     </div>
   );
 }
