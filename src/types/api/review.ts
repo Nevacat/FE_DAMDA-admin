@@ -1,5 +1,15 @@
 export interface ReviewRes {
-  data: ReviewData[];
+  data: {
+    content: ReviewData[];
+    empty: boolean;
+    first: boolean;
+    last: boolean;
+    number: number;
+    numberOfElements: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  };
 }
 
 export interface ReviewData {
