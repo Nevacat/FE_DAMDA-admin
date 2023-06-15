@@ -4,9 +4,11 @@ import * as S from '@/styles/pages/login.style';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { instance } from '@/api/instance';
+import { login } from '@/api/auth';
 
 function Login() {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -14,13 +16,13 @@ function Login() {
   } = useForm();
 
   const submitLogin = async (data: FieldValues) => {
-    console.log(data);
-    const res = await instance.post('/admin/login', {
-      username: 'admin',
-      password: '1234',
-    });
-    console.log(res);
-    // router.push('/');
+    try {
+      const res = await login(data);
+      console.log(res);
+      router.push('/');
+    } catch (error) {
+      console.log('아이디와 비밀번호를 확인해주세요');
+    }
   };
 
   return (
@@ -31,16 +33,16 @@ function Login() {
       </S.Logo>
 
       <S.Form onSubmit={handleSubmit((data) => submitLogin(data))}>
-        <S.Input htmlFor="id" className={errors.id ? 'alert' : ''}>
+        <S.Input htmlFor="username" className={errors.username ? 'alert' : ''}>
           <div>
             아이디
-            {errors.id && <span>{String(errors.id.message)}</span>}
+            {errors.username && <span>{String(errors.username.message)}</span>}
           </div>
           <input
-            id="id"
+            id="username"
             type="text"
             placeholder="관리자아이디"
-            {...register('id', { required: '아이디를 입력해주세요.' })}
+            {...register('username', { required: '아이디를 입력해주세요.' })}
           />
         </S.Input>
         <S.Input htmlFor="password" className={errors.password ? 'alert' : ''}>

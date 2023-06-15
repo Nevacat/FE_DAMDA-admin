@@ -3,6 +3,12 @@ import { css } from '@emotion/react';
 import { ServiceState } from '@/types/serviceState';
 import theme from '../theme';
 
+type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red';
+
+/**
+ * @description state에는 버튼의 색상 혹은 버튼의 상태(State)로 인자 전달
+ * State 는 types폴더의 ServiceState enum 확인
+ */
 export const StateButton = styled.div<{ state: ServiceState | Colors }>`
   display: flex;
   align-items: center;
@@ -52,5 +58,3 @@ export const StateButton = styled.div<{ state: ServiceState | Colors }>`
       background-color: #fff0f0;
     `}
 `;
-
-type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red';

@@ -1,18 +1,13 @@
+import { FieldValues } from 'react-hook-form';
 import { instance } from './instance';
-import { LoginRes, UserRes } from '@/types/api/auth';
+import { UserRes } from '@/types/api/auth';
 
-/**
- * @description: 인가코드를 받아 AccessToken을 요청
- * @param {string} code : 인가코드
- * @return 로그인정보 data
- */
-export const getToken = async (code: string) => {
-  try {
-    const response = await instance.get<LoginRes>(`/member/code?code=${code}`);
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch access token from Kakao');
-  }
+export const login = async (data: FieldValues) => {
+  const res = await instance.post('/admin/login', {
+    username: 'admin',
+    password: '1234',
+  });
+  return res;
 };
 
 /**
