@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { login } from '@/api/auth';
 import useAuthStore from '@/store/auth';
-import LoginLayout from '@/components/login/loginLayout';
+import LoginLayout from '@/components/login/LoginLayout';
 
 function Login() {
   const router = useRouter();
@@ -26,9 +26,10 @@ function Login() {
   };
 
   useEffect(() => {
-    if (isLogin) {
-      router.back();
-    }
+    console.log(isLogin);
+    // if (isLogin) {
+    //   router.back();
+    // }
   }, []);
 
   return (

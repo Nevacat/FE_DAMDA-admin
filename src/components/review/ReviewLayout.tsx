@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from '@/styles/pages/review.style';
 import ReviewTable from './ReviewTable';
 import Image from 'next/image';
+import ModalContainer from '../common/ModalContainer';
 
 function ReviewLayout() {
   return (

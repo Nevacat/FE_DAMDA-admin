@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { Td } from '@/styles/common/table.style';
+import { Td, Tr } from '@/styles/common/table.style';
+
+export const Row = styled(Tr)`
+  position: relative;
+`;
 
 export const ReviewContent = styled(Td)`
   text-overflow: ellipsis;

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as T from '@/styles/common/table.style';
 import { ServiceState } from '@/types/serviceState';
-import { StateButton } from '@/styles/common/ServiceState';
+import { StateButton } from '@/styles/common/StateButton';
 
 function UserItem() {
   return (
