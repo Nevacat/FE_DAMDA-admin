@@ -6,6 +6,14 @@ function ReviewTable() {
   return (
     <T.TableContainer>
       <T.Table>
+        <colgroup>
+          <col width="5%" />
+          <col width="15%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="15%" />
+          <col width="10%" />
+        </colgroup>
         <T.Thead>
           <T.Tr>
             <T.Th>순번</T.Th>

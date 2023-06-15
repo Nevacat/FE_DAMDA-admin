@@ -1,24 +1,22 @@
-import { UserData } from '@/types/api/auth';
-import create from 'zustand';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface AuthStore {
-  user: UserState;
-  setUser: (data: UserData) => void;
-  logout: () => void;
-}
-
-export interface UserState {
   isLogin: boolean;
-  data: UserData | null;
+  setLogin: () => void;
+  setLogout: () => void;
 }
 
-const useAuthStore = create<AuthStore>((set) => ({
-  user: {
-    isLogin: false,
-    data: null,
-  },
-  setUser: (data: UserData) => set((state) => ({ user: { isLogin: true, data } })),
-  logout: () => set((state) => ({ user: { isLogin: false, data: null } })),
-}));
+const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => ({
+      isLogin: false,
+
+      setLogin: () => set({ isLogin: true }),
+      setLogout: () => set({ isLogin: false }),
+    }),
+    { name: 'login-state' },
+  ),
+);
 
 export default useAuthStore;
