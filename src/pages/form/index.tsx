@@ -1,8 +1,8 @@
 import React from 'react';
-import * as S from '@/styles/pages/form.style';
+import FormLayout from '@/components/form/FormLayout';
 
 function FormPage() {
-  return <div>폼 관리</div>;
+  return <FormLayout />;
 }
 
 export default FormPage;
