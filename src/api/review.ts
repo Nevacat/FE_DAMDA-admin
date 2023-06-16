@@ -24,3 +24,9 @@ export const selectBestReview = async (reviewId: number) => {
   console.log(res);
   return res.data;
 };
+
+export const deleteReviewImage = async (imageId: number) => {
+  const res = await instance.delete(`/review/image/${imageId}`);
+  console.log(res);
+  return res.data;
+};
