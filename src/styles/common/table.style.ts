@@ -3,6 +3,7 @@ import theme from '../theme';
 
 export const TableContainer = styled.div`
   width: 1200px;
+  cursor: default;
 `;
 export const Table = styled.table`
   width: 100%;

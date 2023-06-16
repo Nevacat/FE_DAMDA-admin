@@ -11,6 +11,7 @@ type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red';
  */
 export const StateButton = styled.div<{ state: ServiceState | Colors }>`
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 5px 15px;
   width: max-content;
