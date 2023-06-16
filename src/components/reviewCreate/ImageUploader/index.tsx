@@ -7,35 +7,27 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import Image from 'next/image';
 
-function ImageUploader() {
+interface UploaderProps {
+  type: 'before' | 'after';
+  images: (string | ArrayBuffer)[];
+}
+
+function ImageUploader({ type, images }: UploaderProps) {
   return (
-    <S.UploaderContainer>
-      <S.SelectImage>
-        <S.Name>서비스 전</S.Name>
-        <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={5} scrollbar={{ draggable: true }}>
-          <SwiperSlide>
-            <S.EmptyBox htmlFor="image_before" />
-          </SwiperSlide>
-        </Swiper>
-        <S.Label htmlFor="image_before">사진 업로드</S.Label>
-        <input id="image_before" type="file" accept="image/*" />
-      </S.SelectImage>
-      <S.SelectImage>
-        <S.Name>서비스 후</S.Name>
-        <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={5} scrollbar={{ draggable: true }}>
-          {/* <SwiperSlide>
+    <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={5} scrollbar={{ draggable: true }}>
+      {images.length > 0 &&
+        images.map((image, idx) => (
+          <SwiperSlide key={idx}>
             <S.ImageBox>
+              <Image className="image" src={String(image)} alt={'서비스 사진'} width={220} height={220} />
               <Image className="delete" src={'/icons/delete-gray.svg'} alt="이미지 삭제" width={24} height={24} />
             </S.ImageBox>
-          </SwiperSlide> */}
-          <SwiperSlide>
-            <S.EmptyBox htmlFor="image_after" />
           </SwiperSlide>
-        </Swiper>
-        <S.Label htmlFor="image_after">사진 업로드</S.Label>
-        <input id="image_after" type="file" accept="image/*" />
-      </S.SelectImage>
-    </S.UploaderContainer>
+        ))}
+      <SwiperSlide>
+        <S.EmptyBox htmlFor={type} />
+      </SwiperSlide>
+    </Swiper>
   );
 }
 

@@ -1,10 +1,17 @@
 import { PageTitle } from '@/styles/common/PageTitle';
 import * as S from '@/styles/pages/reviewCreate.style';
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { StateButton } from '@/styles/common/StateButton';
 import ImageUploader from './ImageUploader';
+import { ImagesType } from '@/pages/review/create';
 
-function ReviewCreateLayout() {
+interface ReviewCreateProps {
+  images: ImagesType;
+  setImages: React.Dispatch<SetStateAction<ImagesType>>;
+  selectImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function ReviewCreateLayout({ images, setImages, selectImage }: ReviewCreateProps) {
   return (
     <>
       <PageTitle>고객 후기 작성</PageTitle>
@@ -29,11 +36,24 @@ function ReviewCreateLayout() {
         </S.Row>
         <S.Row>
           <S.Name>전후 사진</S.Name>
-          <ImageUploader />
+          <S.UploaderContainer>
+            <S.SelectImage>
+              <S.Name>서비스 전</S.Name>
+              <ImageUploader type={'before'} images={images.before} />
+              <S.Label htmlFor="before">사진 업로드</S.Label>
+              <input id="before" type="file" accept="image/*" onChange={selectImage} />
+            </S.SelectImage>
+            <S.SelectImage>
+              <S.Name>서비스 후</S.Name>
+              <ImageUploader type={'after'} images={images.after} />
+              <S.Label htmlFor="after">사진 업로드</S.Label>
+              <input id="after" type="file" accept="image/*" onChange={selectImage} />
+            </S.SelectImage>
+          </S.UploaderContainer>
         </S.Row>
         <S.Row>
           <S.Label htmlFor="content">내용</S.Label>
-          <textarea placeholder="input text" />
+          <textarea id="content" placeholder="input text" />
         </S.Row>
         <S.Buttons>
           <StateButton state="orange">이전으로</StateButton>

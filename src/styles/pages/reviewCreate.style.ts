@@ -72,6 +72,35 @@ export const Label = styled.label`
 
 export const Name = styled(Label.withComponent('p'))``;
 
+export const UploaderContainer = styled.div`
+  grid-column: 2/4;
+`;
+
+export const SelectImage = styled.div`
+  > label {
+    ${theme.font.bold_14}
+    display: block;
+    width: 160px;
+    color: ${theme.colors.main_blue};
+    text-align: center;
+    line-height: 34px;
+    background-color: ${theme.colors.sub_blue_4};
+    border-radius: 8px;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
+  .swiper {
+    padding-bottom: 20px;
+  }
+
+  .swiper-scrollbar-drag {
+    background-color: ${theme.colors.yolda_gray_5};
+  }
+`;
+
 export const Buttons = styled.div`
   display: flex;
   justify-content: end;
