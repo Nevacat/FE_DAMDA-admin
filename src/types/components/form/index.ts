@@ -11,3 +11,7 @@ export interface FormInputProps {
 export interface FormAddressProps {
   formData: AdminForm;
 }
+
+export interface FormSelectProps {
+  formData: AdminForm;
+}

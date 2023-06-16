@@ -159,5 +159,42 @@ export const FormSelectWrapper = styled.div`
   }
 
   .select-wrapper {
+    width: 300px;
+    height: 55px;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    font-size: 16px;
+    line-height: 19px;
+
+    border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+    border-radius: 5px;
+  }
+
+  .item-list {
+    margin-top: -20px;
+    width: 300px;
+    min-height: 200px;
+    overflow-y: auto;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    span {
+      padding: 12px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      width: 100%;
+
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+    }
+    border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
   }
 `;
