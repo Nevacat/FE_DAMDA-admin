@@ -1,7 +1,4 @@
 import styled from '@emotion/styled';
-import theme from '../theme';
-
-export const ReviewPageContainer = styled.div``;
 
 export const Header = styled.div`
   display: flex;
@@ -10,12 +7,11 @@ export const Header = styled.div`
   align-items: center;
   margin-bottom: 40px;
 
-  img {
+  a {
+    display: block;
     margin: 0 40px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
   }
-`;
-
-export const PageTitle = styled.h2`
-  ${theme.font.bold_24}
 `;
