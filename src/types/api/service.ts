@@ -20,3 +20,28 @@ export interface ServiceData {
   reservationDate: string;
   managerNames: string[];
 }
+
+export interface CompletedServiceRes {
+  data: CompletedServiceData;
+}
+
+export interface CompletedServiceData {
+  reservationId: number;
+  name: string;
+  address: string;
+  reservationDate: string;
+  // before: {
+  //   [id: string]: string;
+  // };
+  // after: {
+  //   [id: string]: string;
+  // };
+  before: {
+    id: number;
+    image: string;
+  }[];
+  after: {
+    id: number;
+    image: string;
+  }[];
+}

@@ -1,3 +1,4 @@
+import { PaginationContainer } from '@/components/common/PaginationContainer/style';
 import { StateButton } from '@/styles/common/StateButton';
 import { TableContainer } from '@/styles/common/table.style';
 import theme from '@/styles/theme';
@@ -29,9 +30,22 @@ export const TableCover = styled(TableContainer)`
   width: calc(830px - (24px * 2));
   line-height: 1.35;
 
+  tbody {
+    tr {
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: ${theme.colors.sub_blue_4};
+      }
+    }
+  }
+
   .manager_name {
     display: block;
   }
+`;
+
+export const PaginationCover = styled(PaginationContainer)`
+  justify-content: center;
 `;
 
 export const Buttons = styled.div`

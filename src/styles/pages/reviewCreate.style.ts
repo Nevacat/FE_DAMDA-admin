@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import theme from '../theme';
 import { StateButton } from '../common/StateButton';
 
-export const ReviewForm = styled.div`
+export const ReviewForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 1200px;
@@ -77,23 +77,12 @@ export const UploaderContainer = styled.div`
 `;
 
 export const SelectImage = styled.div`
-  > label {
-    ${theme.font.bold_14}
-    display: block;
-    width: 160px;
-    color: ${theme.colors.main_blue};
-    text-align: center;
-    line-height: 34px;
-    background-color: ${theme.colors.sub_blue_4};
-    border-radius: 8px;
-  }
-
   input[type='file'] {
     display: none;
   }
 
   .swiper {
-    padding-bottom: 20px;
+    padding-bottom: 15px;
   }
 
   .swiper-scrollbar-drag {
@@ -109,4 +98,11 @@ export const Buttons = styled.div`
   ${StateButton} {
     font-weight: 500;
   }
+`;
+
+export const Button = styled(StateButton.withComponent('button'))`
+  border: none;
+  outline: none;
+  font-weight: 500;
+  cursor: pointer;
 `;

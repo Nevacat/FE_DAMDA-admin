@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect } from 'react';
 import * as S from './style';
 import * as T from '@/styles/common/table.style';
 import ModalContainer from '@/components/common/ModalContainer';
@@ -6,16 +6,18 @@ import Image from 'next/image';
 import { ServiceData, ServiceRes } from '@/types/api/service';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { StateButton } from '@/styles/common/StateButton';
+import Pagination from 'react-js-pagination';
 
 interface CompletedUserListType {
   users: ServiceData[];
   getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
+  onSelectUser: (reservationId: number) => void;
 }
 
-function CompletedUserList({ users, getUserList, setModalOpen }: CompletedUserListType) {
+function CompletedUserList({ users, getUserList, setModalOpen, onSelectUser }: CompletedUserListType) {
   useEffect(() => {
-    getUserList(0, 4);
+    getUserList(0);
   }, []);
   return (
     <ModalContainer setIsOpen={setModalOpen}>
@@ -39,7 +41,7 @@ function CompletedUserList({ users, getUserList, setModalOpen }: CompletedUserLi
             </T.Thead>
             <T.Tbody>
               {users.map((user) => (
-                <T.Tr key={user.reservationId}>
+                <T.Tr key={user.reservationId} onClick={() => onSelectUser(user.reservationId)}>
                   <T.Td>{user.name}</T.Td>
                   <T.Td>{user.phoneNumber}</T.Td>
                   <T.Td>{user.address}</T.Td>
@@ -58,9 +60,20 @@ function CompletedUserList({ users, getUserList, setModalOpen }: CompletedUserLi
             </T.Tbody>
           </S.TableCover>
         </S.List>
-        <S.Buttons>
+        <S.PaginationCover>
+          <Pagination
+            activePage={1}
+            itemsCountPerPage={4}
+            totalItemsCount={8}
+            hideFirstLastPages={true}
+            linkClassPrev="prev"
+            linkClassNext="next"
+            onChange={() => {}}
+          />
+        </S.PaginationCover>
+        {/* <S.Buttons>
           <StateButton state="blue">직접입력</StateButton>
-        </S.Buttons>
+        </S.Buttons> */}
       </>
     </ModalContainer>
   );

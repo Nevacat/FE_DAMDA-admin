@@ -1,9 +1,16 @@
-import { ServiceRes } from '@/types/api/service';
+import { CompletedServiceRes, ServiceRes } from '@/types/api/service';
 import { instance } from './instance';
 
-export const getCompletedServices = async (page?: number, size?: number) => {
+export const getCompletedServices = async (page?: number) => {
+  const params = { page: page ? page : 0, size: 4 };
+  console.log(params);
   const res = await instance.get<ServiceRes>('/service/complete/list', {
-    params: { page: page ? page : 0, size: size ? size : 4 },
+    params,
   });
+  return res.data;
+};
+
+export const getCompletedServiceData = async (reservationId: number) => {
+  const res = await instance.get<CompletedServiceRes>(`/review/auto/${reservationId}`);
   return res.data;
 };
