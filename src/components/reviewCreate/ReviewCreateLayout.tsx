@@ -8,10 +8,11 @@ import { ImagesType } from '@/pages/review/create';
 interface ReviewCreateProps {
   images: ImagesType;
   setImages: React.Dispatch<SetStateAction<ImagesType>>;
+  setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   selectImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ReviewCreateLayout({ images, setImages, selectImage }: ReviewCreateProps) {
+function ReviewCreateLayout({ images, setImages, setModalOpen, selectImage }: ReviewCreateProps) {
   return (
     <>
       <PageTitle>고객 후기 작성</PageTitle>
@@ -22,7 +23,7 @@ function ReviewCreateLayout({ images, setImages, selectImage }: ReviewCreateProp
         </S.Row>
         <S.Row>
           <S.Label htmlFor="name">이름</S.Label>
-          <div className="cover">
+          <div className="cover" onClick={() => setModalOpen(true)}>
             <S.Input id="name" placeholder="고객을 선택해주세요." />
           </div>
         </S.Row>
