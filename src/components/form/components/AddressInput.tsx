@@ -1,12 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getServiceAvailableLocation } from '@/api/form';
 import { FormAddressWrapper } from '@/styles/pages/form/form.styled';
 import { FormAddressProps } from '@/types/components/form';
 import { AiOutlineDown } from 'react-icons/ai';
+import { motion, Variants } from 'framer-motion';
+import { AdditionalInfo } from '@/types/api/form';
+
+const variants: Variants = {
+  hover: {
+    border: '2px solid #00BDFF',
+  },
+};
 
 function AddressInput({ formData }: FormAddressProps) {
   const { data, isLoading } = useQuery(['address'], getServiceAvailableLocation);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [currentAddressInfo, setCurrentAddressInfo] = useState<AdditionalInfo[]>([]);
+  const handleClick = (index: number) => {
+    setSelectedIndex(index);
+  };
+
+  const getArrayByIndex = (index: number): AdditionalInfo[] | undefined => {
+    if (!data) return undefined;
+
+    const keys = Object.keys(data);
+
+    if (index >= 0 && index < keys.length) {
+      return data[keys[index]];
+    }
+
+    return undefined;
+  };
+
+  useEffect(() => {
+    const addressInfo = getArrayByIndex(selectedIndex);
+    if (addressInfo) {
+      setCurrentAddressInfo(addressInfo);
+    }
+  }, [selectedIndex]);
+
+  console.log(currentAddressInfo);
 
   return (
     <FormAddressWrapper>
@@ -17,11 +51,19 @@ function AddressInput({ formData }: FormAddressProps) {
           <>
             <div className="address-item">
               <div className="address-wrapper">
-                지역 선택 <AiOutlineDown />{' '}
+                지역 선택 <AiOutlineDown />
               </div>
               <div className="address-list-item">
-                {Object.keys(data).map((key) => (
-                  <span key={key}>{key}</span>
+                {Object.keys(data).map((key, index) => (
+                  <motion.span
+                    key={key}
+                    variants={variants}
+                    whileHover="hover"
+                    onClick={() => handleClick(index)}
+                    animate={selectedIndex === index ? 'hover' : ''}
+                  >
+                    {key}
+                  </motion.span>
                 ))}
               </div>
             </div>
@@ -30,7 +72,7 @@ function AddressInput({ formData }: FormAddressProps) {
                 지역 선택 <AiOutlineDown />{' '}
               </div>
               <div className="address-list-item">
-                {data['서울특별시'].map((item) => (
+                {currentAddressInfo.map((item) => (
                   <div key={item}>{item}</div>
                 ))}
               </div>

@@ -98,6 +98,9 @@ export const FormAddressWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     span {
+      border: 2px solid transparent;
+      border-radius: 5px;
+      width: 100%;
       padding: 12px;
       font-weight: 400;
       font-size: 16px;
@@ -140,5 +143,21 @@ export const FormAddressWrapper = styled.div`
         color: ${({ theme }) => theme.colors.yolda_gray_3};
       }
     }
+  }
+`;
+
+export const FormSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+    color: ${({ theme }) => theme.colors.yolda_black_1};
+  }
+
+  .select-wrapper {
   }
 `;
