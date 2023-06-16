@@ -4,6 +4,13 @@ export interface ServiceRes {
     last: boolean;
     totalElements: number;
     totalPages: number;
+    pageable: {
+      offset: number;
+      pageNumber: number;
+      pageSize: number;
+      paged: boolean;
+      unpaged: boolean;
+    };
     first: boolean;
     size: number;
     numberOfElements: number;

@@ -10,12 +10,16 @@ import Pagination from 'react-js-pagination';
 
 interface CompletedUserListType {
   users: ServiceData[];
+  page: {
+    page: number;
+    totalCount: number;
+  };
   getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onSelectUser: (reservationId: number) => void;
 }
 
-function CompletedUserList({ users, getUserList, setModalOpen, onSelectUser }: CompletedUserListType) {
+function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUser }: CompletedUserListType) {
   useEffect(() => {
     getUserList(0);
   }, []);
@@ -62,13 +66,13 @@ function CompletedUserList({ users, getUserList, setModalOpen, onSelectUser }: C
         </S.List>
         <S.PaginationCover>
           <Pagination
-            activePage={1}
+            activePage={page.page}
             itemsCountPerPage={4}
-            totalItemsCount={8}
+            totalItemsCount={page.totalCount}
             hideFirstLastPages={true}
             linkClassPrev="prev"
             linkClassNext="next"
-            onChange={() => {}}
+            onChange={() => {}} //여기~~!!!!!!!!!!!!~~!!
           />
         </S.PaginationCover>
         {/* <S.Buttons>

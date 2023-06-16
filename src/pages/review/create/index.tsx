@@ -29,11 +29,16 @@ function ReviewCreate() {
     before: [],
     after: [],
   });
+  const [page, setPage] = useState({
+    page: 0,
+    totalCount: 0,
+  });
   const [modalOpen, setModalOpen] = useState(false);
 
   const getUserList = useCompletedServices((data: ServiceRes) => {
     console.log(data.data);
-    // setUsers(data.data.content);
+    const currentData = data.data;
+    // setUsers(currentData.content);
     setUsers([
       {
         reservationId: 1,
@@ -45,6 +50,8 @@ function ReviewCreate() {
         managerNames: ['김길동', '김길동'],
       },
     ]);
+
+    setPage({ page: currentData.pageable.pageNumber, totalCount: currentData.totalElements });
   });
 
   const getUserData = useCompletedService((data: CompletedServiceRes) => {
@@ -152,6 +159,7 @@ function ReviewCreate() {
       {modalOpen && (
         <CompletedUserList
           users={users}
+          page={page}
           getUserList={getUserList}
           setModalOpen={setModalOpen}
           onSelectUser={onSelectUser}
