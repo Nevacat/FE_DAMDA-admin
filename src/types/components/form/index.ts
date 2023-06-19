@@ -19,3 +19,11 @@ export interface FormSelectProps {
 export interface FormRadioProps {
   formData: AdminForm;
 }
+
+export interface FormDateInputProps {
+  formData: AdminForm;
+}
+
+export interface FormInputProps {
+  formData: AdminForm;
+}

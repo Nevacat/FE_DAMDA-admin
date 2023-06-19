@@ -230,3 +230,64 @@ export const FormRadioWrapper = styled.div`
     }
   }
 `;
+
+export const FormDateInputWrapper = styled.div`
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+  }
+  .select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      width: 300px;
+      height: 55px;
+
+      gap: 8px;
+      justify-content: space-between;
+      padding: 10px;
+
+      font-size: 16px;
+      line-height: 19px;
+
+      border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+      border-radius: 5px;
+    }
+  }
+
+  .radio-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .radio-item-wrapper {
+      display: flex;
+      gap: 12px;
+
+      span {
+        padding: 10px;
+        width: 100px;
+        height: 50px;
+
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: ${({ theme }) => theme.colors.yolda_gray_4};
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid ${({ theme }) => theme.colors.yolda_gray_4};
+        border-radius: 5px;
+      }
+    }
+  }
+`;
+
+export const FormInputWrapper = styled.div``;

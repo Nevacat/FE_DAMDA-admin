@@ -4,6 +4,8 @@ import Title from '@/components/form/components/Title';
 import AddressInput from '@/components/form/components/AddressInput';
 import Select from '@/components/form/components/Select';
 import Radio from '@/components/form/components/Radio';
+import DateInput from '@/components/form/components/DateInput';
+import String from '@/components/form/components/String';
 
 function FormElements({ formData }: FormElementsProps) {
   if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} />;
@@ -12,7 +14,7 @@ function FormElements({ formData }: FormElementsProps) {
     case 'TITLE':
       return <Title formData={formData} />;
     case 'STRING':
-      return <Title formData={formData} />;
+      return <String formData={formData} />;
     case 'ADDRESS':
       return <AddressInput formData={formData} />;
     case 'SELECT':
@@ -20,6 +22,7 @@ function FormElements({ formData }: FormElementsProps) {
     case 'RADIO':
       return <Radio formData={formData} />;
     case 'DATE':
+      return <DateInput formData={formData} />;
   }
 }
 
