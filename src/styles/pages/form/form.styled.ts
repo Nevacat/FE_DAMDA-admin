@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 export const FormLayoutWrapper = styled.div`
   display: flex;
@@ -147,9 +148,11 @@ export const FormAddressWrapper = styled.div`
 `;
 
 export const FormSelectWrapper = styled.div`
+  width: 320px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
 
   h1 {
     font-weight: 800;
@@ -196,6 +199,12 @@ export const FormSelectWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
     border-top: 0;
     border-radius: 0 0 5px 5px;
+  }
+
+  .button {
+    position: absolute;
+    top: 50px;
+    right: -60px;
   }
 `;
 
@@ -290,4 +299,92 @@ export const FormDateInputWrapper = styled.div`
   }
 `;
 
-export const FormInputWrapper = styled.div``;
+export const FormInputWrapper = styled.div`
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  .input-wrapper {
+    width: 100%;
+    height: 55px;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+
+    border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+    border-radius: 5px;
+
+    span {
+    }
+
+    input {
+      border: 0;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 135%;
+
+      color: ${({ theme }) => theme.colors.yolda_gray_4};
+      &::placeholder {
+        color: ${({ theme }) => theme.colors.yolda_gray_4};
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+`;
+
+export const FormChangeBtn = styled.div`
+  position: relative;
+`;
+
+export const FormChangeModal = styled(motion.div)`
+  width: 200px;
+
+  position: absolute;
+  box-shadow: -3px 4px 15px rgba(181, 181, 181, 0.25), 0px 4px 4px rgba(204, 194, 233, 0.25);
+  z-index: 2;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    width: 100%;
+    background-color: #eeeff2;
+    h2 {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+    }
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .item {
+      height: 45px;
+      display: flex;
+      align-items: end;
+      padding: 20px 24px 0 24px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 160%;
+
+      &:last-child {
+        margin-bottom: 32px;
+      }
+    }
+  }
+`;
