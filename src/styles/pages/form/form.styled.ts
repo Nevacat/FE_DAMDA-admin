@@ -350,10 +350,10 @@ export const FormChangeBtn = styled.div`
 
 export const FormChangeModal = styled(motion.div)`
   width: 200px;
-
   position: absolute;
   box-shadow: -3px 4px 15px rgba(181, 181, 181, 0.25), 0px 4px 4px rgba(204, 194, 233, 0.25);
-  z-index: 2;
+  backdrop-filter: blur(4px);
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -372,6 +372,7 @@ export const FormChangeModal = styled(motion.div)`
     width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
     .item {
       height: 45px;
       display: flex;
@@ -381,6 +382,7 @@ export const FormChangeModal = styled(motion.div)`
       font-weight: 700;
       font-size: 14px;
       line-height: 160%;
+      transform-origin: left;
 
       &:last-child {
         margin-bottom: 32px;

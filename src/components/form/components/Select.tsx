@@ -21,7 +21,7 @@ function Select({ formData }: FormSelectProps) {
         <AiOutlineDown />
       </div>
       <div className="button">
-        <ChangeButton />
+        <ChangeButton formData={formData} />
       </div>
       <div className="item-list">
         {formData.categoryList?.map((category, index) => (

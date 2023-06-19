@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormChangeBtn, FormChangeModal } from '@/styles/pages/form/form.styled';
 import Change from '@/components/form/components/svg/change';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { FormChangeButtonProps } from '@/types/components/form';
 
-function ChangeButton() {
+const variants: Variants = {
+  initial: { opacity: 0, y: 50 },
+  open: { opacity: 1, y: -50 },
+  close: { opacity: 0, y: 50 },
+
+  hover: { scale: 1.2 },
+  selected: { scale: 1.2 },
+};
+
+function ChangeButton({ formData }: FormChangeButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -20,21 +30,7 @@ function ChangeButton() {
         </div>
         <AnimatePresence>
           {isOpen && (
-            <FormChangeModal
-              id="modal"
-              initial={{
-                opacity: 0,
-                y: 50,
-              }}
-              animate={{
-                opacity: 1,
-                y: -50,
-              }}
-              exit={{
-                opacity: 0,
-                y: 50,
-              }}
-            >
+            <FormChangeModal id="modal" initial="initial" animate="open" exit="close" variants={variants}>
               <div className="header">
                 <h2>변경</h2>
                 <div onClick={onClick}>
@@ -43,9 +39,15 @@ function ChangeButton() {
               </div>
               <div className="content">
                 {questionTypes.map((questionType, index) => (
-                  <div className="item" key={index}>
+                  <motion.div
+                    className="item"
+                    key={index}
+                    whileHover="hover"
+                    animate={formData.questionType === questionType ? 'selected' : ''}
+                    variants={variants}
+                  >
                     {questionType}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </FormChangeModal>

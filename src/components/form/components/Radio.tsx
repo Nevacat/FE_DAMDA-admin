@@ -13,7 +13,7 @@ function Radio({ formData, children }: FormRadioProps) {
             {category.category}
           </span>
         ))}
-        <ChangeButton />
+        <ChangeButton formData={formData} />
       </div>
       {children}
     </FormRadioWrapper>
