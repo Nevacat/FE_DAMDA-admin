@@ -4,6 +4,7 @@ import { FormSelectWrapper } from '@/styles/pages/form/form.styled';
 import { convertIdentifierToKorean } from '@/utils';
 import { AiOutlineDown } from 'react-icons/ai';
 import { motion, Variants } from 'framer-motion';
+import ChangeButton from '@/components/form/components/ChangeButton';
 
 const variants: Variants = {
   hover: {
@@ -19,8 +20,11 @@ function Select({ formData }: FormSelectProps) {
         <span>{convertIdentifierToKorean(formData.questionIdentify)}</span>
         <AiOutlineDown />
       </div>
+      <div className="button">
+        <ChangeButton />
+      </div>
       <div className="item-list">
-        {formData.categoryList.map((category, index) => (
+        {formData.categoryList?.map((category, index) => (
           <motion.span key={index} variants={variants} whileHover="hover">
             {category.category}
           </motion.span>
