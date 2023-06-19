@@ -15,8 +15,9 @@ const variants: Variants = {
 
 function AddressInput({ formData }: FormAddressProps) {
   const { data, isLoading } = useQuery(['address'], getServiceAvailableLocation);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
   const [currentAddressInfo, setCurrentAddressInfo] = useState<AdditionalInfo[]>([]);
+
   const handleClick = (index: number) => {
     setSelectedIndex(index);
   };
@@ -34,13 +35,12 @@ function AddressInput({ formData }: FormAddressProps) {
   };
 
   useEffect(() => {
+    if (selectedIndex === undefined) return;
     const addressInfo = getArrayByIndex(selectedIndex);
     if (addressInfo) {
       setCurrentAddressInfo(addressInfo);
     }
   }, [selectedIndex]);
-
-  console.log(currentAddressInfo);
 
   return (
     <FormAddressWrapper>
@@ -72,8 +72,9 @@ function AddressInput({ formData }: FormAddressProps) {
                 지역 선택 <AiOutlineDown />{' '}
               </div>
               <div className="address-list-item">
+                {selectedIndex === undefined ? <span>지역을 선택하여 시도를 확인 할 수 있습니다.</span> : null}
                 {currentAddressInfo.map((item) => (
-                  <div key={item}>{item}</div>
+                  <span key={item}>{item}</span>
                 ))}
               </div>
             </div>
