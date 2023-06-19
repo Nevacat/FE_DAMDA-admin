@@ -29,3 +29,7 @@ export interface FormDateInputProps {
 export interface FormInputProps {
   formData: AdminForm;
 }
+
+export interface FormChangeButtonProps {
+  formData: AdminForm;
+}
