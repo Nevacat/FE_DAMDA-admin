@@ -10,6 +10,9 @@ import String from '@/components/form/components/String';
 function FormElements({ formData }: FormElementsProps) {
   if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} />;
 
+  const isDuration =
+    formData.questionIdentify === 'SERVICEDURATION' ? <div className="duration">{formData.placeHolder}</div> : null;
+
   switch (formData.questionType) {
     case 'TITLE':
       return <Title formData={formData} />;
@@ -20,7 +23,7 @@ function FormElements({ formData }: FormElementsProps) {
     case 'SELECT':
       return <Select formData={formData} />;
     case 'RADIO':
-      return <Radio formData={formData} />;
+      return <Radio formData={formData}>{isDuration}</Radio>;
     case 'DATE':
       return <DateInput formData={formData} />;
   }
