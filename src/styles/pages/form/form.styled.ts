@@ -198,3 +198,35 @@ export const FormSelectWrapper = styled.div`
     border-radius: 0 0 5px 5px;
   }
 `;
+
+export const FormRadioWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  .radio-wrapper {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    gap: 12px;
+
+    .radio-item {
+      width: 100px;
+      height: 50px;
+      padding: 10px;
+
+      display: flex;
+      align-items: center;
+      border: 1px solid ${({ theme }) => theme.colors.yolda_gray_4};
+      color: ${({ theme }) => theme.colors.yolda_gray_4};
+      border-radius: 5px;
+    }
+  }
+`;

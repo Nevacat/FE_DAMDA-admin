@@ -15,3 +15,7 @@ export interface FormAddressProps {
 export interface FormSelectProps {
   formData: AdminForm;
 }
+
+export interface FormRadioProps {
+  formData: AdminForm;
+}
