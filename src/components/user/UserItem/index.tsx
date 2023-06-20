@@ -4,6 +4,7 @@ import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
 import History from '../History';
 import { UserContext } from '@/pages/user';
+import { ServiceState, ServiceStateType } from '@/types/serviceState';
 
 interface UserItemProp {
   user: {
@@ -11,7 +12,7 @@ interface UserItemProp {
     name: string;
     phoneNumber: string;
     address: string;
-    serviceState: string;
+    serviceState: ServiceStateType;
     createdAt: string;
     memo: string;
     code: string;
@@ -23,6 +24,8 @@ function UserItem({ user }: UserItemProp) {
   if (!context) return;
   const { OpenHistory } = context;
 
+  const state = ServiceState[user.serviceState];
+
   return (
     <>
       <T.Tr>
@@ -30,10 +33,7 @@ function UserItem({ user }: UserItemProp) {
         <T.Td>{user.phoneNumber}</T.Td>
         <T.Td>{user.address}</T.Td>
         <T.Td>
-          {/* <StateButton state={ServiceState[state]}>
-          {ServiceState[state]}
-        </StateButton> */}
-          <StateButton state={'blue'}>서비스예약확정</StateButton>
+          <StateButton state={user.serviceState}>{state}</StateButton>
         </T.Td>
         <T.Td>{user.createdAt}</T.Td>
         <S.Memo>{user.memo}</S.Memo>
