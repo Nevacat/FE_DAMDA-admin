@@ -5,38 +5,39 @@ import Image from 'next/image';
 import { StateButton } from '@/styles/common/StateButton';
 import { ReviewContext } from '@/pages/review';
 import { deleteReview } from '@/api/review';
+import TopBarGray from '@/components/common/TopBarGray';
 
 interface ConfirmProps {
-  reviewId: number
+  reviewId: number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function ConfirmDelete({ reviewId, setIsOpen }: ConfirmProps) {
-  
-  const context = useContext(ReviewContext)
-  if(!context) return
-  const {reviewMutate} = context
+  const context = useContext(ReviewContext);
+  if (!context) return;
+  const { reviewMutate } = context;
 
-  const onConfirm = async() => {
+  const onConfirm = async () => {
     try {
       // await deleteReview(reviewId)
-      reviewMutate(0)
-      setIsOpen(false)
+      reviewMutate(0);
+      setIsOpen(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   return (
     <ModalContainer setIsOpen={setIsOpen}>
       <S.Container>
-        <S.TopBar>
-          <S.Title>리뷰 삭제</S.Title>
-          <Image onClick={() => setIsOpen(false)} src={'/icons/close-icon.svg'} alt="닫기" width={24} height={24} />
-        </S.TopBar>
+        <TopBarGray title="리뷰 삭제" setIsOpen={setIsOpen} />
         <S.Message>해당 리뷰를 삭제하시겠습니까?</S.Message>
         <S.Buttons>
-          <StateButton state={'green'} onClick={onConfirm}>네</StateButton>
-          <StateButton state={'red'} onClick={() => setIsOpen(false)}>아니요</StateButton>
+          <StateButton state={'green'} onClick={onConfirm}>
+            네
+          </StateButton>
+          <StateButton state={'red'} onClick={() => setIsOpen(false)}>
+            아니요
+          </StateButton>
         </S.Buttons>
       </S.Container>
     </ModalContainer>
