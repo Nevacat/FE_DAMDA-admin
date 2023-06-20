@@ -3,7 +3,7 @@ import { FormRadioProps } from '@/types/components/form';
 import { FormRadioWrapper } from '@/styles/pages/form/form.styled';
 import ChangeButton from '@/components/form/components/ChangeButton';
 import Plus from '@/components/form/components/svg/plus';
-import Check from '@/components/form/components/svg/Check';
+import CheckGreen from '@/components/form/components/svg/CheckGreen';
 import { useMutation } from '@tanstack/react-query';
 import { putCategoryList } from '@/api/form';
 
@@ -48,7 +48,7 @@ function Radio({ formData, children, refetch }: FormRadioProps) {
           {isAddClicked && <input ref={addInput} type="text" placeholder="입력중" onChange={onChange} />}
         </div>
         <div className="button-wrapper">
-          <div onClick={addButtonOnClick}>{isAddClicked ? <Check /> : <Plus />}</div>
+          <div onClick={addButtonOnClick}>{isAddClicked ? <CheckGreen /> : <Plus />}</div>
           <ChangeButton formData={formData} refetch={refetch} />
         </div>
       </div>
