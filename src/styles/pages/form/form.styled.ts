@@ -221,10 +221,40 @@ export const FormRadioWrapper = styled.div`
 
   .radio-wrapper {
     width: 100%;
-    height: 50px;
+    height: 100%;
 
     display: flex;
+    align-items: center;
     gap: 12px;
+
+    .item-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 12px;
+
+      input {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        border: 1px solid #0061ff;
+        border-radius: 5px;
+        color: #0061ff;
+
+        &::placeholder {
+          color: #0061ff;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .button-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: end;
+    }
 
     .radio-item {
       width: 100px;
