@@ -7,10 +7,10 @@ import { ReviewData } from '@/types/api/review';
 import ConfirmDelete from '../../ConfirmDelete';
 
 interface ReviewItemProps {
-  review: ReviewData
+  review: ReviewData;
 }
 
-const ReviewItem = ({review}: ReviewItemProps) => {
+const ReviewItem = ({ review }: ReviewItemProps) => {
   const [isBestModalOpen, setIsBestModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -20,21 +20,23 @@ const ReviewItem = ({review}: ReviewItemProps) => {
         <T.Td>{review.reviewId}</T.Td>
         <T.Td>{review.name}</T.Td>
         <T.Td>{review.address}</T.Td>
-        <S.ReviewContent>
-          {review.title}
-        </S.ReviewContent>
+        <S.ReviewContent>{review.title}</S.ReviewContent>
         <T.Td>{review.createdAt}</T.Td>
         <T.Td>
-          <StateButton state={review.best ? 'green' :'blue'} onClick={() => setIsBestModalOpen(true)}>
-            {review.best ? '베스트 리뷰': '일반 리뷰'}
+          <StateButton state={review.best ? 'green' : 'blue'} onClick={() => setIsBestModalOpen(true)}>
+            {review.best ? '베스트 리뷰' : '일반 리뷰'}
           </StateButton>
         </T.Td>
         <T.Td>
-          <StateButton state={'red'} onClick={() => setIsDeleteModalOpen(true)}>삭제</StateButton>
+          <StateButton state={'red'} onClick={() => setIsDeleteModalOpen(true)}>
+            삭제
+          </StateButton>
         </T.Td>
+        <td>
+          {isBestModalOpen && <ConfirmBest reviewId={review.reviewId} setIsOpen={setIsBestModalOpen} />}
+          {isDeleteModalOpen && <ConfirmDelete reviewId={review.reviewId} setIsOpen={setIsDeleteModalOpen} />}
+        </td>
       </S.Row>
-      {isBestModalOpen && <ConfirmBest reviewId={review.reviewId} setIsOpen={setIsBestModalOpen} />}
-      {isDeleteModalOpen && <ConfirmDelete reviewId={review.reviewId} setIsOpen={setIsDeleteModalOpen} />}
     </>
   );
 };

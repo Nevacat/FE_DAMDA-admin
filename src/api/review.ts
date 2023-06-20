@@ -3,10 +3,10 @@ import { instance } from './instance';
 
 export const getReviews = async (page?: number) => {
   const params = {
-    page: page? page : 0,
-    size: 10
-  }
-  const res = await instance.get<ReviewRes>('/admin/review/list', {params});
+    page: page ? page : 0,
+    size: 10,
+  };
+  const res = await instance.get<ReviewRes>('/admin/review/list', { params });
   console.log(res);
   return res.data;
 };

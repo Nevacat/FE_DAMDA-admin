@@ -15,6 +15,8 @@ const colors = {
   yolda_gray_3: '#858585',
   yolda_gray_4: '#A6A6A6',
   yolda_gray_5: '#C7C7C7',
+  yolda_gray_6: '#CBD5E0',
+  yolda_gray_7: '#EEEFF2',
 };
 
 const font = {
