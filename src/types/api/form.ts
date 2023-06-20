@@ -5,7 +5,7 @@ export interface GetAdminFormList {
 }
 
 export interface AdminForm {
-  questionNumber?: number;
+  questionNumber: number;
   questionOrder: number;
   questionTitle: string;
   questionType: QuestionType;
@@ -34,6 +34,11 @@ export interface AddressList {
 }
 
 export type AdditionalInfo = string;
+
+export interface putCategory {
+  questionNumber: number;
+  data: string | string[];
+}
 
 /**
  * 질문 식별자
