@@ -5,13 +5,13 @@ import ManagerItem from './ManagerItem';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 
-function ManagerTable({ data, category }: any) {
+function ManagerTable({ waiting, pending, inactive, category }: any) {
   let content;
   if (
-    (data === 'waiting' && category === 'all') ||
-    (data === 'waiting' && category === 'waiting') ||
-    (data === 'pending' && category === 'pending') ||
-    (data === 'inactive' && category === 'inactive')
+    (waiting && category === 'all') ||
+    (waiting && category === 'waiting') ||
+    (pending && category === 'pending') ||
+    (inactive && category === 'inactive')
   ) {
     content = (
       <G.Thead>
@@ -39,43 +39,75 @@ function ManagerTable({ data, category }: any) {
 
         <tbody>
           {/* ----------- WAITING ----------- */}
-          {data === 'waiting' && category === 'all' && '매니저 신청 관리' && (
+          {waiting && category === 'all' && '매니저 신청 관리' && (
             <tr>
               <S.Title colSpan={11}>매니저 신청 관리</S.Title>
             </tr>
           )}
-          {data === 'waiting' && category === 'all' && <ManagerItem />}
-          {data === 'waiting' && category === 'waiting' && <ManagerItem />}
+          {waiting &&
+            category === 'all' &&
+            waiting.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+          {waiting &&
+            category === 'waiting' &&
+            waiting.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* ----------- PENDING ----------- */}
-          {data === 'pending' && category === 'all' && '보류 매니저' && (
+          {pending && category === 'all' && '보류 매니저' && (
             <tr>
               <S.Title colSpan={11}>보류 매니저</S.Title>
             </tr>
           )}
-          {data === 'pending' && category === 'all' && <ManagerItem />}
+          {pending &&
+            category === 'all' &&
+            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
           {/* 기존 매니저 중 보류 매니저.map() */}
-          {data === 'pending' && category === 'pending' && <S.Title colSpan={11}>기존 매니저</S.Title>}
-          {data === 'pending' && category === 'pending' && <ManagerItem />}
+          {pending && category === 'pending' && (
+            <tr>
+              <S.Title colSpan={11}>기존 매니저</S.Title>
+            </tr>
+          )}
+          {pending &&
+            category === 'pending' &&
+            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* 예비 매니저 중 보류 매니저.map() */}
-          {data === 'pending' && category === 'pending' && <S.Title colSpan={11}>예비 매니저</S.Title>}
-          {data === 'pending' && category === 'pending' && <ManagerItem />}
+          {pending && category === 'pending' && (
+            <tr>
+              <S.Title colSpan={11}>예비 매니저</S.Title>
+            </tr>
+          )}
+          {pending &&
+            category === 'pending' &&
+            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* ----------- INACTIVE ----------- */}
-          {data === 'inactive' && category === 'all' && '활동 불가 매니저' && (
+          {inactive && category === 'all' && '활동 불가 매니저' && (
             <tr>
               <S.Title colSpan={11}>활동 불가 매니저</S.Title>
             </tr>
           )}
-          {data === 'inactive' && category === 'all' && <ManagerItem />}
+          {inactive &&
+            category === 'all' &&
+            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
           {/* 기존 매니저 중 활동 불가 매니저.map() */}
-          {data === 'inactive' && category === 'inactive' && <S.Title colSpan={11}>기존 매니저</S.Title>}
-          {data === 'inactive' && category === 'inactive' && <ManagerItem />}
+          {inactive && category === 'inactive' && (
+            <tr>
+              <S.Title colSpan={11}>기존 매니저</S.Title>
+            </tr>
+          )}
+          {inactive &&
+            category === 'inactive' &&
+            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* 예비 매니저 중 활동 불가 매니저.map() */}
-          {data === 'inactive' && category === 'inactive' && <S.Title colSpan={11}>예비 매니저</S.Title>}
-          {data === 'inactive' && category === 'inactive' && <ManagerItem />}
+          {inactive && category === 'inactive' && (
+            <tr>
+              <S.Title colSpan={11}>예비 매니저</S.Title>
+            </tr>
+          )}
+          {inactive &&
+            category === 'inactive' &&
+            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
         </tbody>
       </G.Table>
     </G.TableContainer>
