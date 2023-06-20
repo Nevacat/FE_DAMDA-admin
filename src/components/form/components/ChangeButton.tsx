@@ -9,8 +9,8 @@ const variants: Variants = {
   open: { opacity: 1, y: -50 },
   close: { opacity: 0, y: 50 },
 
-  hover: { scale: 1.2 },
-  selected: { scale: 1.2 },
+  hover: { scale: 1.2, color: '#0061FF' },
+  selected: { scale: 1.2, color: '#0061FF' },
 };
 
 function ChangeButton({ formData }: FormChangeButtonProps) {
