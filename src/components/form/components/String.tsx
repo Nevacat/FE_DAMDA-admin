@@ -4,7 +4,7 @@ import { FormInputWrapper } from '@/styles/pages/form/form.styled';
 import { convertIdentifierToKorean } from '@/utils';
 import ChangeButton from '@/components/form/components/ChangeButton';
 
-function String({ formData }: FormInputProps) {
+function String({ formData, refetch }: FormInputProps) {
   return (
     <FormInputWrapper>
       <h1>{formData.questionTitle}</h1>
@@ -13,7 +13,7 @@ function String({ formData }: FormInputProps) {
         <input type="text" placeholder={formData.placeHolder} />
       </div>
       <div className="button">
-        {formData.questionIdentify === 'SERVICEDURATION' && <ChangeButton formData={formData} />}
+        {formData.questionIdentify === 'SERVICEDURATION' && <ChangeButton formData={formData} refetch={refetch} />}
       </div>
     </FormInputWrapper>
   );

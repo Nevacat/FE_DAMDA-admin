@@ -7,25 +7,29 @@ import Radio from '@/components/form/components/Radio';
 import DateInput from '@/components/form/components/DateInput';
 import String from '@/components/form/components/String';
 
-function FormElements({ formData }: FormElementsProps) {
-  if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} />;
+function FormElements({ formData, refetch }: FormElementsProps) {
+  if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} refetch={refetch} />;
 
   const isDuration =
     formData.questionIdentify === 'SERVICEDURATION' ? <div className="duration">{formData.placeHolder}</div> : null;
 
   switch (formData.questionType) {
     case 'TITLE':
-      return <Title formData={formData} />;
+      return <Title formData={formData} refetch={refetch} />;
     case 'STRING':
-      return <String formData={formData} />;
+      return <String formData={formData} refetch={refetch} />;
     case 'ADDRESS':
-      return <AddressInput formData={formData} />;
+      return <AddressInput formData={formData} refetch={refetch} />;
     case 'SELECT':
-      return <Select formData={formData} />;
+      return <Select formData={formData} refetch={refetch} />;
     case 'RADIO':
-      return <Radio formData={formData}>{isDuration}</Radio>;
+      return (
+        <Radio formData={formData} refetch={refetch}>
+          {isDuration}
+        </Radio>
+      );
     case 'DATE':
-      return <DateInput formData={formData} />;
+      return <DateInput formData={formData} refetch={refetch} />;
   }
 }
 

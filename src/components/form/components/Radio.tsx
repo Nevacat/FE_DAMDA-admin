@@ -7,7 +7,7 @@ import Check from '@/components/form/components/svg/Check';
 import { useMutation } from '@tanstack/react-query';
 import { putCategoryList } from '@/api/form';
 
-function Radio({ formData, children }: FormRadioProps) {
+function Radio({ formData, children, refetch }: FormRadioProps) {
   const [isAddClicked, setIsAddClicked] = useState(false);
   const [input, setInput] = useState('');
   const addInput = useRef<HTMLInputElement | null>(null);
@@ -49,7 +49,7 @@ function Radio({ formData, children }: FormRadioProps) {
         </div>
         <div className="button-wrapper">
           <div onClick={addButtonOnClick}>{isAddClicked ? <Check /> : <Plus />}</div>
-          <ChangeButton formData={formData} />
+          <ChangeButton formData={formData} refetch={refetch} />
         </div>
       </div>
       {children}

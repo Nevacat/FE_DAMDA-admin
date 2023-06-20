@@ -16,9 +16,14 @@ const variants: Variants = {
   selected: { scale: 1.2, color: '#0061FF' },
 };
 
-function ChangeButton({ formData }: FormChangeButtonProps) {
+function ChangeButton({ formData, refetch }: FormChangeButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { mutate } = useMutation(putForm);
+
+  const { mutate } = useMutation(putForm, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const onClick = () => {
     setIsOpen((prev) => !prev);
