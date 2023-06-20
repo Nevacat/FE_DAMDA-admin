@@ -1,13 +1,13 @@
 import React from 'react';
-import * as S from '@/styles/pages/user.style';
 import UserTable from './UserTable';
+import { PageTitle } from '@/styles/common/PageTitle';
 
 function UserLayout() {
   return (
-    <S.UserPageContainer>
-      <S.PageTitle>고객관리</S.PageTitle>
+    <>
+      <PageTitle>고객관리</PageTitle>
       <UserTable />
-    </S.UserPageContainer>
+    </>
   );
 }
 
