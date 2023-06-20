@@ -17,9 +17,10 @@ interface CompletedUserListType {
   getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onSelectUser: (reservationId: number) => void;
+  onPaging: (page: number) => void;
 }
 
-function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUser }: CompletedUserListType) {
+function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUser, onPaging }: CompletedUserListType) {
   useEffect(() => {
     getUserList(0);
   }, []);
@@ -72,7 +73,7 @@ function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUse
             hideFirstLastPages={true}
             linkClassPrev="prev"
             linkClassNext="next"
-            onChange={() => {}} //여기~~!!!!!!!!!!!!~~!!
+            onChange={onPaging}
           />
         </S.PaginationCover>
         {/* <S.Buttons>

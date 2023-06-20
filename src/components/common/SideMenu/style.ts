@@ -1,5 +1,6 @@
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 export const SideBar = styled.div`
   position: sticky;
@@ -13,7 +14,8 @@ export const SideBar = styled.div`
   z-index: 2;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled(Link)`
+display: block;
   padding: 25px 25px 30px;
 `;
 

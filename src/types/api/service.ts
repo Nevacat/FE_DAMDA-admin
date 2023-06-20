@@ -37,18 +37,12 @@ export interface CompletedServiceData {
   name: string;
   address: string;
   reservationDate: string;
-  // before: {
-  //   [id: string]: string;
-  // };
-  // after: {
-  //   [id: string]: string;
-  // };
   before: {
     id: number;
-    image: string;
+    imgUrl: string;
   }[];
   after: {
     id: number;
-    image: string;
+    imgUrl: string;
   }[];
 }
