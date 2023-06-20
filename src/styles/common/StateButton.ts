@@ -17,6 +17,7 @@ export const StateButton = styled.div<{ state: ServiceState | Colors }>`
   width: max-content;
   height: 32px;
   border-radius: 8px;
+  user-select: none;
   cursor: default;
 
   ${({ state }) =>

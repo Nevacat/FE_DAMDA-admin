@@ -11,7 +11,8 @@ export const Table = styled.table`
 export const Thead = styled.thead``;
 export const Tbody = styled.tbody``;
 export const Tr = styled.tr`
-  border-bottom: 1px solid ${theme.colors.yolda_gray_5};
+  /* border-bottom: 1px solid ${theme.colors.yolda_gray_5}; */
+  border-bottom: 1px solid #eeeff2;
 `;
 export const Th = styled.th`
   ${theme.font.bold_14}

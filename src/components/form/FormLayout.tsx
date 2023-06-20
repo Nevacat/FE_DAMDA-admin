@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getAdminFormList } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 import FormElements from '@/components/form/FormElements';
+import { instance } from '@/api/instance';
+import { log } from 'util';
 
 function FormLayout() {
   const { data } = useQuery(['form'], getAdminFormList);
@@ -12,14 +14,14 @@ function FormLayout() {
 
   useEffect(() => {
     if (data) {
-      const firstPageData = data.splice(0, 4);
-      const secPageData = data.splice(4, data.length);
+      const firstPageData = data.filter((form) => form.page === 1).sort((a, b) => a.questionOrder - b.questionOrder);
+      const secPageData = data.filter((form) => form.page === 2).sort((a, b) => a.questionOrder - b.questionOrder);
       setFirstPageData(firstPageData);
       setSecPageData(secPageData);
     }
   }, [data]);
 
-  // console.log(firstPageData, secPageData);
+  console.log(data);
 
   return (
     <S.FormLayoutWrapper>

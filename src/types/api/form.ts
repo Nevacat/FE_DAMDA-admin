@@ -5,7 +5,7 @@ export interface GetAdminFormList {
 }
 
 export interface AdminForm {
-  questionNumber: number;
+  questionNumber?: number;
   questionOrder: number;
   questionTitle: string;
   questionType: QuestionType;
@@ -13,8 +13,8 @@ export interface AdminForm {
   required: boolean;
   page: number;
   placeHolder: string;
-  categoryList: CategoryList[];
-  deleted: boolean;
+  categoryList?: CategoryList[];
+  deleted?: boolean;
 }
 
 export interface CategoryList {
@@ -84,7 +84,7 @@ export type QuestionIdentifier =
  *
  * @remarks
  * - DATE: 날짜
- * - STRING: Input 문자
+ * - STRING: String 문자
  * - RADIO: Radio Button
  * - SELECT: Select Box
  * - TITLE: 제목을 나타나기 위한 타입
