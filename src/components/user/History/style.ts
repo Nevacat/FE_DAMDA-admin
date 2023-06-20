@@ -1,35 +1,30 @@
 import { StateButton } from '@/styles/common/StateButton';
-import { Td, Tr } from '@/styles/common/table.style';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 
-export const MoreHistory = styled(Tr)`
-  position: relative;
-  background-color: ${theme.colors.yolda_gray_7};
-  border-bottom: none;
-
-  &::after {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 165px;
-    height: 2px;
-    background-color: ${theme.colors.main_blue};
-    content: '';
-  }
+export const Histories = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  width: 400px;
+  max-height: 80vh;
+  padding: 20px;
 `;
 
-export const HistoryItem = styled(Td)`
-  height: 56px;
+export const HistoryItem = styled.div``;
 
-  .center {
-    text-align: center;
-    span {
-      ${theme.font.bold_14}
-      margin-left: 10px;
-    }
-  }
+export const Date = styled.div`
+  display: flex;
+  gap: 25px;
+  padding: 10px;
+  border-bottom: 1px solid ${theme.colors.yolda_gray_7};
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  gap: 25px;
+  padding: 10px;
 
   ${StateButton} {
     cursor: pointer;

@@ -1,27 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
-import ReservationForm from '../ReservationForm';
+import { UserContext } from '@/pages/user';
+import ModalContainer from '@/components/common/ModalContainer';
+import TopBarGray from '@/components/common/TopBarGray';
 
-function History() {
-  const [isReservationFormOpen, setIsReservationFormOpen] = useState(false);
+interface HistoryProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function History({ setIsOpen }: HistoryProps) {
+  const context = useContext(UserContext);
+  if (!context) return;
+
+  const { OpenReservationForm, OpenCompletedServiceForm } = context;
+
   return (
-    <S.MoreHistory>
-      <S.HistoryItem colSpan={4}>
-        <div className="center">
-          서비스 일시 :<span>2023-12-29</span>
-        </div>
-      </S.HistoryItem>
-      <S.HistoryItem>
-        <StateButton state={'blue'} onClick={() => setIsReservationFormOpen(!isReservationFormOpen)}>
-          고객예약 폼
-        </StateButton>
-      </S.HistoryItem>
-      <S.HistoryItem colSpan={3}>
-        <StateButton state={'blue'}>매니저 서비스 완료 폼</StateButton>
-      </S.HistoryItem>
-      <td>{isReservationFormOpen && <ReservationForm setIsOpen={setIsReservationFormOpen} />}</td>
-    </S.MoreHistory>
+    <ModalContainer setIsOpen={setIsOpen}>
+      <>
+        <TopBarGray title={`${'이름'}님의 예약내역`} setIsOpen={setIsOpen} />
+        <S.Histories>
+          <S.HistoryItem>
+            <S.Date>
+              <span>서비스 일시</span>
+              <span>2023-12-29</span>
+            </S.Date>
+            <S.Buttons>
+              <StateButton state={'blue'} onClick={() => OpenReservationForm(1)}>
+                고객예약 폼
+              </StateButton>
+              <StateButton state={'blue'} onClick={() => OpenCompletedServiceForm(1)}>
+                매니저 서비스 완료 폼
+              </StateButton>
+            </S.Buttons>
+          </S.HistoryItem>
+        </S.Histories>
+      </>
+    </ModalContainer>
   );
 }
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as T from '@/styles/common/table.style';
 import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
 import History from '../History';
+import { UserContext } from '@/pages/user';
 
 interface UserItemProp {
   user: {
@@ -18,7 +19,9 @@ interface UserItemProp {
 }
 
 function UserItem({ user }: UserItemProp) {
-  const [historyOpen, setHistoryOpen] = useState(false);
+  const context = useContext(UserContext);
+  if (!context) return;
+  const { OpenHistory } = context;
 
   return (
     <>
@@ -36,16 +39,11 @@ function UserItem({ user }: UserItemProp) {
         <S.Memo>{user.memo}</S.Memo>
         <T.Td>{user.code}</T.Td>
         <T.Td>
-          <StateButton state={'blue'} onClick={() => setHistoryOpen(!historyOpen)}>
+          <StateButton state={'blue'} onClick={() => OpenHistory(1)}>
             예약내역
           </StateButton>
         </T.Td>
       </T.Tr>
-      {historyOpen && (
-        <>
-          <History />
-        </>
-      )}
     </>
   );
 }
