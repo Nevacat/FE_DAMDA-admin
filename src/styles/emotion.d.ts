@@ -17,6 +17,8 @@ declare module '@emotion/react' {
       yolda_gray_3: string;
       yolda_gray_4: string;
       yolda_gray_5: string;
+      yolda_gray_6: string;
+      yolda_gray_7: string;
     };
 
     font: {

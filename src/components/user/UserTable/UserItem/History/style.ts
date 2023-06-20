@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 export const MoreHistory = styled(Tr)`
   position: relative;
-  background-color: #eeeff2;
+  background-color: ${theme.colors.yolda_gray_7};
   border-bottom: none;
 
   &::after {

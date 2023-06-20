@@ -20,8 +20,7 @@ function History() {
       <S.HistoryItem colSpan={3}>
         <StateButton state={'blue'}>매니저 서비스 완료 폼</StateButton>
       </S.HistoryItem>
-
-      {isReservationFormOpen && <ReservationForm setIsOpen={setIsReservationFormOpen} />}
+      <td>{isReservationFormOpen && <ReservationForm setIsOpen={setIsReservationFormOpen} />}</td>
     </S.MoreHistory>
   );
 }
