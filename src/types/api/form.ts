@@ -40,6 +40,10 @@ export interface putCategory {
   data: string | string[];
 }
 
+export interface putFormType {
+  data: AdminForm;
+}
+
 /**
  * 질문 식별자
  *

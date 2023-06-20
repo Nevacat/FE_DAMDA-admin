@@ -12,6 +12,9 @@ function String({ formData }: FormInputProps) {
         <span>{convertIdentifierToKorean(formData.questionIdentify)}</span>
         <input type="text" placeholder={formData.placeHolder} />
       </div>
+      <div className="button">
+        {formData.questionIdentify === 'SERVICEDURATION' && <ChangeButton formData={formData} />}
+      </div>
     </FormInputWrapper>
   );
 }

@@ -3,6 +3,9 @@ import { FormChangeBtn, FormChangeModal } from '@/styles/pages/form/form.styled'
 import Change from '@/components/form/components/svg/change';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { FormChangeButtonProps } from '@/types/components/form';
+import { useMutation } from '@tanstack/react-query';
+import { putForm } from '@/api/form';
+import { AdminForm, QuestionType } from '@/types/api/form';
 
 const variants: Variants = {
   initial: { opacity: 0, y: 50 },
@@ -15,9 +18,17 @@ const variants: Variants = {
 
 function ChangeButton({ formData }: FormChangeButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate } = useMutation(putForm);
 
   const onClick = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const onChange = (questionType: QuestionType) => {
+    const putData: AdminForm = { ...formData, questionType };
+
+    mutate({ data: putData });
+    setIsOpen(false);
   };
 
   const questionTypes = ['STRING', 'RADIO', 'SELECT'];
@@ -44,6 +55,7 @@ function ChangeButton({ formData }: FormChangeButtonProps) {
                     key={index}
                     whileHover="hover"
                     animate={formData.questionType === questionType ? 'selected' : ''}
+                    onClick={() => onChange(questionType as QuestionType)}
                     variants={variants}
                   >
                     {questionType}
