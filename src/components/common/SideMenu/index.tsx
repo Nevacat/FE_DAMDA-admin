@@ -9,7 +9,7 @@ function SideMenu() {
 
   return (
     <S.SideBar>
-      <S.Logo>
+      <S.Logo href={'/'}>
         <Image src="/icons/Yolda_logo.svg" alt="열다" width={53} height={25} />
       </S.Logo>
       <S.Nav>
