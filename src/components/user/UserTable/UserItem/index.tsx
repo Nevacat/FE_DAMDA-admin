@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as T from '@/styles/common/table.style';
+import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
 import History from './History';
 
@@ -32,7 +33,7 @@ function UserItem({ user }: UserItemProp) {
           <StateButton state={'blue'}>서비스예약확정</StateButton>
         </T.Td>
         <T.Td>{user.createdAt}</T.Td>
-        <T.Td>{user.memo}</T.Td>
+        <S.Memo>{user.memo}</S.Memo>
         <T.Td>{user.code}</T.Td>
         <T.Td>
           <StateButton state={'blue'} onClick={() => setHistoryOpen(!historyOpen)}>

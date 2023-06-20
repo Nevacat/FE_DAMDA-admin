@@ -1,4 +1,4 @@
-import { ServiceState } from "@/types/serviceState";
+import { ServiceState } from '@/types/serviceState';
 
 export const dummy = [
   {
@@ -8,7 +8,7 @@ export const dummy = [
     address: '서울시 영등포구',
     serviceState: 'WAITING_FOR_MANAGER_REQUEST',
     createdAt: '2023-03-12',
-    memo: '메모끄적끄적',
+    memo: '메모끄적끄적길어져라 메모메모',
     code: 'ABC1DR',
   },
   {
@@ -18,7 +18,7 @@ export const dummy = [
     address: '서울시 관악구',
     serviceState: 'WAITING_FOR_ACCEPT_MATCHING',
     createdAt: '2023-03-10',
-    memo: '메모끄적끄적',
+    memo: '메모끄적끄적길어져라 메모메모',
     code: 'ABC1DR',
   },
   {
@@ -28,7 +28,7 @@ export const dummy = [
     address: '서울시 관악구',
     serviceState: 'MANAGER_MATCHING_COMPLETED',
     createdAt: '2023-03-10',
-    memo: '메모끄적끄적',
+    memo: '메모끄적끄적끄적',
     code: 'ABC1DR',
   },
   {
@@ -51,4 +51,4 @@ export const dummy = [
     memo: '메모끄적끄적',
     code: 'ABC1DR',
   },
-]
+];

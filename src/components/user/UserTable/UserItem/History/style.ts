@@ -1,3 +1,4 @@
+import { StateButton } from '@/styles/common/StateButton';
 import { Td, Tr } from '@/styles/common/table.style';
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
@@ -28,5 +29,9 @@ export const HistoryItem = styled(Td)`
       ${theme.font.bold_14}
       margin-left: 10px;
     }
+  }
+
+  ${StateButton} {
+    cursor: pointer;
   }
 `;
