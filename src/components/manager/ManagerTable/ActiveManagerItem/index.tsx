@@ -6,6 +6,7 @@ import * as S from './style';
 
 function ActiveManagerItem() {
   const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [isMemoOpen, setIsMemoOpen] = useState(false);
 
   const stateChangeHandler = () => {
     setIsStatusOpen(false);
@@ -49,8 +50,10 @@ function ActiveManagerItem() {
           </S.StateChangeContainer>
         )}
       </S.ManagerTd>
-      <S.ManagerTd>
+      <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)} onMouseLeave={() => setIsMemoOpen(false)}>
         <StateButton state={'blue'}>메모</StateButton>
+
+        {isMemoOpen && <textarea name="" id=""></textarea>}
       </S.ManagerTd>
     </G.Tr>
   );
