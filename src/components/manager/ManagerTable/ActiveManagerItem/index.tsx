@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
+import LocationSelectionForm from '../../LocationSelectionForm';
+
 import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 
 function ActiveManagerItem() {
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isMemoOpen, setIsMemoOpen] = useState(false);
 
@@ -19,7 +22,10 @@ function ActiveManagerItem() {
       <S.ManagerTd>홍길동</S.ManagerTd>
       <S.ManagerTd>010-0000-0000</S.ManagerTd>
       <S.ManagerTd>서울 특별시 서초대로 23-1</S.ManagerTd>
-      <S.ManagerTd>서울 특별시 서초대로 23-1</S.ManagerTd>
+      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
+        서울 금천구
+        {isLocationOpen && <LocationSelectionForm />}
+      </S.ManagerTd>
       <S.ManagerTd>5</S.ManagerTd>
       <S.ManagerTd>1급 (off)</S.ManagerTd>
       <S.ManagerTd>
