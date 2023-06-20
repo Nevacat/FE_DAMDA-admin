@@ -3,7 +3,6 @@ import { instance } from './instance';
 
 export const getCompletedServices = async (page?: number) => {
   const params = { page: page ? page : 0, size: 4 };
-  console.log(params);
   const res = await instance.get<ServiceRes>('/service/complete/list', {
     params,
   });
