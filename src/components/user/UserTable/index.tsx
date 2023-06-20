@@ -1,6 +1,6 @@
 import React from 'react';
 import * as T from '@/styles/common/table.style';
-import UserItem from './UserItem';
+import UserItem from '../UserItem';
 import { dummy } from './dummy';
 
 function UserTable() {
@@ -20,9 +20,9 @@ function UserTable() {
           </T.Tr>
         </T.Thead>
         <T.Tbody>
-          {dummy.map((item) => 
-          <UserItem key={item.id} user={item} />
-          )}
+          {dummy.map((item) => (
+            <UserItem key={item.id} user={item} />
+          ))}
         </T.Tbody>
       </T.Table>
     </T.TableContainer>

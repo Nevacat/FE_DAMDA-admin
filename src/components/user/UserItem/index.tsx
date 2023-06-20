@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as T from '@/styles/common/table.style';
 import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
-import History from './History';
+import History from '../History';
 
 interface UserItemProp {
   user: {
