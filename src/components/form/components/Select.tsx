@@ -12,7 +12,7 @@ const variants: Variants = {
   },
 };
 
-function Select({ formData }: FormSelectProps) {
+function Select({ formData, refetch }: FormSelectProps) {
   return (
     <FormSelectWrapper>
       <h1>{formData.questionTitle}</h1>
@@ -21,7 +21,7 @@ function Select({ formData }: FormSelectProps) {
         <AiOutlineDown />
       </div>
       <div className="button">
-        <ChangeButton formData={formData} />
+        <ChangeButton formData={formData} refetch={refetch} />
       </div>
       <div className="item-list">
         {formData.categoryList?.map((category, index) => (
