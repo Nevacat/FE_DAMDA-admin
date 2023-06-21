@@ -21,7 +21,8 @@ function Login() {
       setLogin();
       router.push('/');
     } catch (error) {
-      console.log('아이디와 비밀번호를 확인해주세요');
+      // alert('아이디와 비밀번호를 확인해주세요');
+      alert('아이디 admin , 비밀번호 1234');
     }
   };
 

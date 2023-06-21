@@ -221,10 +221,40 @@ export const FormRadioWrapper = styled.div`
 
   .radio-wrapper {
     width: 100%;
-    height: 50px;
+    height: 100%;
 
     display: flex;
+    align-items: center;
     gap: 12px;
+
+    .item-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 12px;
+
+      input {
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        border: 1px solid #0061ff;
+        border-radius: 5px;
+        color: #0061ff;
+
+        &::placeholder {
+          color: #0061ff;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .button-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: end;
+    }
 
     .radio-item {
       width: 100px;
@@ -304,6 +334,7 @@ export const FormInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
 
   h1 {
     font-weight: 800;
@@ -323,9 +354,6 @@ export const FormInputWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
     border-radius: 5px;
 
-    span {
-    }
-
     input {
       border: 0;
       font-weight: 800;
@@ -341,6 +369,12 @@ export const FormInputWrapper = styled.div`
         outline: none;
       }
     }
+  }
+
+  .button {
+    position: absolute;
+    right: -50px;
+    top: 50px;
   }
 `;
 

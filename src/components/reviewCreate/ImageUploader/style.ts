@@ -37,6 +37,7 @@ export const EmptyBox = styled(ImageBox.withComponent('label'))`
   background-image: url('/icons/image.png');
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 export const Label = styled.label`
@@ -49,6 +50,7 @@ export const Label = styled.label`
   line-height: 34px;
   background-color: ${theme.colors.sub_blue_4};
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 export const Upload = styled.div`

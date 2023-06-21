@@ -5,10 +5,9 @@ import { getAdminFormList } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 import FormElements from '@/components/form/FormElements';
 import { instance } from '@/api/instance';
-import { log } from 'util';
 
 function FormLayout() {
-  const { data } = useQuery(['form'], getAdminFormList);
+  const { data, refetch } = useQuery(['form'], getAdminFormList);
   const [firstPageData, setFirstPageData] = useState<AdminForm[]>([]);
   const [secPageData, setSecPageData] = useState<AdminForm[]>([]);
 
@@ -21,8 +20,6 @@ function FormLayout() {
     }
   }, [data]);
 
-  console.log(data);
-
   return (
     <S.FormLayoutWrapper>
       <S.FormTitle>
@@ -32,7 +29,7 @@ function FormLayout() {
       <S.FormContent>
         <S.FormListWrapper>
           {firstPageData.map((form, index) => (
-            <FormElements key={index} formData={form} />
+            <FormElements key={index} formData={form} refetch={refetch} />
           ))}
         </S.FormListWrapper>
 
@@ -43,7 +40,7 @@ function FormLayout() {
 
         <S.FormListWrapper>
           {secPageData.map((form, index) => (
-            <FormElements key={index} formData={form} />
+            <FormElements key={index} formData={form} refetch={refetch} />
           ))}
         </S.FormListWrapper>
       </S.FormContent>

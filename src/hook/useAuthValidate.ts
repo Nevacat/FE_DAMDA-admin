@@ -8,6 +8,7 @@ export const useAuthValidate = () => {
   const { setLogin, setLogout } = useAuthStore();
   const { mutate } = useMutation(validateToken, {
     onSuccess: () => {
+      console.log('로그인이 확인되었습니다');
       setLogin();
     },
     onError: () => {
