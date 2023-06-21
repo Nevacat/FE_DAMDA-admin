@@ -1,52 +1,45 @@
-import CompletedService from '@/components/user/CompletedService';
-import History from '@/components/user/History';
-import ReservationForm from '@/components/user/ReservationForm';
+import { getUserList } from '@/api/user';
+import History from '@/components/common/History';
 import UserLayout from '@/components/user/UserLayout';
+import { UserListRes } from '@/types/api/user';
+import { useQuery } from '@tanstack/react-query';
 import React, { createContext, useState } from 'react';
 
 interface UserContextProp {
-  OpenReservationForm: (reservationId: number) => void;
-  OpenCompletedServiceForm: (reservationId: number) => void;
-  OpenHistory: (userId: number) => void;
+  OpenHistory: (userId: number, username: string) => void;
+  userList: UserListRes | undefined;
 }
 
 export const UserContext = createContext<UserContextProp | null>(null);
 
 function UserPage() {
-  const [reservationFormData, setReservationFormData] = useState({}); // 고객예약폼에 들어 갈 데이터
-  const [completedServiceData, setCompletedServiceData] = useState({}); // 매니저 서비스 완료 폼에 들어 갈 데이터
-  const [userHistory, setUserHistory] = useState([]);
-  const [isReservationFormOpen, setIsReservationFormOpen] = useState(false);
-  const [isCompletedServiceFormOpen, setIsCompletedServiceFormOpen] = useState(false);
+  const { data: userList } = useQuery(['user'], () => getUserList(undefined), {});
+  const [clickedUsername, setClickedUsername] = useState('');
+  const [clickedUserId, setClickedUserId] = useState(0);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [userListPage, setUserListPage] = useState({ page: 1, totalCount: 10 });
 
-  const OpenReservationForm = (reservationId: number) => {
-    setReservationFormData({});
-    setIsReservationFormOpen(true);
-  };
-
-  const OpenCompletedServiceForm = (reservationId: number) => {
-    setCompletedServiceData({});
-    setIsCompletedServiceFormOpen(true);
-  };
-
-  const OpenHistory = (userId: number) => {
-    setUserHistory([]);
+  const OpenHistory = (memberId: number, username: string) => {
+    setClickedUsername(username);
+    setClickedUserId(memberId);
     setIsHistoryOpen(true);
+  };
+
+  const onUserListPaging = (page: number) => {
+    setUserListPage({ ...userListPage, page });
   };
 
   return (
     <UserContext.Provider
       value={{
-        OpenReservationForm,
-        OpenCompletedServiceForm,
         OpenHistory,
+        userList,
       }}
     >
-      <UserLayout />
-      {isHistoryOpen && <History setIsOpen={setIsHistoryOpen} />}
-      {isReservationFormOpen && <ReservationForm setIsOpen={setIsReservationFormOpen} />}
-      {isCompletedServiceFormOpen && <CompletedService setIsOpen={setIsCompletedServiceFormOpen} />}
+      <UserLayout page={userListPage} onPaging={onUserListPaging} />
+      {isHistoryOpen && (
+        <History type={'MEMBER'} username={clickedUsername} memberId={clickedUserId} setIsOpen={setIsHistoryOpen} />
+      )}
     </UserContext.Provider>
   );
 }
