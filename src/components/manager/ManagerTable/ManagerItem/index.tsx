@@ -110,10 +110,14 @@ function ManagerItem({ data }: any) {
   return (
     <G.Tr>
       <S.ManagerTd onClick={() => setIsEditingName(true)}>
-        {isEditingName ? <input type="text" onBlur={nameBlurHandler} value="홍길동" /> : data.name}
+        {isEditingName ? <input autoFocus type="text" onBlur={nameBlurHandler} value="홍길동" /> : data.name}
       </S.ManagerTd>
       <S.ManagerTd onClick={() => setIsEditingPhone(true)} onBlur={() => setIsEditingPhone(false)}>
-        {isEditingPhone ? <input type="text" onBlur={phoneBlurHandler} value="010-0000-1111" /> : '010-0000-1111'}
+        {isEditingPhone ? (
+          <input autoFocus type="text" onBlur={phoneBlurHandler} value="010-0000-1111" />
+        ) : (
+          '010-0000-1111'
+        )}
       </S.ManagerTd>
       <S.ManagerTd>서울 특별시 서초대로 23-1</S.ManagerTd>
       <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
@@ -121,10 +125,14 @@ function ManagerItem({ data }: any) {
         {isLocationOpen && <LocationSelectionForm />}
       </S.ManagerTd>
       <S.ManagerTd onClick={() => setIsEditingLevel(true)}>
-        {isEditingLevel ? <input type="text" onBlur={levelBlurHandler} value="5" /> : '5'}
+        {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} value="5" /> : '5'}
       </S.ManagerTd>
       <S.ManagerTd onClick={() => setIsEditingCertificate(true)}>
-        {isEditingCertificate ? <input type="text" onBlur={certificateBlurHandler} value="1급 (off)" /> : '1급 (off)'}
+        {isEditingCertificate ? (
+          <input autoFocus type="text" onBlur={certificateBlurHandler} value="1급 (off)" />
+        ) : (
+          '1급 (off)'
+        )}
       </S.ManagerTd>
       <S.ManagerTd>
         <StateButton state={'green'} onClick={() => setIsVehicleOpen(!isVehicleOpen)}>
