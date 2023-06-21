@@ -10,10 +10,11 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 
 interface CompletedServiceProps {
+  reservationId: number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function CompletedService({ setIsOpen }: CompletedServiceProps) {
+function CompletedService({ reservationId, setIsOpen }: CompletedServiceProps) {
   return (
     <ModalContainer setIsOpen={setIsOpen}>
       <>

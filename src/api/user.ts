@@ -1,4 +1,4 @@
-import { UserHistoryRes, UserListRes } from '@/types/api/user';
+import { ReservationFormDetailRes, UserHistoryRes, UserListRes } from '@/types/api/user';
 import { instance } from './instance';
 
 export const getUserList = async (query?: string) => {
@@ -18,7 +18,7 @@ export const getUserHistory = async (params: { memberId: number; page: number })
 };
 
 export const getReservationFormDetail = async (id: number) => {
-  const res = await instance.get(`/member/submit/form?formId=${id}`);
+  const res = await instance.get<ReservationFormDetailRes>(`/member/submit/form?formId=${id}`);
   console.log(res);
   return res.data;
 };

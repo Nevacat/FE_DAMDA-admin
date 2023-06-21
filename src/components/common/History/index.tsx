@@ -59,8 +59,12 @@ function History({ type, username, memberId, setIsOpen }: HistoryProps) {
         OpenCompletedServiceForm={OpenCompletedServiceForm}
         onHistoryPaging={onHistoryPaging}
       />
-      {isReservationFormOpen && <ReservationForm setIsOpen={setIsReservationFormOpen} />}
-      {isCompletedServiceFormOpen && <CompletedService setIsOpen={setIsCompletedServiceFormOpen} />}
+      {isReservationFormOpen && (
+        <ReservationForm reservationId={clickedReservationId} setIsOpen={setIsReservationFormOpen} />
+      )}
+      {isCompletedServiceFormOpen && (
+        <CompletedService reservationId={clickedReservationId} setIsOpen={setIsCompletedServiceFormOpen} />
+      )}
     </>
   );
 }
