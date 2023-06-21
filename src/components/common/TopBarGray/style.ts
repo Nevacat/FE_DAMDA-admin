@@ -6,7 +6,7 @@ export const TopBar = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px 24px;
-  background-color: #eeeff2;
+  background-color: ${theme.colors.yolda_gray_7};
 
   img {
     cursor: pointer;
