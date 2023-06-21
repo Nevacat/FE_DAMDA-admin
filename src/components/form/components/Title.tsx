@@ -7,6 +7,7 @@ import Check from '@/components/form/components/svg/Check';
 import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
+import TitleEdit from '@/components/form/components/TitleEdit';
 
 function Title({ formData, refetch }: FormInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
@@ -42,9 +43,7 @@ function Title({ formData, refetch }: FormInputProps) {
   return (
     <FormTittleWrapper>
       {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
-      <EditButtonWrapper layout onClick={onEditMode}>
-        {isTitleEdit ? <Check /> : <Edit />}
-      </EditButtonWrapper>
+      <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />
     </FormTittleWrapper>
   );
 }
