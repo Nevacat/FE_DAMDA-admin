@@ -18,7 +18,6 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
         <tr>
           <S.ManagerTh scope="col">이름</S.ManagerTh>
           <S.ManagerTh scope="col">연락처</S.ManagerTh>
-          <S.ManagerTh scope="col">거주지</S.ManagerTh>
           <S.ManagerTh scope="col">활동지역</S.ManagerTh>
           <S.ManagerTh scope="col">레벨</S.ManagerTh>
           <S.ManagerTh scope="col">자격증</S.ManagerTh>

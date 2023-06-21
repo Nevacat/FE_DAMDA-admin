@@ -119,7 +119,6 @@ function ManagerItem({ data }: any) {
           '010-0000-1111'
         )}
       </S.ManagerTd>
-      <S.ManagerTd>서울 특별시 서초대로 23-1</S.ManagerTd>
       <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
         서울 금천구
         {isLocationOpen && <LocationSelectionForm />}
