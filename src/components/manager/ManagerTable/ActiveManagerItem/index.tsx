@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
+import ReservationHistory from '../../ReservationHistory';
 
 import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
@@ -16,6 +17,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isMemoOpen, setIsMemoOpen] = useState(false);
   const [isVehicleOpen, setIsVehicleOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -98,7 +100,10 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         <StateButton state={'blue'}>지원폼</StateButton>
       </S.ManagerTd>
       <S.ManagerTd>
-        <StateButton state={'blue'}>예약 내역</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsHistoryOpen(true)}>
+          예약 내역
+          {isHistoryOpen && <ReservationHistory setIsOpen={setIsHistoryOpen} />}
+        </StateButton>
       </S.ManagerTd>
       <S.ManagerTd style={{ position: 'relative' }}>
         <StateButton state={'green'} onClick={() => setIsStatusOpen(!isStatusOpen)}>
