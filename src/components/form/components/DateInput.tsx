@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FormDateInputProps } from '@/types/components/form';
 import { FormDateInputWrapper } from '@/styles/pages/form/form.styled';
 import { AiOutlineDown } from 'react-icons/ai';
-import { instance } from '@/api/instance';
 import TitleEdit from '@/components/form/components/TitleEdit';
 import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 
-function DateInput({ formData, refetch }: FormDateInputProps) {
+function DateInput({ formData, refetch, children }: FormDateInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
   const { mutate } = useMutation(putForm, {
@@ -40,6 +39,7 @@ function DateInput({ formData, refetch }: FormDateInputProps) {
 
   return (
     <FormDateInputWrapper>
+      {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
         <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />

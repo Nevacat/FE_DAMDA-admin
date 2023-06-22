@@ -9,7 +9,7 @@ import { putCategoryList, putForm } from '@/api/form';
 import TitleEdit from '@/components/form/components/TitleEdit';
 import { AdminForm } from '@/types/api/form';
 
-function Radio({ formData, children, refetch }: FormRadioProps) {
+function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
   const [isAddClicked, setIsAddClicked] = useState(false);
   const [input, setInput] = useState('');
   const [isTitleEdit, setIsTitleEdit] = useState(false);
@@ -73,6 +73,7 @@ function Radio({ formData, children, refetch }: FormRadioProps) {
 
   return (
     <FormRadioWrapper>
+      {dragChild}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onInputChange} ref={inputRef} /> : <h1>{title}</h1>}
         <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />

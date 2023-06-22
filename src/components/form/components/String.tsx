@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 
-function String({ formData, refetch }: FormInputProps) {
+function String({ formData, refetch, children }: FormInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [isPlaceholderEdit, setIsPlaceholderEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
@@ -64,6 +64,7 @@ function String({ formData, refetch }: FormInputProps) {
 
   return (
     <FormInputWrapper>
+      {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
         <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />
