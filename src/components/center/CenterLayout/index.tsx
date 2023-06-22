@@ -1,4 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { CenterData } from '@/types/api/center';
 
 import * as G from '@/styles/common/table.style';
@@ -12,6 +14,10 @@ function CenterLayout({ data }: CenterLayoutProps) {
   return (
     <div>
       <S.Title>고객 센터</S.Title>
+
+      <S.AddButton href="/center/newFaq">
+        <Image src="/icons/faq-add-button.svg" alt="faq-add-button" width={24} height={24} />
+      </S.AddButton>
 
       <G.TableContainer>
         <G.Table>
