@@ -5,6 +5,7 @@ import * as S from './style';
 
 interface CategoryDropdownProps {
   size?: string;
+  qnaCategory: string;
   isDropdownOpen: boolean;
   setIsDropdownOpen: (isOpen: boolean) => void;
   selectedCategory: string | undefined;
@@ -13,13 +14,14 @@ interface CategoryDropdownProps {
 
 function CategoryDropdown({
   size,
+  qnaCategory,
   isDropdownOpen,
   setIsDropdownOpen,
   selectedCategory,
   selectHandler,
 }: CategoryDropdownProps) {
   let transformedCategory;
-  switch (selectedCategory) {
+  switch (qnaCategory) {
     case 'PRICE':
       transformedCategory = '가격';
       break;
@@ -40,7 +42,7 @@ function CategoryDropdown({
     <S.StyleWrapper isOpen={isDropdownOpen} size={size}>
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <button type="button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {transformedCategory || selectedCategory}
+          {selectedCategory || transformedCategory}
         </button>
         <IoMdArrowDropdown />
       </div>

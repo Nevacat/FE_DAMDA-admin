@@ -9,11 +9,10 @@ interface FAQItemProps {
   qnaId: number;
   title: string;
   qnaCategory: string;
-  contents: string;
   mutate: UseMutateFunction<boolean, AxiosError, number>;
 }
 
-function FAQItem({ qnaId, title, qnaCategory, contents, mutate }: FAQItemProps) {
+function FAQItem({ qnaId, title, qnaCategory, mutate }: FAQItemProps) {
   const [isFaqClicked, setIsFaqClicked] = useState(false);
 
   const deleteFAQHandler = (id: number) => {
@@ -49,15 +48,7 @@ function FAQItem({ qnaId, title, qnaCategory, contents, mutate }: FAQItemProps) 
         </StateButton>
       </G.Td>
 
-      {isFaqClicked && (
-        <Modal
-          title="FAQ"
-          description={title}
-          category={qnaCategory}
-          text={contents}
-          setIsFaqClicked={setIsFaqClicked}
-        />
-      )}
+      {isFaqClicked && <Modal faq="faq" qnaId={qnaId} setIsFaqClicked={setIsFaqClicked} />}
     </G.Tr>
   );
 }

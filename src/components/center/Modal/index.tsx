@@ -2,42 +2,45 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { getFAQData, putFAQData } from '@/api/center';
 import CategoryDropdown from '../CategoryDropdown';
 
 import * as N from '@/components/center/NewFaqLayout/style';
 import * as S from './style';
+import { FAQData } from '@/types/api/center';
 
 interface ModalProps {
-  title: string;
-  description: string;
-  category?: string;
-  text?: string;
+  qnaId: number;
+  faq: string;
   setIsGobackClicked?: (isOpen: boolean) => void;
   setIsRegistrationClicked?: (isOpen: boolean) => void;
   setIsFaqClicked?: (isOpen: boolean) => void;
 }
 
-function Modal({
-  title,
-  description,
-  category,
-  text,
-  setIsGobackClicked,
-  setIsRegistrationClicked,
-  setIsFaqClicked,
-}: ModalProps) {
+function Modal({ qnaId, faq, setIsGobackClicked, setIsRegistrationClicked, setIsFaqClicked }: ModalProps) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FAQData>();
+
+  const queryClient = useQueryClient();
 
   const router = useRouter();
+
+  const { data: singleFAQ } = useQuery(['faq', qnaId], () => getFAQData(qnaId));
+  const { mutate } = useMutation(putFAQData, {
+    onSuccess(data) {
+      queryClient.setQueryData(['faq', qnaId], data);
+      window.location.reload();
+    },
+  });
+
   const [isInputEditing, setIsInputEditing] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(category);
+  const [selectedCategory, setSelectedCategory] = useState(singleFAQ?.data.qnaCategory);
 
   const selectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedCategory(e.currentTarget.innerText);
@@ -45,22 +48,22 @@ function Modal({
   };
 
   const closeHandler = () => {
-    if (title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
-    else if (title === '등록' && setIsRegistrationClicked) {
+    if (singleFAQ?.data.title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
+    else if (singleFAQ?.data.title === '등록' && setIsRegistrationClicked) {
       setIsRegistrationClicked(false);
-    } else if (title === 'FAQ' && setIsFaqClicked) {
+    } else if (faq && setIsFaqClicked) {
       setIsFaqClicked(false);
     }
   };
 
   const mainHandler = () => {
-    if (title === '돌아가기') router.push('/center');
-    else if (title === 'FAQ') setIsInputEditing(true);
+    if (singleFAQ?.data.title === '돌아가기') router.push('/center');
+    else if (faq) setIsInputEditing(true);
   };
 
   let transformedCategory;
-  if (title === 'FAQ') {
-    switch (category) {
+  if (faq) {
+    switch (singleFAQ?.data.qnaCategory) {
       case 'PRICE':
         transformedCategory = '가격';
         break;
@@ -77,15 +80,38 @@ function Modal({
         break;
     }
 
-    const onSubmit = (data) => {
-      console.log(data);
+    const onSubmit = (data: FAQData) => {
+      let transformedCategory;
+      switch (selectedCategory) {
+        case '가격':
+          transformedCategory = 'PRICE';
+          break;
+
+        case '서비스 관련':
+          transformedCategory = 'SERVICE';
+          break;
+
+        case '기타':
+          transformedCategory = 'ETC';
+          break;
+
+        default:
+          break;
+      }
+
+      const formData = {
+        title: data.title,
+        qnaCategory: transformedCategory,
+        contents: data.contents,
+      };
+      mutate({ id: qnaId, faq: formData });
     };
 
     return (
       <S.Overlay>
         <S.Modal>
           <S.ModalHeader>
-            <h2>{title}</h2>
+            <h2>{singleFAQ?.data.title}</h2>
             <button onClick={closeHandler}>
               <Image src="/icons/close-icon.svg" alt="close-icon" width={24} height={24} />
             </button>
@@ -96,7 +122,18 @@ function Modal({
               <S.Info>
                 <div>
                   <dt>제목</dt>
-                  <dd>{isInputEditing ? <input type="text" defaultValue={description} autoFocus /> : description}</dd>
+                  <dd>
+                    {isInputEditing ? (
+                      <input
+                        type="text"
+                        {...register('title', { required: true })}
+                        defaultValue={singleFAQ?.data.title}
+                        autoFocus
+                      />
+                    ) : (
+                      singleFAQ?.data.title
+                    )}
+                  </dd>
                 </div>
 
                 <div>
@@ -109,6 +146,7 @@ function Modal({
                           isDropdownOpen={isDropdownOpen}
                           setIsDropdownOpen={setIsDropdownOpen}
                           selectedCategory={selectedCategory}
+                          qnaCategory={singleFAQ.data.qnaCategory}
                           selectHandler={selectHandler}
                         />
                       </N.FormWrapper>
@@ -120,13 +158,22 @@ function Modal({
 
                 <div>
                   <dt>내용</dt>
-                  <dd>{isInputEditing ? <textarea value={text}></textarea> : text}</dd>
+                  <dd>
+                    {isInputEditing ? (
+                      <textarea
+                        {...register('contents', { required: true })}
+                        defaultValue={singleFAQ?.data.contents}
+                      ></textarea>
+                    ) : (
+                      singleFAQ?.data.contents
+                    )}
+                  </dd>
                 </div>
               </S.Info>
 
               <S.ButtonGroup>
                 <button onClick={closeHandler}>취소</button>
-                <button type="button" onClick={mainHandler}>
+                <button type={faq ? 'submit' : 'button'} onClick={mainHandler}>
                   {isInputEditing ? '적용' : '수정'}
                 </button>
               </S.ButtonGroup>
@@ -136,24 +183,36 @@ function Modal({
               <S.Info>
                 <div>
                   <dt>제목</dt>
-                  <dd>{isInputEditing ? <input type="text" value={description} autoFocus /> : description}</dd>
+                  <dd>
+                    {isInputEditing ? (
+                      <input type="text" defaultValue={singleFAQ?.data.title} autoFocus />
+                    ) : (
+                      singleFAQ?.data.title
+                    )}
+                  </dd>
                 </div>
 
                 <div>
                   <dt>유형</dt>
-                  <dd>{isInputEditing ? '' : transformedCategory}</dd>
+                  <dd>{isInputEditing ? selectedCategory : transformedCategory}</dd>
                 </div>
 
                 <div>
                   <dt>내용</dt>
-                  <dd>{isInputEditing ? <textarea value={text}></textarea> : text}</dd>
+                  <dd>
+                    {isInputEditing ? (
+                      <textarea defaultValue={singleFAQ?.data.contents}></textarea>
+                    ) : (
+                      singleFAQ?.data.contents
+                    )}
+                  </dd>
                 </div>
               </S.Info>
 
               <S.ButtonGroup>
                 <button onClick={closeHandler}>취소</button>
                 <button type="button" onClick={mainHandler}>
-                  {isInputEditing ? '적용' : '수정'}
+                  수정
                 </button>
               </S.ButtonGroup>
             </>
@@ -167,18 +226,18 @@ function Modal({
     <S.Overlay>
       <S.Modal>
         <S.ModalHeader>
-          <h2>{title}</h2>
+          <h2>{singleFAQ?.data.title}</h2>
           <button onClick={closeHandler}>
             <Image src="/icons/close-icon.svg" alt="close-icon" width={24} height={24} />
           </button>
         </S.ModalHeader>
 
-        <p>{description}</p>
+        <p>{singleFAQ?.data.contents}</p>
 
         <S.ButtonGroup>
           <button onClick={closeHandler}>취소</button>
-          <button type={title === '등록' ? 'submit' : 'button'} onClick={mainHandler}>
-            {title}
+          <button type={singleFAQ?.data.title === '등록' ? 'submit' : 'button'} onClick={mainHandler}>
+            {singleFAQ?.data.title}
           </button>
         </S.ButtonGroup>
       </S.Modal>

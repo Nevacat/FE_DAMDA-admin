@@ -36,7 +36,13 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
 
           <G.Tbody>
             {faqResponse?.map((item: FAQResponse) => (
-              <FAQItem key={item.qnaId} {...item} mutate={mutate} />
+              <FAQItem
+                key={item.qnaId}
+                qnaId={item.qnaId}
+                title={item.title}
+                qnaCategory={item.qnaCategory}
+                mutate={mutate}
+              />
             ))}
           </G.Tbody>
         </G.Table>
