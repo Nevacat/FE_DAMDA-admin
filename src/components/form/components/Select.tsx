@@ -6,9 +6,10 @@ import { AiOutlineDown } from 'react-icons/ai';
 import { motion, Variants } from 'framer-motion';
 import ChangeButton from '@/components/form/components/ChangeButton';
 import TitleEdit from '@/components/form/components/TitleEdit';
-import { AdminForm } from '@/types/api/form';
+import { AdminForm, CategoryList } from '@/types/api/form';
 import { useMutation } from '@tanstack/react-query';
-import { putForm } from '@/api/form';
+import { deleteCategory, putForm } from '@/api/form';
+import Delete from '@/components/form/components/svg/delete';
 
 const variants: Variants = {
   hover: {
@@ -19,13 +20,19 @@ const variants: Variants = {
 function Select({ formData, refetch }: FormSelectProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const { mutate } = useMutation(putForm, {
     onSuccess: () => {
       refetch();
       setIsTitleEdit(false);
     },
   });
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const { mutate: deleteCategoryHandle } = useMutation(deleteCategory, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -46,6 +53,15 @@ function Select({ formData, refetch }: FormSelectProps) {
     }
   };
 
+  const onDeleteClick = (category: CategoryList) => {
+    const value = confirm('ㄹ?ㅇ?');
+
+    if (value) {
+      const categoryNumber = category.id;
+      deleteCategoryHandle({ categoryNumber });
+    }
+  };
+
   return (
     <FormSelectWrapper>
       <div className="header">
@@ -63,6 +79,9 @@ function Select({ formData, refetch }: FormSelectProps) {
         {formData.categoryList?.map((category, index) => (
           <motion.span key={index} variants={variants} whileHover="hover">
             {category.category}
+            <div onClick={() => onDeleteClick(category)}>
+              <Delete />
+            </div>
           </motion.span>
         ))}
       </div>
