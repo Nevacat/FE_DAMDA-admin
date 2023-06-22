@@ -105,8 +105,10 @@ function Select({ formData, refetch }: FormSelectProps) {
     if (isAddMode) {
       const questionNumber = formData.questionNumber;
       const data = [category];
+      const regEx = formData.questionIdentify === 'SERVICEDURATION' && /([0-9]시간)/gm;
 
       if (category === '') return notify('추가할 항목을 입력해주세요.', 'error');
+      if (regEx && !regEx.test(category)) return notify('형식이 맞지 않습니다 형식은 다음과 같습니다 n시간', 'error');
 
       addCategoryHandle({ data, questionNumber });
     }
