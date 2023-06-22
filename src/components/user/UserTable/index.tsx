@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import * as T from '@/styles/common/table.style';
 import UserItem from '../UserItem';
 import { UserContext } from '@/pages/user';
-import { UserData } from '@/types/api/user';
+import { UserListData } from '@/types/api/user';
 
 function UserTable() {
   const context = useContext(UserContext);
@@ -27,7 +27,7 @@ function UserTable() {
         </T.Thead>
         <T.Tbody>
           {userList ? (
-            userList.data.content.map((user: UserData) => <UserItem key={user.id} user={user} />)
+            userList.map((user: UserListData) => <UserItem key={user.id} user={user} />)
           ) : (
             <tr>
               <td>데이터를 불러오고 있습니다</td>

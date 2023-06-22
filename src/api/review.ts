@@ -11,8 +11,11 @@ export const getReviews = async (page?: number) => {
   return res.data;
 };
 
-export const postReview = async (reservationId: number) => {
-  const res = await instance.post(`/review/auto/${reservationId}`);
+export const postReview = async (
+  reservationId: number,
+  params: { title: string; content: string; berfore?: string[]; after?: string[] },
+) => {
+  const res = await instance.post(`/review/auto/${reservationId}`, { params });
   console.log(res);
   return res.data;
 };

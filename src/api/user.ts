@@ -3,7 +3,7 @@ import { instance } from './instance';
 
 export const getUserList = async (query?: string) => {
   const res = await instance.get<UserListRes>('/member/list', {
-    params: query && { list: query },
+    params: query && { search: query },
   });
   console.log(res);
   return res.data;

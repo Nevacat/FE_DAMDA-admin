@@ -1,4 +1,3 @@
-import { PaginationContainer } from '@/components/common/PaginationContainer/style';
 import { StateButton } from '@/styles/common/StateButton';
 import { TableContainer } from '@/styles/common/table.style';
 import theme from '@/styles/theme';
@@ -44,15 +43,11 @@ export const TableCover = styled(TableContainer)`
   }
 `;
 
-export const PaginationCover = styled(PaginationContainer)`
-  justify-content: center;
-`;
-
 export const Buttons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 12px;
+  justify-content: space-between;
+  padding: 0 20px;
 
   ${StateButton} {
     width: 160px;

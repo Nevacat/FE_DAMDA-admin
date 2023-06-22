@@ -1,4 +1,4 @@
-import { deleteReviewImage } from '@/api/review';
+import { deleteReviewImage, postReview } from '@/api/review';
 import CompletedUserList from '@/components/reviewCreate/CompletedUserList';
 import ReviewCreateLayout from '@/components/reviewCreate/ReviewCreateLayout';
 import useCompletedService from '@/hook/useCompletedService';
@@ -43,7 +43,6 @@ function ReviewCreate() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const getUserList = useCompletedServices((data: ServiceRes) => {
-    console.log(data.data);
     const currentData = data.data;
     // setUsers(currentData.content);
     setUsers([
@@ -114,7 +113,7 @@ function ReviewCreate() {
     } */
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
     const reservationId = user.reservationId;
@@ -122,6 +121,8 @@ function ReviewCreate() {
       ...formData,
       ...images,
     };
+
+    // postReview(reservationId, data)
   };
 
   const onPaging = (selectedPage: number) => {

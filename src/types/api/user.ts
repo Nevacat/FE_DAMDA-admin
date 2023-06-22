@@ -2,14 +2,14 @@ import { ServiceStateType } from '../serviceState';
 
 export interface UserListRes {
   data: {
-    content: UserData[];
+    content: UserListData[];
     total: number;
     first: boolean;
     last: boolean;
   };
 }
 
-export interface UserData {
+export interface UserListData {
   id: number;
   name: string;
   phoneNumber: string;

@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import * as T from '@/styles/common/table.style';
 import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
-import History from '../History';
 import { UserContext } from '@/pages/user';
 import { ServiceState } from '@/types/serviceState';
 import { UserData } from '@/types/api/user';
