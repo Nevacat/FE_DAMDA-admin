@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { CenterData, FAQResponse } from '@/types/api/center';
 import { StateButton } from '@/styles/common/StateButton';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+
+import Modal from '../Modal';
 
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
@@ -14,6 +16,8 @@ interface CenterLayoutProps {
 }
 
 function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
+  const [isFaqClicked, setIsFaqClicked] = useState(false);
+
   const deleteFAQHandler = (id: number) => {
     mutate(id);
   };
@@ -39,7 +43,7 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
 
           {faqResponse?.map((item: FAQResponse) => (
             <G.Tbody key={item.qnaId}>
-              <G.Tr>
+              <G.Tr onDoubleClick={() => setIsFaqClicked(true)}>
                 <G.Td>{item.qnaId}</G.Td>
                 <G.Td>{item.title}</G.Td>
                 <G.Td>{item.contents}</G.Td>
@@ -49,6 +53,10 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
                   </StateButton>
                 </G.Td>
               </G.Tr>
+
+              {isFaqClicked && (
+                <Modal title="FAQ" description={item.title} category={item.qnaCategory} text={item.contents} />
+              )}
             </G.Tbody>
           ))}
         </G.Table>

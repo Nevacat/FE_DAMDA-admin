@@ -48,6 +48,26 @@ export const ModalHeader = styled.header`
   }
 `;
 
+export const Info = styled.dl`
+  padding: 16px 30px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-of-type) {
+      margin-bottom: 16px;
+    }
+
+    dt {
+      margin-right: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      color: ${theme.colors.yolda_black_1};
+    }
+  }
+`;
+
 export const ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-end;
