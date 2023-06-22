@@ -10,7 +10,9 @@ import { AdminForm } from '@/types/api/form';
 
 function String({ formData, refetch }: FormInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
+  const [isPlaceholderEdit, setIsPlaceholderEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
+  const [placeHolder, setPlaceHolder] = useState(formData.placeHolder);
   const { mutate } = useMutation(putForm, {
     onSuccess: () => {
       refetch();
@@ -18,7 +20,8 @@ function String({ formData, refetch }: FormInputProps) {
     },
   });
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const isEdittable =
+  const placeHolderRef = useRef<HTMLInputElement | null>(null);
+  const isEditable =
     formData.questionIdentify === 'SERVICEDURATION' ||
     formData.questionIdentify === 'LEARNEDROUTE' ||
     formData.questionIdentify === 'AFEWSERVINGS';
@@ -27,12 +30,14 @@ function String({ formData, refetch }: FormInputProps) {
     setTitle(e.target.value);
   };
 
+  const onPlaceHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaceHolder(e.target.value);
+  };
+
   const onEditMode = () => {
     setIsTitleEdit((prev) => !prev);
 
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
+    setTimeout(() => inputRef.current?.focus(), 100);
 
     if (isTitleEdit) {
       const copiedData: AdminForm = { ...formData };
@@ -42,6 +47,21 @@ function String({ formData, refetch }: FormInputProps) {
     }
   };
 
+  const onPlaceHolderEdit = () => {
+    setIsPlaceholderEdit((prev) => !prev);
+
+    setTimeout(() => placeHolderRef.current?.focus(), 100);
+
+    if (isPlaceholderEdit) {
+      const copiedData: AdminForm = { ...formData };
+      copiedData.placeHolder = placeHolder;
+
+      mutate({ data: copiedData });
+    }
+  };
+
+  if (formData.questionIdentify === 'RESERVATIONREQUEST') return <></>;
+
   return (
     <FormInputWrapper>
       <div className="header">
@@ -50,10 +70,19 @@ function String({ formData, refetch }: FormInputProps) {
       </div>
       <div className="input-wrapper">
         <span>{convertIdentifierToKorean(formData.questionIdentify)}</span>
-        <input type="text" placeholder={formData.placeHolder} />
+        <div>
+          <input
+            type="text"
+            value={placeHolder}
+            disabled={!isPlaceholderEdit}
+            ref={placeHolderRef}
+            onChange={onPlaceHolderChange}
+          />
+          <TitleEdit isTitleEdit={isPlaceholderEdit} onEditMode={onPlaceHolderEdit} />
+        </div>
       </div>
 
-      <div className="button">{isEdittable && <ChangeButton formData={formData} refetch={refetch} />}</div>
+      <div className="button">{isEditable && <ChangeButton formData={formData} refetch={refetch} />}</div>
     </FormInputWrapper>
   );
 }
