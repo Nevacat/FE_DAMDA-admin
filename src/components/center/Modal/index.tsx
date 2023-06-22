@@ -11,15 +11,26 @@ interface ModalProps {
   text?: string;
   setIsGobackClicked?: (isOpen: boolean) => void;
   setIsRegistrationClicked?: (isOpen: boolean) => void;
+  setIsFaqClicked: (isOpen: boolean) => void;
 }
 
-function Modal({ title, description, category, text, setIsGobackClicked, setIsRegistrationClicked }: ModalProps) {
+function Modal({
+  title,
+  description,
+  category,
+  text,
+  setIsGobackClicked,
+  setIsRegistrationClicked,
+  setIsFaqClicked,
+}: ModalProps) {
   const router = useRouter();
 
   const closeHandler = () => {
     if (title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
     else if (title === '등록' && setIsRegistrationClicked) {
       setIsRegistrationClicked(false);
+    } else if (title === 'FAQ' && setIsFaqClicked) {
+      setIsFaqClicked(false);
     }
   };
 
