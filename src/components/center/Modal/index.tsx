@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import * as S from './style';
+import { useRouter } from 'next/router';
 
 interface ModalProps {
   title: string;
@@ -11,11 +12,17 @@ interface ModalProps {
 }
 
 function Modal({ title, description, setIsGobackClicked, setIsRegistrationClicked }: ModalProps) {
+  const router = useRouter();
+
   const closeHandler = () => {
     if (title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
     else if (title === '등록' && setIsRegistrationClicked) {
       setIsRegistrationClicked(false);
     }
+  };
+
+  const mainHandler = () => {
+    if (title === '돌아가기') router.push('/center');
   };
 
   return (
@@ -32,7 +39,9 @@ function Modal({ title, description, setIsGobackClicked, setIsRegistrationClicke
 
         <S.ButtonGroup>
           <button onClick={closeHandler}>취소</button>
-          <button>{title}</button>
+          <button type={title === '등록' ? 'submit' : 'button'} onClick={mainHandler}>
+            {title}
+          </button>
         </S.ButtonGroup>
       </S.Modal>
     </S.Overlay>
