@@ -1,16 +1,16 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CenterData } from '@/types/api/center';
+import { CenterData, FAQResponse } from '@/types/api/center';
 
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 
 interface CenterLayoutProps {
-  data: CenterData[];
+  faqResponse: CenterData[];
 }
 
-function CenterLayout({ data }: CenterLayoutProps) {
+function CenterLayout({ faqResponse }: CenterLayoutProps) {
   return (
     <div>
       <S.Title>고객 센터</S.Title>
@@ -21,14 +21,24 @@ function CenterLayout({ data }: CenterLayoutProps) {
 
       <G.TableContainer>
         <G.Table>
-          <G.Tr>
-            <G.Th scope="col">순번</G.Th>
-            <G.Th scope="col">제목</G.Th>
-            <G.Th scope="col">유형</G.Th>
-            <G.Th scope="col">action</G.Th>
-          </G.Tr>
+          <thead>
+            <G.Tr>
+              <G.Th scope="col">순번</G.Th>
+              <G.Th scope="col">제목</G.Th>
+              <G.Th scope="col">유형</G.Th>
+              <G.Th scope="col">action</G.Th>
+            </G.Tr>
+          </thead>
 
-          <G.Tbody></G.Tbody>
+          {faqResponse?.map((item: FAQResponse) => (
+            <G.Tbody key={item.qnaId}>
+              <tr>
+                <td>{item.qnaId}</td>
+                <td>{item.title}</td>
+                <td>{item.contents}</td>
+              </tr>
+            </G.Tbody>
+          ))}
         </G.Table>
       </G.TableContainer>
     </div>

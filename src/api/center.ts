@@ -2,7 +2,7 @@ import { CenterData, FAQData } from '@/types/api/center';
 import { instance } from './instance';
 
 export const getCenterData = async () => {
-  const response = await instance.get<CenterData[]>('/member/qna');
+  const response = await instance.get('/member/qna');
   return response.data;
 };
 

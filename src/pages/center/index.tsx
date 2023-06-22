@@ -7,14 +7,14 @@ import CenterLayout from '@/components/center/CenterLayout';
 import * as S from '@/styles/pages/center.style';
 
 function CenterPage() {
-  const { data: centerData } = useQuery({
+  const { data: faqResponse } = useQuery({
     queryKey: ['faq'],
     queryFn: getCenterData,
   });
 
-  if (!centerData || centerData.length < 1) return <>Not Found Center Data</>;
+  if (!faqResponse || faqResponse.length < 1) return <>Not Found Center Data</>;
 
-  return <CenterLayout data={centerData} />;
+  return <CenterLayout faqResponse={faqResponse.data} />;
 }
 
 export default CenterPage;

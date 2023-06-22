@@ -10,3 +10,7 @@ export interface FAQData {
   qnaCategory: string | undefined;
   contents: string;
 }
+
+export interface FAQResponse extends FAQData {
+  qnaId: number;
+}
