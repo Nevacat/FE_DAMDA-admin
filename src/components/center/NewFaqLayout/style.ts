@@ -12,6 +12,8 @@ export const FormContainer = styled.div`
 `;
 
 export const FormWrapper = styled.div`
+  display: flex;
+
   &:not(:last-of-type) {
     margin-bottom: 24px;
   }
@@ -69,5 +71,25 @@ export const FormWrapper = styled.div`
     background-color: #ffffff;
     outline: none;
     resize: none;
+  }
+`;
+
+export const StyleWrapper = styled.div<{ isOpen: boolean }>`
+  position: relative;
+
+  svg {
+    transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+  }
+`;
+
+export const Options = styled.div`
+  position: absolute;
+  top: 42px;
+  left: 0;
+  width: 480px;
+
+  button:hover {
+    color: #ffffff;
+    background-color: ${theme.colors.yolda_gray_5};
   }
 `;
