@@ -6,21 +6,32 @@ import * as S from './style';
 interface ModalProps {
   title: string;
   description: string;
+  setIsGobackClicked?: (isOpen: boolean) => void;
+  setIsRegistrationClicked?: (isOpen: boolean) => void;
 }
 
-function Modal({ title, description }: ModalProps) {
+function Modal({ title, description, setIsGobackClicked, setIsRegistrationClicked }: ModalProps) {
+  const closeHandler = () => {
+    if (title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
+    else if (title === '등록' && setIsRegistrationClicked) {
+      setIsRegistrationClicked(false);
+    }
+  };
+
   return (
     <S.Overlay>
       <S.Modal>
         <S.ModalHeader>
           <h2>{title}</h2>
-          <Image src="/icons/close-icon.svg" alt="close-icon" width={24} height={24} />
+          <button onClick={closeHandler}>
+            <Image src="/icons/close-icon.svg" alt="close-icon" width={24} height={24} />
+          </button>
         </S.ModalHeader>
 
         <p>{description}</p>
 
         <S.ButtonGroup>
-          <button>취소</button>
+          <button onClick={closeHandler}>취소</button>
           <button>{title}</button>
         </S.ButtonGroup>
       </S.Modal>

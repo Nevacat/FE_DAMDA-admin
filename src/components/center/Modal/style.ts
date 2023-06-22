@@ -42,6 +42,10 @@ export const ModalHeader = styled.header`
   height: 48px;
   padding: 0 24px;
   background-color: ${theme.colors.yolda_gray_7};
+
+  button {
+    background-color: transparent !important;
+  }
 `;
 
 export const ButtonGroup = styled.div`

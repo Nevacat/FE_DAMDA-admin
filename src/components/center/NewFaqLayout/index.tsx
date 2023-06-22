@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import * as S from './style';
 import Modal from '../Modal';
+
+import * as S from './style';
 
 function NewFaqLayout() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,9 +66,16 @@ function NewFaqLayout() {
           <Modal
             title="돌아가기"
             description="이전 화면으로 돌아가면 현재 화면에서 작성중인 내용이 사라집니다. 이전 화면으로 돌아가시겠습니까?"
+            setIsGobackClicked={setIsGobackClicked}
           />
         )}
-        {isRegistrationClicked && <Modal title="등록" description="선택하신 항목을 등록하시겠습니까?" />}
+        {isRegistrationClicked && (
+          <Modal
+            title="등록"
+            description="선택하신 항목을 등록하시겠습니까?"
+            setIsRegistrationClicked={setIsRegistrationClicked}
+          />
+        )}
       </S.FormContainer>
     </div>
   );
