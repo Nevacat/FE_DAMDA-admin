@@ -7,6 +7,6 @@ export interface CenterData {
 
 export interface FAQData {
   title: string;
-  qnaCategory: string;
+  qnaCategory: string | undefined;
   contents: string;
 }

@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { IoMdArrowDropdown } from 'react-icons/io';
 import { useForm } from 'react-hook-form';
+import { FAQData } from '@/types/api/center';
+import { useRouter } from 'next/router';
+import { UseMutateFunction } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import Modal from '../Modal';
 
+import { IoMdArrowDropdown } from 'react-icons/io';
 import * as S from './style';
-import { FAQData } from '@/types/api/center';
 
-function NewFaqLayout() {
+interface NewFaqLayoutProps {
+  mutate: UseMutateFunction<boolean, AxiosError, FAQData>;
+}
+
+function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<FAQData>();
+
+  const router = useRouter();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isGobackClicked, setIsGobackClicked] = useState(false);
@@ -59,8 +68,10 @@ function NewFaqLayout() {
       qnaCategory: transformedCategory,
       contents: data.contents,
     };
+    mutate(formData);
 
-    // 폼 데이터를 처리하는 로직 작성
+    // api 요청 작성
+    router.push('/center');
     console.log(formData);
   };
 
