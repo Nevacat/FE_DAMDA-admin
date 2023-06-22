@@ -6,8 +6,8 @@ import { UseMutateFunction } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import Modal from '../Modal';
+import CategoryDropdown from '../CategoryDropdown';
 
-import { IoMdArrowDropdown } from 'react-icons/io';
 import * as S from './style';
 
 interface NewFaqLayoutProps {
@@ -95,29 +95,12 @@ function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
 
         <S.FormWrapper>
           <strong className="category">유형</strong>
-
-          <S.StyleWrapper isOpen={isDropdownOpen}>
-            <div style={{ position: 'relative', display: 'inline-block' }}>
-              <button type="button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                {selectedCategory || '유형을 선택해주세요.'}
-              </button>
-              <IoMdArrowDropdown />
-            </div>
-
-            {isDropdownOpen && (
-              <S.Options>
-                <button type="button" onClick={selectHandler}>
-                  가격
-                </button>
-                <button type="button" onClick={selectHandler}>
-                  서비스 관련
-                </button>
-                <button type="button" onClick={selectHandler}>
-                  기타
-                </button>
-              </S.Options>
-            )}
-          </S.StyleWrapper>
+          <CategoryDropdown
+            isDropdownOpen={isDropdownOpen}
+            setIsDropdownOpen={setIsDropdownOpen}
+            selectedCategory={selectedCategory}
+            selectHandler={selectHandler}
+          />
         </S.FormWrapper>
 
         <S.FormWrapper>
