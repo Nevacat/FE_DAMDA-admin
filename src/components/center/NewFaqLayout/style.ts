@@ -11,7 +11,7 @@ export const FormContainer = styled.form`
   padding-left: 77px;
 `;
 
-export const FormWrapper = styled.div<{ size: string | undefined }>`
+export const FormWrapper = styled.div<{ size?: string | undefined }>`
   display: flex;
   margin-bottom: ${({ size }) => size && '0'};
 

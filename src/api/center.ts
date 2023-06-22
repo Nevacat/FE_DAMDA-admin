@@ -16,12 +16,12 @@ export const deleteFAQData = async (id: number) => {
   return response.data;
 };
 
-export const getFAQData = async (id: number) => {
+export const getFAQData = async (id: number | undefined) => {
   const response = await instance.get(`/member/qna/${id}`);
   return response.data;
 };
 
-export const putFAQData = async ({ id, faq }: { id: number; faq: FAQData }) => {
+export const putFAQData = async ({ id, faq }: { id: number | undefined; faq: FAQData }) => {
   const response = await instance.put<boolean>(`/admin/qna/${id}`, faq);
   return response.data;
 };

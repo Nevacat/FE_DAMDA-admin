@@ -12,14 +12,24 @@ import * as S from './style';
 import { FAQData } from '@/types/api/center';
 
 interface ModalProps {
-  qnaId: number;
-  faq: string;
+  title: string;
+  description: string;
+  qnaId?: number;
+  faq?: string;
   setIsGobackClicked?: (isOpen: boolean) => void;
   setIsRegistrationClicked?: (isOpen: boolean) => void;
   setIsFaqClicked?: (isOpen: boolean) => void;
 }
 
-function Modal({ qnaId, faq, setIsGobackClicked, setIsRegistrationClicked, setIsFaqClicked }: ModalProps) {
+function Modal({
+  title,
+  description,
+  qnaId,
+  faq,
+  setIsGobackClicked,
+  setIsRegistrationClicked,
+  setIsFaqClicked,
+}: ModalProps) {
   const {
     register,
     handleSubmit,
@@ -48,8 +58,8 @@ function Modal({ qnaId, faq, setIsGobackClicked, setIsRegistrationClicked, setIs
   };
 
   const closeHandler = () => {
-    if (singleFAQ?.data.title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
-    else if (singleFAQ?.data.title === '등록' && setIsRegistrationClicked) {
+    if (title === '돌아가기' && setIsGobackClicked) setIsGobackClicked(false);
+    else if (title === '등록' && setIsRegistrationClicked) {
       setIsRegistrationClicked(false);
     } else if (faq && setIsFaqClicked) {
       setIsFaqClicked(false);
@@ -57,7 +67,7 @@ function Modal({ qnaId, faq, setIsGobackClicked, setIsRegistrationClicked, setIs
   };
 
   const mainHandler = () => {
-    if (singleFAQ?.data.title === '돌아가기') router.push('/center');
+    if (title === '돌아가기') router.push('/center');
     else if (faq) setIsInputEditing(true);
   };
 
@@ -226,18 +236,18 @@ function Modal({ qnaId, faq, setIsGobackClicked, setIsRegistrationClicked, setIs
     <S.Overlay>
       <S.Modal>
         <S.ModalHeader>
-          <h2>{singleFAQ?.data.title}</h2>
+          <h2>{title}</h2>
           <button onClick={closeHandler}>
             <Image src="/icons/close-icon.svg" alt="close-icon" width={24} height={24} />
           </button>
         </S.ModalHeader>
 
-        <p>{singleFAQ?.data.contents}</p>
+        <p>{description}</p>
 
         <S.ButtonGroup>
           <button onClick={closeHandler}>취소</button>
-          <button type={singleFAQ?.data.title === '등록' ? 'submit' : 'button'} onClick={mainHandler}>
-            {singleFAQ?.data.title}
+          <button type={title === '등록' ? 'submit' : 'button'} onClick={mainHandler}>
+            {title}
           </button>
         </S.ButtonGroup>
       </S.Modal>

@@ -27,7 +27,7 @@ function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isGobackClicked, setIsGobackClicked] = useState(false);
   const [isRegistrationClicked, setIsRegistrationClicked] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('유형을 선택해주세요.');
   const [isDisabled, setIsDisabled] = useState(true);
 
   const gobackHandler = () => {
@@ -76,7 +76,7 @@ function NewFaqLayout({ mutate }: NewFaqLayoutProps) {
   };
 
   useEffect(() => {
-    if (watch('title').length !== 0 && selectedCategory !== '' && watch('contents').length !== 0) {
+    if (watch('title').length !== 0 && selectedCategory !== '유형을 선택해주세요.' && watch('contents').length !== 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
