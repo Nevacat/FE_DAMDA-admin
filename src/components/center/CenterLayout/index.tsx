@@ -1,17 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { CenterData, FAQResponse } from '@/types/api/center';
+import { StateButton } from '@/styles/common/StateButton';
+import { UseMutateFunction } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
-import { StateButton } from '@/styles/common/StateButton';
 
 interface CenterLayoutProps {
   faqResponse: CenterData[];
+  mutate: UseMutateFunction<boolean, AxiosError, number>;
 }
 
-function CenterLayout({ faqResponse }: CenterLayoutProps) {
+function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
+  const deleteFAQHandler = (id: number) => {
+    mutate(id);
+  };
+
   return (
     <div>
       <S.Title>고객 센터</S.Title>
@@ -38,7 +44,9 @@ function CenterLayout({ faqResponse }: CenterLayoutProps) {
                 <G.Td>{item.title}</G.Td>
                 <G.Td>{item.contents}</G.Td>
                 <G.Td>
-                  <StateButton state="red">삭제</StateButton>
+                  <StateButton state="red" onClick={() => deleteFAQHandler(item.qnaId)}>
+                    삭제
+                  </StateButton>
                 </G.Td>
               </G.Tr>
             </G.Tbody>

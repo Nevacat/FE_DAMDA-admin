@@ -1,4 +1,4 @@
-import { CenterData, FAQData } from '@/types/api/center';
+import { FAQData } from '@/types/api/center';
 import { instance } from './instance';
 
 export const getCenterData = async () => {
@@ -8,5 +8,10 @@ export const getCenterData = async () => {
 
 export const postFAQData = async (formData: FAQData) => {
   const response = await instance.post<boolean>('/admin/qna', formData);
+  return response.data;
+};
+
+export const deleteFAQData = async (id: number) => {
+  const response = await instance.delete<boolean>(`/admin/qna/${id}`);
   return response.data;
 };
