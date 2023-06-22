@@ -5,6 +5,7 @@ import { CenterData, FAQResponse } from '@/types/api/center';
 
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
+import { StateButton } from '@/styles/common/StateButton';
 
 interface CenterLayoutProps {
   faqResponse: CenterData[];
@@ -32,11 +33,14 @@ function CenterLayout({ faqResponse }: CenterLayoutProps) {
 
           {faqResponse?.map((item: FAQResponse) => (
             <G.Tbody key={item.qnaId}>
-              <tr>
-                <td>{item.qnaId}</td>
-                <td>{item.title}</td>
-                <td>{item.contents}</td>
-              </tr>
+              <G.Tr>
+                <G.Td>{item.qnaId}</G.Td>
+                <G.Td>{item.title}</G.Td>
+                <G.Td>{item.contents}</G.Td>
+                <G.Td>
+                  <StateButton state="red">삭제</StateButton>
+                </G.Td>
+              </G.Tr>
             </G.Tbody>
           ))}
         </G.Table>
