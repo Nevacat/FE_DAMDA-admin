@@ -8,7 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { putCategoryList, putForm } from '@/api/form';
 import TitleEdit from '@/components/form/components/TitleEdit';
 import { AdminForm } from '@/types/api/form';
-
+import { toast, ToastContainer, TypeOptions } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
   const [isAddClicked, setIsAddClicked] = useState(false);
   const [input, setInput] = useState('');
@@ -22,7 +23,7 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
   });
   const inputRef = useRef<HTMLInputElement | null>(null);
   const addInput = useRef<HTMLInputElement | null>(null);
-
+  const notify = (message: string, type: TypeOptions) => toast(message, { type });
   const { mutate } = useMutation(putCategoryList, {
     onSuccess: () => {
       refetch();
@@ -41,9 +42,15 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
     }, 100);
 
     if (isAddClicked) {
+      const questionNumber = formData.questionNumber;
+      const regEx = formData.questionIdentify === 'SERVICEDURATION' && /([0-9]시간)/gm;
+
+      if (input === '') return notify('카테고리를 입력해주세요', 'error');
+      if (regEx && !regEx.test(input)) return notify('형식이 맞지 않습니다 형식은 다음과 같습니다 n시간', 'error');
+
       mutate({
         data: [input],
-        questionNumber: formData.questionNumber,
+        questionNumber,
       });
     }
   };
@@ -73,6 +80,7 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
 
   return (
     <FormRadioWrapper>
+      <ToastContainer />
       {dragChild}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onInputChange} ref={inputRef} /> : <h1>{title}</h1>}
