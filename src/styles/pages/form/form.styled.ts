@@ -72,10 +72,29 @@ export const FormAddressWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
 
+  .header {
+    width: 300px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
   h1 {
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .address-list {
@@ -220,6 +239,9 @@ export const FormSelectWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     span {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 12px;
       border: 2px solid transparent;
       border-radius: 5px;
@@ -250,6 +272,31 @@ export const FormRadioWrapper = styled.div`
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
+  }
+
+  .header {
+    width: 300px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .radio-wrapper {
@@ -439,6 +486,14 @@ export const FormInputWrapper = styled.div`
       &:focus {
         outline: none;
       }
+
+      &:disabled {
+        background-color: #fff;
+      }
+    }
+
+    div {
+      display: flex;
     }
   }
 
