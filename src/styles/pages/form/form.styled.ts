@@ -238,6 +238,7 @@ export const FormSelectWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    overflow-x: hidden;
     span {
       display: flex;
       justify-content: space-between;
@@ -254,6 +255,17 @@ export const FormSelectWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
     border-top: 0;
     border-radius: 0 0 5px 5px;
+  }
+
+  .plus-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .add {
+    padding: 12px;
+    width: 100%;
   }
 
   .button {
