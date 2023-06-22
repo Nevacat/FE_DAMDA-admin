@@ -8,28 +8,55 @@ import DateInput from '@/components/form/components/DateInput';
 import String from '@/components/form/components/String';
 
 function FormElements({ formData, refetch }: FormElementsProps) {
-  if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} refetch={refetch} />;
+  const dragComponent = <p>drag</p>;
+
+  if (formData.questionIdentify === 'ADDRESS')
+    return (
+      <AddressInput formData={formData} refetch={refetch}>
+        {dragComponent}
+      </AddressInput>
+    );
 
   const isDuration =
     formData.questionIdentify === 'SERVICEDURATION' ? <div className="duration">{formData.placeHolder}</div> : null;
 
   switch (formData.questionType) {
     case 'TITLE':
-      return <Title formData={formData} refetch={refetch} />;
+      return (
+        <Title formData={formData} refetch={refetch}>
+          {dragComponent}
+        </Title>
+      );
     case 'STRING':
-      return <String formData={formData} refetch={refetch} />;
+      return (
+        <String formData={formData} refetch={refetch}>
+          {dragComponent}
+        </String>
+      );
     case 'ADDRESS':
-      return <AddressInput formData={formData} refetch={refetch} />;
+      return (
+        <AddressInput formData={formData} refetch={refetch}>
+          {dragComponent}
+        </AddressInput>
+      );
     case 'SELECT':
-      return <Select formData={formData} refetch={refetch} />;
+      return (
+        <Select formData={formData} refetch={refetch}>
+          {dragComponent}
+        </Select>
+      );
     case 'RADIO':
       return (
-        <Radio formData={formData} refetch={refetch}>
+        <Radio formData={formData} refetch={refetch} dragChild={dragComponent}>
           {isDuration}
         </Radio>
       );
     case 'DATE':
-      return <DateInput formData={formData} refetch={refetch} />;
+      return (
+        <DateInput formData={formData} refetch={refetch}>
+          {dragComponent}
+        </DateInput>
+      );
   }
 }
 
