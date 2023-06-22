@@ -1,8 +1,14 @@
 import React from 'react';
+import { CenterData } from '@/types/api/center';
+
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 
-function CenterLayout() {
+interface CenterLayoutProps {
+  data: CenterData[];
+}
+
+function CenterLayout({ data }: CenterLayoutProps) {
   return (
     <div>
       <S.Title>고객 센터</S.Title>
