@@ -1,7 +1,8 @@
+import NewFaqLayout from '@/components/center/NewFaqLayout';
 import React from 'react';
 
-function NewFaq() {
-  return <div>NewFaq</div>;
+function NewFaqPage() {
+  return <NewFaqLayout />;
 }
 
-export default NewFaq;
+export default NewFaqPage;
