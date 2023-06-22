@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Modal from '../Modal';
 
 import * as S from './style';
+import { FAQData } from '@/types/api/center';
 
 function NewFaqLayout() {
   const {
@@ -12,7 +13,7 @@ function NewFaqLayout() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FAQData>();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isGobackClicked, setIsGobackClicked] = useState(false);
@@ -28,14 +29,39 @@ function NewFaqLayout() {
     setIsRegistrationClicked(true);
   };
 
-  const selectHandler = (e) => {
+  const selectHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedCategory(e.currentTarget.innerText);
     setIsDropdownOpen(false);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FAQData) => {
+    let transformedCategory;
+
+    switch (selectedCategory) {
+      case '가격':
+        transformedCategory = 'PRICE';
+        break;
+
+      case '서비스 관련':
+        transformedCategory = 'SERVICE';
+        break;
+
+      case '기타':
+        transformedCategory = 'ETC';
+        break;
+
+      default:
+        break;
+    }
+
+    const formData = {
+      title: data.title,
+      qnaCategory: transformedCategory,
+      contents: data.contents,
+    };
+
     // 폼 데이터를 처리하는 로직 작성
-    console.log(data);
+    console.log(formData);
   };
 
   useEffect(() => {
