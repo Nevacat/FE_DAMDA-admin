@@ -1,8 +1,9 @@
 import React from 'react';
+import CenterLayout from '@/components/center/CenterLayout';
 import * as S from '@/styles/pages/center.style';
 
 function CenterPage() {
-  return <div>고객센터</div>;
+  return <CenterLayout />;
 }
 
 export default CenterPage;
