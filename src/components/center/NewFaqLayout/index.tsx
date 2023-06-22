@@ -40,6 +40,11 @@ function NewFaqLayout() {
           <strong className="contents">내용</strong>
           <textarea name="" id="" placeholder="내용을 입력해주세요."></textarea>
         </S.FormWrapper>
+
+        <S.ButtonGroup>
+          <button type="button">이전으로</button>
+          <button type="button">등록하기</button>
+        </S.ButtonGroup>
       </S.FormContainer>
     </div>
   );

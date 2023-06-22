@@ -7,12 +7,13 @@ export const Title = styled.h1`
   ${theme.font.bold_24_135}
 `;
 
-export const FormContainer = styled.div`
+export const FormContainer = styled.form`
   padding-left: 77px;
 `;
 
 export const FormWrapper = styled.div`
   display: flex;
+  margin-bottom: 24px;
 
   &:not(:last-of-type) {
     margin-bottom: 24px;
@@ -91,5 +92,33 @@ export const Options = styled.div`
   button:hover {
     color: #ffffff;
     background-color: ${theme.colors.yolda_gray_5};
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  padding-right: 60px;
+  text-align: right;
+
+  button {
+    width: 81px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+
+    &:first-of-type {
+      color: #fe964a;
+      background-color: #fff0e6;
+    }
+
+    &:last-of-type {
+      color: ${theme.colors.main_blue};
+      background-color: #e5f5ff;
+    }
+
+    &:not(:last-of-type) {
+      margin-right: 20px;
+    }
   }
 `;
