@@ -44,10 +44,26 @@ export const FormListWrapper = styled.div`
 export const Divider = styled.div``;
 
 export const FormTittleWrapper = styled.div`
+  width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
   h1 {
     font-weight: 900;
     font-size: 20px;
     line-height: 135%;
+    word-break: keep-all;
+  }
+  input {
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
@@ -56,10 +72,29 @@ export const FormAddressWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
 
+  .header {
+    width: 300px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
   h1 {
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .address-list {
@@ -154,11 +189,28 @@ export const FormSelectWrapper = styled.div`
   gap: 16px;
   position: relative;
 
+  .header {
+    display: flex;
+    gap: 8px;
+  }
+
   h1 {
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
     color: ${({ theme }) => theme.colors.yolda_black_1};
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .select-wrapper {
@@ -187,6 +239,9 @@ export const FormSelectWrapper = styled.div`
     flex-direction: column;
     align-items: start;
     span {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 12px;
       border: 2px solid transparent;
       border-radius: 5px;
@@ -217,6 +272,31 @@ export const FormRadioWrapper = styled.div`
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
+  }
+
+  .header {
+    width: 300px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 160%;
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .radio-wrapper {
@@ -271,10 +351,31 @@ export const FormRadioWrapper = styled.div`
 `;
 
 export const FormDateInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 390px;
+
+  .header {
+    display: flex;
+    gap: 8px;
+  }
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
   h1 {
     font-weight: 800;
     font-size: 16px;
     line-height: 160%;
+    flex-wrap: wrap;
   }
   .select-wrapper {
     display: flex;
@@ -336,6 +437,23 @@ export const FormInputWrapper = styled.div`
   gap: 16px;
   position: relative;
 
+  .header {
+    display: flex;
+    gap: 8px;
+  }
+
+  input {
+    width: 100%;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 135%;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   h1 {
     font-weight: 800;
     font-size: 16px;
@@ -368,6 +486,14 @@ export const FormInputWrapper = styled.div`
       &:focus {
         outline: none;
       }
+
+      &:disabled {
+        background-color: #fff;
+      }
+    }
+
+    div {
+      display: flex;
     }
   }
 
@@ -423,4 +549,8 @@ export const FormChangeModal = styled(motion.div)`
       }
     }
   }
+`;
+
+export const EditButtonWrapper = styled(motion.div)`
+  height: fit-content;
 `;

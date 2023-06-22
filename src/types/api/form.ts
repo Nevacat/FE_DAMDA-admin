@@ -40,6 +40,9 @@ export interface putCategory {
   data: string | string[];
 }
 
+export interface DeleteCategory {
+  categoryNumber: number;
+}
 export interface putFormType {
   data: AdminForm;
 }
