@@ -11,9 +11,9 @@ export const FormContainer = styled.form`
   padding-left: 77px;
 `;
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.div<{ size: string | undefined }>`
   display: flex;
-  margin-bottom: 24px;
+  margin-bottom: ${({ size }) => size && '0'};
 
   &:not(:last-of-type) {
     margin-bottom: 24px;

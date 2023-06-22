@@ -96,15 +96,16 @@ function Modal({
               <S.Info>
                 <div>
                   <dt>제목</dt>
-                  <dd>{isInputEditing ? <input type="text" value={description} autoFocus /> : description}</dd>
+                  <dd>{isInputEditing ? <input type="text" defaultValue={description} autoFocus /> : description}</dd>
                 </div>
 
                 <div>
                   <dt>유형</dt>
                   <dd>
                     {isInputEditing ? (
-                      <N.FormWrapper>
+                      <N.FormWrapper size="small">
                         <CategoryDropdown
+                          size="small"
                           isDropdownOpen={isDropdownOpen}
                           setIsDropdownOpen={setIsDropdownOpen}
                           selectedCategory={selectedCategory}

@@ -4,6 +4,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import * as S from './style';
 
 interface CategoryDropdownProps {
+  size?: string;
   isDropdownOpen: boolean;
   setIsDropdownOpen: (isOpen: boolean) => void;
   selectedCategory: string | undefined;
@@ -11,16 +12,35 @@ interface CategoryDropdownProps {
 }
 
 function CategoryDropdown({
+  size,
   isDropdownOpen,
   setIsDropdownOpen,
   selectedCategory,
   selectHandler,
 }: CategoryDropdownProps) {
+  let transformedCategory;
+  switch (selectedCategory) {
+    case 'PRICE':
+      transformedCategory = '가격';
+      break;
+
+    case 'SERVICE':
+      transformedCategory = '서비스 관련';
+      break;
+
+    case 'ETC':
+      transformedCategory = '기타';
+      break;
+
+    default:
+      break;
+  }
+
   return (
-    <S.StyleWrapper isOpen={isDropdownOpen}>
+    <S.StyleWrapper isOpen={isDropdownOpen} size={size}>
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <button type="button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          {selectedCategory || '유형을 선택해주세요.'}
+          {transformedCategory || selectedCategory}
         </button>
         <IoMdArrowDropdown />
       </div>
