@@ -4,98 +4,68 @@ import ReviewCreateLayout from '@/components/reviewCreate/ReviewCreateLayout';
 import useCompletedService from '@/hook/useCompletedService';
 import useCompletedServices from '@/hook/useCompletedServices';
 import { CompletedServiceData, CompletedServiceRes, ServiceData, ServiceRes } from '@/types/api/service';
+import { BeforeAfter, FormDataType, ImageFormsType, ImagesType, UploaderProps } from '@/types/components/createReview';
+import { useRouter } from 'next/router';
 import React, { createContext, useState } from 'react';
-
-export interface ImagesType {
-  before: string[];
-  after: string[];
-}
-
-export interface FormDataType {
-  title: string;
-  content: string;
-}
-
-interface UploaderProps {
-  selectImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  deleteAddedImage: (type: 'before' | 'after', idx: number) => void;
-  deleteRegisteredImages: (type: 'before' | 'after', imageId: number) => void;
-}
 
 export const ImageUploaderContext = createContext<UploaderProps | null>(null);
 
 function ReviewCreate() {
-  const [formData, setFormData] = useState<FormDataType>({ title: '', content: '' });
-  const [images, setImages] = useState<ImagesType>({ before: [], after: [] });
-  const [users, setUsers] = useState<ServiceData[]>([]);
-  const [user, setUser] = useState<CompletedServiceData>({
-    reservationId: 0,
-    name: '',
-    address: '',
-    reservationDate: '',
-    before: [],
-    after: [],
-  });
+  const router = useRouter();
+  // const beforeImageForm = new FormData();
+  // const afterImageForm = new FormData();
+  const [formData, setFormData] = useState<FormDataType>({ title: '', content: '' }); // 사용자가 추가한 리뷰 제목과 본문
+  const [images, setImages] = useState<ImagesType>({ before: [], after: [] }); // 사용자가 추가한 이미지 (렌더링용)
+  const [imageForms, setImageForms] = useState<ImageFormsType>({ before: [], after: [] }); // api로 전송 할 이미지 formData
+  const [users, setUsers] = useState<ServiceData[]>([]); // 서비스 완료 유저 목록
+  const [user, setUser] = useState<CompletedServiceData | null>(null); // 선택 된 서비스 완료 유저
   const [page, setPage] = useState({
+    // 서비스 완료 유저 목록 페이징
     page: 1,
     totalCount: 4,
   });
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false); // 서비스 완료 유저 목록 모달 open 상태
 
+  /**
+   * 서비스 완료 유저 목록 요청(mutate)후 유저 리스트 set
+   */
   const getUserList = useCompletedServices((data: ServiceRes) => {
     const currentData = data.data;
-    // setUsers(currentData.content);
-    setUsers([
-      {
-        reservationId: 1,
-        name: 'admin',
-        phoneNumber: '010-1234-1234',
-        address: '경기도 하남시 망월동',
-        totalPrice: 20000,
-        reservationDate: '2023-05-31',
-        managerNames: ['김길동', '김길동'],
-      },
-    ]);
+    console.log(currentData);
+    setUsers(currentData.content);
 
-    // setPage({ ...page, totalCount: currentData.totalElements });
-    setPage({ ...page, totalCount: 8 });
+    setPage({ ...page, totalCount: currentData.totalElements });
   });
 
+  /**
+   * 선택 된 서비스 완료 유저 데이터 요청(mutate)후 유저 데이터 set
+   */
   const getUserData = useCompletedService((data: CompletedServiceRes) => {
-    console.log(data.data);
-    // setUser(data.data);
-    setUser({
-      reservationId: 1,
-      name: '김디버깅',
-      address: '경기도 하남시 망월동',
-      reservationDate: '2023-05-31',
-      before: [
-        {
-          id: 5,
-          imgUrl:
-            'https://s3.ap-northeast-2.amazonaws.com/yerimbucket/BEFORE/7cb236f8-2483-4d35-939a-65f45a59e6db_ff (1).png',
-        },
-        {
-          id: 6,
-          imgUrl:
-            'https://s3.ap-northeast-2.amazonaws.com/yerimbucket/BEFORE/d8847601-4607-4a80-b772-972e417b1cbb_image (3).png',
-        },
-      ],
-      after: [
-        {
-          id: 7,
-          imgUrl:
-            'https://s3.ap-northeast-2.amazonaws.com/yerimbucket/AFTER/ffbba6a8-96ae-4b29-b799-3ad3d70fbbbe_시스템.drawio (4).png',
-        },
-      ],
-    });
+    setUser(data.data);
   });
 
+  /**
+   * 서비스 완료 유저 목록에서 리뷰에 사용 될 유저 선택
+   * => 선택 된 유저의 아이디를 받아 해당 유저데이터를 호출하고 페이지 초기화
+   */
   const onSelectUser = (reservationId: number) => {
     getUserData(reservationId);
+    setPage({ ...page, page: 1 });
     setModalOpen(false);
   };
 
+  /**
+   * 서비스 완료 유저목록 페이징
+   */
+  const onPaging = (selectedPage: number) => {
+    setPage({ ...page, page: selectedPage });
+    getUserList(selectedPage - 1);
+  };
+
+  /**
+   * 직접입력모드가 아닌 경우
+   * input 내용 기재 시 title과 content만 input값 입력 가능하도록 함
+   */
   const onChangeInput = (e: React.ChangeEvent<HTMLFormElement>) => {
     const name = e.target.id;
     if (name === 'before' || name == 'after') return;
@@ -113,56 +83,75 @@ function ReviewCreate() {
     } */
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(formData);
-    const reservationId = user.reservationId;
-    const data = {
-      ...formData,
-      ...images,
-    };
-
-    // postReview(reservationId, data)
-  };
-
-  const onPaging = (selectedPage: number) => {
-    setPage({ ...page, page: selectedPage });
-    getUserList(selectedPage - 1);
-  };
-
+  /**
+   * input에 이미지 추가 시, 선택 된 이미지를 formData타입으로 배열에 담아두도록 함
+   */
   const selectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const type = e.target.id;
+    const type = e.target.id as BeforeAfter;
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = (evt) => {
-      const url = evt.target?.result as string;
-      if (url) {
-        setImages((prevImages) => {
-          if (type === 'before') {
-            return { ...prevImages, before: [url, ...prevImages.before] };
-          } else if (type === 'after') {
-            return { ...prevImages, after: [url, ...prevImages.after] };
-          }
-          return prevImages;
-        });
+    // const formData = new FormData();
+    setImageForms((prevImages) => {
+      if (type === 'before') {
+        return { ...prevImages, before: [file, ...prevImages.before] };
+      } else if (type === 'after') {
+        return { ...prevImages, after: [file, ...prevImages.after] };
       }
-    };
+      return prevImages;
+    });
+
+    const reader = new FileReader();
+
+    reader.onload = (evt) => loadImage(evt, type);
+
+    reader.readAsDataURL(file);
   };
 
+  /**
+   * input으로 추가한 이미지를 화면에 바로 렌더링
+   */
+  const loadImage = (evt: ProgressEvent<FileReader>, type: BeforeAfter) => {
+    const url = evt.target?.result as string;
+    if (url) {
+      setImages((prevImages) => {
+        if (type === 'before') {
+          return { ...prevImages, before: [url, ...prevImages.before] };
+        } else if (type === 'after') {
+          return { ...prevImages, after: [url, ...prevImages.after] };
+        }
+        return prevImages;
+      });
+    }
+  };
+
+  /**
+   * 임의로 추가한 이미지 삭제
+   */
   const deleteAddedImage = (type: 'before' | 'after', idx: number) => {
     if (type === 'before') {
       setImages({ ...images, before: images.before.filter((image, nowIdx) => nowIdx !== idx) });
+      setImageForms((prevImages) => ({
+        ...prevImages,
+        before: imageForms.before.filter((image, nowIdx) => nowIdx !== idx),
+      }));
     }
     if (type === 'after') {
       setImages({ ...images, after: images.after.filter((image, nowIdx) => nowIdx !== idx) });
+      setImageForms((prevImages) => ({
+        ...prevImages,
+        after: imageForms.after.filter((image, nowIdx) => nowIdx !== idx),
+      }));
     }
   };
 
+  /**
+   * 사용자의 서비스 완료 데이터에 담겨있던 기존 이미지 삭제.
+   * 삭제 시 해당 이미지는 DB에서 영구적으로 지워지게 되며, 최소 한장의 사진은 남아있도록 함
+   */
   const deleteRegisteredImages = (type: 'before' | 'after', imageId: number) => {
+    if (!user) return alert('고객을 선택해주세요');
+
     if (type === 'before') {
       if (user.before.length <= 1) {
         return alert('등록 된 사진을 모두 지울 수 없습니다');
@@ -176,6 +165,32 @@ function ReviewCreate() {
 
     if (confirm('해당 이미지가 DB에서 영구삭제됩니다. 삭제하시겠습니까?')) {
       deleteReviewImage(imageId);
+      getUserData(user.reservationId);
+    }
+  };
+
+  /**
+   * 리뷰등록~~!
+   */
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (formData.content === '') return alert('내용을 입력해주세요');
+    if (formData.title === '') return alert('제목을 입력해주세요');
+    if (!user) return alert('고객을 선택해주세요');
+
+    const reservationId = user.reservationId;
+    const data = {
+      ...formData,
+      ...imageForms,
+    };
+
+    console.log(data);
+
+    try {
+      await postReview(reservationId, data);
+      router.push('/review');
+    } catch (err) {
+      console.log(err);
     }
   };
 

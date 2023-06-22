@@ -1,5 +1,5 @@
 import { ReviewRes } from '@/types/api/review';
-import { instance } from './instance';
+import { instance, multipartInstance } from './instance';
 
 export const getReviews = async (page?: number) => {
   const params = {
@@ -13,9 +13,9 @@ export const getReviews = async (page?: number) => {
 
 export const postReview = async (
   reservationId: number,
-  params: { title: string; content: string; berfore?: string[]; after?: string[] },
+  params: { title: string; content: string; berfore?: File[]; after?: File[] },
 ) => {
-  const res = await instance.post(`/review/auto/${reservationId}`, { params });
+  const res = await multipartInstance.post(`/review/auto/${reservationId}`, { params });
   console.log(res);
   return res.data;
 };
