@@ -122,3 +122,10 @@ export const ButtonGroup = styled.div`
     }
   }
 `;
+
+export const SubmitButton = styled.button<{ disabled: boolean }>`
+  border: ${({ disabled }) => (disabled ? `1px solid ${theme.colors.yolda_gray_4}` : 'none')} !important;
+  color: ${({ disabled }) => (disabled ? theme.colors.yolda_gray_4 : theme.colors.main_blue)} !important;
+  background-color: ${({ disabled }) => (disabled ? '#ffffff' : '#e5f5ff')} !important;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')} !important;
+`;

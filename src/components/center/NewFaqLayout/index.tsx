@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import { useForm } from 'react-hook-form';
+
 import Modal from '../Modal';
 
 import * as S from './style';
 
 function NewFaqLayout() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isGobackClicked, setIsGobackClicked] = useState(false);
   const [isRegistrationClicked, setIsRegistrationClicked] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const gobackHandler = () => {
     setIsGobackClicked(true);
@@ -17,14 +28,32 @@ function NewFaqLayout() {
     setIsRegistrationClicked(true);
   };
 
+  const selectHandler = (e) => {
+    setSelectedCategory(e.currentTarget.innerText);
+    setIsDropdownOpen(false);
+  };
+
+  const onSubmit = (data) => {
+    // 폼 데이터를 처리하는 로직 작성
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (watch('title').length !== 0 && selectedCategory !== '' && watch('contents').length !== 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [watch('title'), selectedCategory, watch('contents')]);
+
   return (
     <div>
       <S.Title>FAQ 작성</S.Title>
 
-      <S.FormContainer>
+      <S.FormContainer onSubmit={handleSubmit(onSubmit)}>
         <S.FormWrapper>
           <strong className="title">제목</strong>
-          <input type="text" placeholder="제목을 입력해주세요." />
+          <input type="text" id="title" placeholder="제목을 입력해주세요." {...register('title', { required: true })} />
         </S.FormWrapper>
 
         <S.FormWrapper>
@@ -33,16 +62,22 @@ function NewFaqLayout() {
           <S.StyleWrapper isOpen={isDropdownOpen}>
             <div style={{ position: 'relative', display: 'inline-block' }}>
               <button type="button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                유형을 선택해주세요.
+                {selectedCategory || '유형을 선택해주세요.'}
               </button>
               <IoMdArrowDropdown />
             </div>
 
             {isDropdownOpen && (
               <S.Options>
-                <button type="button">가격</button>
-                <button type="button">서비스 관련</button>
-                <button type="button">기타</button>
+                <button type="button" onClick={selectHandler}>
+                  가격
+                </button>
+                <button type="button" onClick={selectHandler}>
+                  서비스 관련
+                </button>
+                <button type="button" onClick={selectHandler}>
+                  기타
+                </button>
               </S.Options>
             )}
           </S.StyleWrapper>
@@ -50,16 +85,16 @@ function NewFaqLayout() {
 
         <S.FormWrapper>
           <strong className="contents">내용</strong>
-          <textarea name="" id="" placeholder="내용을 입력해주세요."></textarea>
+          <textarea id="" placeholder="내용을 입력해주세요." {...register('contents', { required: true })}></textarea>
         </S.FormWrapper>
 
         <S.ButtonGroup>
           <button type="button" onClick={gobackHandler}>
             이전으로
           </button>
-          <button type="button" onClick={registerHandler}>
+          <S.SubmitButton type="button" onClick={registerHandler} disabled={isDisabled}>
             등록하기
-          </button>
+          </S.SubmitButton>
         </S.ButtonGroup>
 
         {isGobackClicked && (
