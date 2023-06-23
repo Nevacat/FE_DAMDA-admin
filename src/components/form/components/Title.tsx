@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FormInputProps, FormTitleProps } from '@/types/components/form';
+import { FormTitleProps } from '@/types/components/form';
 import { FormTittleWrapper } from '@/styles/pages/form/form.styled';
 import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';

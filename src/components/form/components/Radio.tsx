@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FormRadioProps } from '@/types/components/form';
 import { FormRadioWrapper } from '@/styles/pages/form/form.styled';
 import ChangeButton from '@/components/form/components/ChangeButton';
@@ -10,6 +10,8 @@ import TitleEdit from '@/components/form/components/TitleEdit';
 import { AdminForm } from '@/types/api/form';
 import { toast, ToastContainer, TypeOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DeleteRed from '@/components/form/components/svg/DeleteRed';
+
 function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
   const [isAddClicked, setIsAddClicked] = useState(false);
   const [input, setInput] = useState('');
@@ -91,6 +93,7 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
           {formData.categoryList?.map((category, index) => (
             <span className="radio-item" key={index}>
               {category.category}
+              <DeleteRed />
             </span>
           ))}
           {isAddClicked && <input ref={addInput} type="text" placeholder="입력중" onChange={onChange} />}
