@@ -6,15 +6,24 @@ import Select from '@/components/form/components/Select';
 import Radio from '@/components/form/components/Radio';
 import DateInput from '@/components/form/components/DateInput';
 import String from '@/components/form/components/String';
+import { Draggable } from 'react-beautiful-dnd';
 
-function FormElements({ formData, refetch }: FormElementsProps) {
-  const dragComponent = <p>drag</p>;
-
+function FormElements({ formData, refetch, index }: FormElementsProps) {
   if (formData.questionIdentify === 'ADDRESS')
     return (
-      <AddressInput formData={formData} refetch={refetch}>
-        {dragComponent}
-      </AddressInput>
+      <Draggable
+        key={formData.questionNumber.toString()}
+        draggableId={formData.questionNumber.toString()}
+        index={index}
+      >
+        {(provided) => (
+          <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+            <AddressInput formData={formData} refetch={refetch}>
+              <p {...provided.dragHandleProps}>drag</p>
+            </AddressInput>
+          </div>
+        )}
+      </Draggable>
     );
 
   const isDuration =
@@ -22,40 +31,86 @@ function FormElements({ formData, refetch }: FormElementsProps) {
 
   switch (formData.questionType) {
     case 'TITLE':
-      return (
-        <Title formData={formData} refetch={refetch}>
-          {dragComponent}
-        </Title>
-      );
+      return <Title formData={formData} refetch={refetch} />;
     case 'STRING':
       return (
-        <String formData={formData} refetch={refetch}>
-          {dragComponent}
-        </String>
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <String formData={formData} refetch={refetch}>
+                <p {...provided.dragHandleProps}>drag</p>
+              </String>
+            </div>
+          )}
+        </Draggable>
       );
     case 'ADDRESS':
       return (
-        <AddressInput formData={formData} refetch={refetch}>
-          {dragComponent}
-        </AddressInput>
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <AddressInput formData={formData} refetch={refetch}>
+                <p {...provided.dragHandleProps}>drag</p>
+              </AddressInput>
+            </div>
+          )}
+        </Draggable>
       );
     case 'SELECT':
       return (
-        <Select formData={formData} refetch={refetch}>
-          {dragComponent}
-        </Select>
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <Select formData={formData} refetch={refetch}>
+                <p {...provided.dragHandleProps}>drag</p>
+              </Select>
+            </div>
+          )}
+        </Draggable>
       );
     case 'RADIO':
       return (
-        <Radio formData={formData} refetch={refetch} dragChild={dragComponent}>
-          {isDuration}
-        </Radio>
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <Radio formData={formData} refetch={refetch} dragChild={<p {...provided.dragHandleProps}>drag</p>}>
+                {isDuration}
+              </Radio>
+            </div>
+          )}
+        </Draggable>
       );
     case 'DATE':
       return (
-        <DateInput formData={formData} refetch={refetch}>
-          {dragComponent}
-        </DateInput>
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <DateInput formData={formData} refetch={refetch}>
+                <p {...provided.dragHandleProps}>drag</p>
+              </DateInput>
+            </div>
+          )}
+        </Draggable>
       );
   }
 }
