@@ -19,7 +19,7 @@ export const StateButton = styled.div<{ state: ServiceStateType | Colors }>`
   border-radius: 8px;
   user-select: none;
   cursor: default;
-
+  margin: 0 auto;
   ${({ state }) =>
     //주황색
     (state === 'WAITING_FOR_MANAGER_REQUEST' || state === 'orange') &&
