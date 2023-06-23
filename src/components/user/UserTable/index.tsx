@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as T from '@/styles/common/table.style';
 import UserItem from '../UserItem';
-import { dummy } from './dummy';
+import { UserContext } from '@/pages/user';
+import { UserListData } from '@/types/api/user';
 
 function UserTable() {
+  const context = useContext(UserContext);
+  if (!context) return;
+
+  const { userList } = context;
+
   return (
     <T.TableContainer>
       <T.Table>
@@ -20,9 +26,13 @@ function UserTable() {
           </T.Tr>
         </T.Thead>
         <T.Tbody>
-          {dummy.map((item) => (
-            <UserItem key={item.id} user={item} />
-          ))}
+          {userList ? (
+            userList.map((user: UserListData) => <UserItem key={user.id} user={user} />)
+          ) : (
+            <tr>
+              <td>데이터를 불러오고 있습니다</td>
+            </tr>
+          )}
         </T.Tbody>
       </T.Table>
     </T.TableContainer>

@@ -7,6 +7,7 @@ import { ServiceData, ServiceRes } from '@/types/api/service';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { StateButton } from '@/styles/common/StateButton';
 import Pagination from 'react-js-pagination';
+import { PaginationContainer } from '@/components/common/PaginationContainer/style';
 
 interface CompletedUserListType {
   users: ServiceData[];
@@ -65,20 +66,20 @@ function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUse
             </T.Tbody>
           </S.TableCover>
         </S.List>
-        <S.PaginationCover>
-          <Pagination
-            activePage={page.page}
-            itemsCountPerPage={4}
-            totalItemsCount={page.totalCount}
-            hideFirstLastPages={true}
-            linkClassPrev="prev"
-            linkClassNext="next"
-            onChange={onPaging}
-          />
-        </S.PaginationCover>
-        {/* <S.Buttons>
+        <S.Buttons>
           <StateButton state="blue">직접입력</StateButton>
-        </S.Buttons> */}
+          <PaginationContainer>
+            <Pagination
+              activePage={page.page}
+              itemsCountPerPage={4}
+              totalItemsCount={page.totalCount}
+              hideFirstLastPages={true}
+              linkClassPrev="prev"
+              linkClassNext="next"
+              onChange={onPaging}
+            />
+          </PaginationContainer>
+        </S.Buttons>
       </>
     </ModalContainer>
   );
