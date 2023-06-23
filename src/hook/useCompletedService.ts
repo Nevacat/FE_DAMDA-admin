@@ -6,7 +6,7 @@ const useCompletedService = (onSuccess: (data: CompletedServiceRes) => void) => 
   const { mutate } = useMutation((reservationId: number) => getCompletedServiceData(reservationId), {
     onSuccess,
     onError: (error) => {
-      console.log(error);
+      alert('이미 리뷰작성이 완료 된 사용자입니다');
     },
   });
 
