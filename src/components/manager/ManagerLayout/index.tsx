@@ -5,17 +5,21 @@ import ActiveManager from '../ManagerTable/ActiveManager';
 
 import * as S from './style';
 
-function ManagerLayout() {
+interface ManagerLayoutProps {
+  activeManagers: ManagerType[];
+}
+
+function ManagerLayout({ activeManagers }: any) {
   const [category, setCategory] = useState('all');
 
   return (
     <div>
-      <S.Header className="header">
+      <S.Header>
         <h1>매니저 관리</h1>
       </S.Header>
 
       {/* 활동 중 매니저 데이터 */}
-      <ActiveManager />
+      <ActiveManager activeManagers={activeManagers} />
 
       <S.ButtonGroup>
         <button type="button" onClick={() => setCategory('all')}>

@@ -12,8 +12,8 @@ import * as S from './style';
 import { FAQData } from '@/types/api/center';
 
 interface ModalProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   qnaId?: number;
   faq?: string;
   setIsGobackClicked?: (isOpen: boolean) => void;
@@ -44,7 +44,7 @@ function Modal({
   const { mutate } = useMutation(putFAQData, {
     onSuccess(data) {
       queryClient.setQueryData(['faq', qnaId], data);
-      window.location.reload();
+      // window.location.reload();
     },
   });
 
