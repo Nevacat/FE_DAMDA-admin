@@ -3,6 +3,12 @@ import React from 'react';
 
 export interface FormElementsProps {
   formData: AdminForm;
+  index: number;
+  refetch: () => void;
+}
+
+export interface FormTitleProps {
+  formData: AdminForm;
   refetch: () => void;
 }
 
