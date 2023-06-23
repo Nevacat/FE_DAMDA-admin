@@ -10,10 +10,12 @@ import { ImageUploaderContext } from '@/pages/review/create';
 
 interface UploaderProps {
   type: 'before' | 'after';
-  registeredImages: {
-    id: number;
-    imgUrl: string;
-  }[];
+  registeredImages:
+    | {
+        id: number;
+        imgUrl: string;
+      }[]
+    | undefined;
   moreImages: string[];
 }
 
@@ -22,7 +24,7 @@ function ImageUploader({ type, registeredImages, moreImages }: UploaderProps) {
   if (!context) return;
   const { selectImage, deleteAddedImage, deleteRegisteredImages } = context;
 
-  const totalLength = registeredImages.length + moreImages.length;
+  const totalLength = registeredImages ? registeredImages.length + moreImages.length : 0;
   return (
     <>
       <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={5} scrollbar={{ draggable: true }}>
@@ -47,7 +49,7 @@ function ImageUploader({ type, registeredImages, moreImages }: UploaderProps) {
               </S.ImageBox>
             </SwiperSlide>
           ))}
-        {registeredImages.length > 0 &&
+        {registeredImages &&
           registeredImages.map((image) => (
             <SwiperSlide key={image.id}>
               <S.ImageBox>
@@ -67,7 +69,7 @@ function ImageUploader({ type, registeredImages, moreImages }: UploaderProps) {
       <S.Upload>
         <S.Label htmlFor={type}>사진 업로드</S.Label>
         {totalLength <= 10 ? (
-          <input id={type} type="file" accept="image/*" onChange={selectImage} />
+          <input id={type} type="file" accept="image/jpg,image/png,image/jpeg" onChange={selectImage} />
         ) : (
           <span className="message">사진은 10장 까지 업로드 가능합니다</span>
         )}

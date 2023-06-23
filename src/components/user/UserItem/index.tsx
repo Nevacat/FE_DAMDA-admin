@@ -1,22 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import * as T from '@/styles/common/table.style';
 import * as S from './style';
 import { StateButton } from '@/styles/common/StateButton';
-import History from '../History';
 import { UserContext } from '@/pages/user';
-import { ServiceState, ServiceStateType } from '@/types/serviceState';
+import { ServiceState } from '@/types/serviceState';
+import { UserData } from '@/types/api/user';
 
 interface UserItemProp {
-  user: {
-    id: number;
-    name: string;
-    phoneNumber: string;
-    address: string;
-    serviceState: ServiceStateType;
-    createdAt: string;
-    memo: string;
-    code: string;
-  };
+  user: UserData;
 }
 
 function UserItem({ user }: UserItemProp) {
@@ -24,7 +15,7 @@ function UserItem({ user }: UserItemProp) {
   if (!context) return;
   const { OpenHistory } = context;
 
-  const state = ServiceState[user.serviceState];
+  const state = ServiceState[user.reservationStatus];
 
   return (
     <>
@@ -33,13 +24,13 @@ function UserItem({ user }: UserItemProp) {
         <T.Td>{user.phoneNumber}</T.Td>
         <T.Td>{user.address}</T.Td>
         <T.Td>
-          <StateButton state={user.serviceState}>{state}</StateButton>
+          <StateButton state={user.reservationStatus}>{state}</StateButton>
         </T.Td>
-        <T.Td>{user.createdAt}</T.Td>
+        <T.Td>{user.createdAt.slice(0, 10)}</T.Td>
         <S.Memo>{user.memo}</S.Memo>
         <T.Td>{user.code}</T.Td>
         <T.Td>
-          <StateButton state={'blue'} onClick={() => OpenHistory(1)}>
+          <StateButton state={'blue'} onClick={() => OpenHistory(user.id, user.name)}>
             예약내역
           </StateButton>
         </T.Td>

@@ -1,4 +1,3 @@
-import { PaginationContainer } from '@/components/common/PaginationContainer/style';
 import { StateButton } from '@/styles/common/StateButton';
 import { TableContainer } from '@/styles/common/table.style';
 import theme from '@/styles/theme';
@@ -8,7 +7,7 @@ export const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 830px;
+  width: 880px;
   padding: 12px 24px;
   border-top: 3px solid #9948ff;
 
@@ -27,7 +26,7 @@ export const List = styled.div`
 `;
 
 export const TableCover = styled(TableContainer)`
-  width: calc(830px - (24px * 2));
+  width: calc(880px - (24px * 2));
   line-height: 1.35;
 
   tbody {
@@ -44,15 +43,11 @@ export const TableCover = styled(TableContainer)`
   }
 `;
 
-export const PaginationCover = styled(PaginationContainer)`
-  justify-content: center;
-`;
-
 export const Buttons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 12px;
+  justify-content: space-between;
+  padding: 0 20px;
 
   ${StateButton} {
     width: 160px;
