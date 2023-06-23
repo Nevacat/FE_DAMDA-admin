@@ -66,7 +66,7 @@ function UserPage() {
       />
 
       {isHistoryOpen && (
-        <History type={'MEMBER'} username={clickedUsername} memberId={clickedUserId} setIsOpen={setIsHistoryOpen} />
+        <History type={'MEMBER'} username={clickedUsername} userId={clickedUserId} setIsOpen={setIsHistoryOpen} />
       )}
     </UserContext.Provider>
   );

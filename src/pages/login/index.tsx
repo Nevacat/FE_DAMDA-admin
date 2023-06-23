@@ -16,8 +16,13 @@ function Login() {
   } = useForm();
 
   const submitLogin = async (data: FieldValues) => {
+    const loginData = {
+      username: data.username.trim(),
+      password: data.password.trim(),
+    };
+
     try {
-      await login(data);
+      await login(loginData);
       setLogin();
       router.push('/');
     } catch (error) {

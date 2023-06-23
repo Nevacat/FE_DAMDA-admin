@@ -9,9 +9,13 @@ export const getUserList = async (query?: string) => {
   return res.data;
 };
 
-export const getUserHistory = async (params: { memberId: number; page: number }) => {
+export const getUserHistory = async ({ memberId, page }: { memberId: number; page: number }) => {
+  console.log(memberId + '/' + page);
   const res = await instance.get<UserHistoryRes>(`/member/reservation`, {
-    params,
+    params: {
+      memberId,
+      page,
+    },
   });
   console.log(res);
   return res.data;
