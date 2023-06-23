@@ -7,6 +7,8 @@ import Radio from '@/components/form/components/Radio';
 import DateInput from '@/components/form/components/DateInput';
 import String from '@/components/form/components/String';
 import { Draggable } from 'react-beautiful-dnd';
+import Drag from '@/components/form/components/svg/Drag';
+import { DragHandle } from '@/styles/pages/form/form.styled';
 
 function FormElements({ formData, refetch, index }: FormElementsProps) {
   if (formData.questionIdentify === 'ADDRESS')
@@ -19,7 +21,9 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
         {(provided) => (
           <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
             <AddressInput formData={formData} refetch={refetch}>
-              <p {...provided.dragHandleProps}>drag</p>
+              <DragHandle {...provided.dragHandleProps}>
+                <Drag />
+              </DragHandle>
             </AddressInput>
           </div>
         )}
@@ -42,7 +46,9 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
           {(provided) => (
             <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
               <String formData={formData} refetch={refetch}>
-                <p {...provided.dragHandleProps}>drag</p>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
               </String>
             </div>
           )}
@@ -58,7 +64,9 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
           {(provided) => (
             <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
               <AddressInput formData={formData} refetch={refetch}>
-                <p {...provided.dragHandleProps}>drag</p>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
               </AddressInput>
             </div>
           )}
@@ -74,7 +82,9 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
           {(provided) => (
             <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
               <Select formData={formData} refetch={refetch}>
-                <p {...provided.dragHandleProps}>drag</p>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
               </Select>
             </div>
           )}
@@ -89,7 +99,15 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
         >
           {(provided) => (
             <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
-              <Radio formData={formData} refetch={refetch} dragChild={<p {...provided.dragHandleProps}>drag</p>}>
+              <Radio
+                formData={formData}
+                refetch={refetch}
+                dragChild={
+                  <DragHandle {...provided.dragHandleProps}>
+                    <Drag />
+                  </DragHandle>
+                }
+              >
                 {isDuration}
               </Radio>
             </div>
@@ -106,7 +124,9 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
           {(provided) => (
             <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
               <DateInput formData={formData} refetch={refetch}>
-                <p {...provided.dragHandleProps}>drag</p>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
               </DateInput>
             </div>
           )}

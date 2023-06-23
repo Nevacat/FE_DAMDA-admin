@@ -5,6 +5,10 @@ export const FormLayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  .Toastify {
+    position: absolute;
+  }
 `;
 
 export const FormTitle = styled.div`
@@ -71,6 +75,7 @@ export const FormAddressWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
 
   .header {
     width: 300px;
@@ -279,6 +284,7 @@ export const FormRadioWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
 
   h1 {
     font-weight: 800;
@@ -367,6 +373,7 @@ export const FormDateInputWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 390px;
+  position: relative;
 
   .header {
     display: flex;
@@ -514,6 +521,32 @@ export const FormInputWrapper = styled.div`
     right: -50px;
     top: 50px;
   }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 14px 16px;
+    border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+    border-radius: 5px;
+    resize: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 160%;
+    color: ${({ theme }) => theme.colors.yolda_gray_2};
+  }
+  .textarea {
+    height: 100px;
+    display: flex;
+    gap: 12px;
+  }
 `;
 
 export const FormChangeBtn = styled.div`
@@ -565,4 +598,10 @@ export const FormChangeModal = styled(motion.div)`
 
 export const EditButtonWrapper = styled(motion.div)`
   height: fit-content;
+`;
+
+export const DragHandle = styled.div`
+  position: absolute;
+  left: -22px;
+  top: 0;
 `;
