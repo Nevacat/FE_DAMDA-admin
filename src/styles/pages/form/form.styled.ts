@@ -358,12 +358,19 @@ export const FormRadioWrapper = styled.div`
       width: 100px;
       height: 50px;
       padding: 10px;
+      position: relative;
 
       display: flex;
       align-items: center;
       border: 1px solid ${({ theme }) => theme.colors.yolda_gray_4};
       color: ${({ theme }) => theme.colors.yolda_gray_4};
       border-radius: 5px;
+
+      .delete {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+      }
     }
   }
 `;
