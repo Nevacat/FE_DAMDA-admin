@@ -540,6 +540,9 @@ export const FormInputWrapper = styled.div`
     &:focus {
       outline: none;
     }
+    &:disabled {
+      background-color: inherit;
+    }
   }
   .footer {
     display: flex;
