@@ -8,8 +8,8 @@ import { putCategoryList, putForm } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 import CheckGreen from '@/components/form/components/svg/CheckGreen';
 import Plus from '@/components/form/components/svg/plus';
-import ChangeButton from '@/components/form/components/ChangeButton';
 import RadioDelete from '@/components/form/components/RadioDelete';
+import { toast, ToastContainer } from 'react-toastify';
 
 function DateInput({ formData, refetch, children }: FormDateInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
@@ -33,6 +33,7 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
   const { mutate: addCategory } = useMutation(putCategoryList, {
     onSuccess: () => {
       refetch();
+      setInput('');
     },
   });
 
@@ -92,11 +93,30 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
       }
     }, 100);
 
-    addCategory({ data: [input], questionNumber: formData.questionNumber });
+    if (isAddClicked) {
+      if (!validTime(input)) {
+        toast('시간 형식이 맞지 않습니다. 유형은 아래와 같습니다. \n 오전 10시 \n 오후 3시', {
+          type: 'error',
+          position: 'top-center',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+        });
+      }
+    } else {
+      addCategory({ data: [input], questionNumber: formData.questionNumber });
+    }
+  };
+
+  const validTime = (time: string) => {
+    const pattern = /^(오전|오후) [0-9]+시$/;
+    return pattern.test(time);
   };
 
   return (
     <FormDateInputWrapper>
+      <ToastContainer />
       {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
