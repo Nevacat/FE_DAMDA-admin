@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAdminFormList } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 import FormElements from '@/components/form/FormElements';
-import { instance } from '@/api/instance';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 function FormLayout() {
   const { data, refetch } = useQuery(['form'], getAdminFormList);
@@ -27,22 +27,34 @@ function FormLayout() {
         <h2>모든 항목은 클릭시 수정 가능합니다.</h2>
       </S.FormTitle>
       <S.FormContent>
-        <S.FormListWrapper>
-          {firstPageData.map((form, index) => (
-            <FormElements key={index} formData={form} refetch={refetch} />
-          ))}
-        </S.FormListWrapper>
+        <DragDropContext onDragEnd={(result) => console.log(result)}>
+          <Droppable droppableId={'1'}>
+            {(provided) => (
+              <S.FormListWrapper ref={provided.innerRef} {...provided.droppableProps}>
+                {firstPageData.map((form, index) => (
+                  <FormElements index={index} key={index} formData={form} refetch={refetch} />
+                ))}
+                {provided.placeholder}
+              </S.FormListWrapper>
+            )}
+          </Droppable>
 
-        <S.Divider>
-          <span>2페이지</span>
-          <div />
-        </S.Divider>
+          <S.Divider>
+            <span>2페이지</span>
+            <div />
+          </S.Divider>
 
-        <S.FormListWrapper>
-          {secPageData.map((form, index) => (
-            <FormElements key={index} formData={form} refetch={refetch} />
-          ))}
-        </S.FormListWrapper>
+          <Droppable droppableId={'2'}>
+            {(provided) => (
+              <S.FormListWrapper ref={provided.innerRef} {...provided.droppableProps}>
+                {secPageData.map((form, index) => (
+                  <FormElements index={index} key={index} formData={form} refetch={refetch} />
+                ))}
+                {provided.placeholder}
+              </S.FormListWrapper>
+            )}
+          </Droppable>
+        </DragDropContext>
       </S.FormContent>
     </S.FormLayoutWrapper>
   );
