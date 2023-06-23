@@ -5,11 +5,7 @@ import { EditButtonWrapper } from '@/styles/pages/form/form.styled';
 import { FormTitleEditProps } from '@/types/components/form';
 
 function TitleEdit({ onEditMode, isTitleEdit }: FormTitleEditProps) {
-  return (
-    <EditButtonWrapper layout onClick={onEditMode}>
-      {isTitleEdit ? <Check /> : <Edit />}
-    </EditButtonWrapper>
-  );
+  return <EditButtonWrapper onClick={onEditMode}>{isTitleEdit ? <Check /> : <Edit />}</EditButtonWrapper>;
 }
 
 export default TitleEdit;
