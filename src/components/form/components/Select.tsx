@@ -34,7 +34,7 @@ const variants: Variants = {
   },
 };
 
-function Select({ formData, refetch }: FormSelectProps) {
+function Select({ formData, refetch, children }: FormSelectProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
   const [isAddMode, setIsAddMode] = useState(false);
@@ -117,6 +117,7 @@ function Select({ formData, refetch }: FormSelectProps) {
   return (
     <FormSelectWrapper>
       <ToastContainer />
+      {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
         <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />

@@ -60,7 +60,7 @@ function String({ formData, refetch, children }: FormInputProps) {
     }
   };
 
-  if (formData.questionIdentify === 'RESERVATIONREQUEST') return <></>;
+  if (formData.questionIdentify === 'RESERVATIONREQUEST') return <FormInputWrapper>{children}</FormInputWrapper>;
 
   return (
     <FormInputWrapper>
