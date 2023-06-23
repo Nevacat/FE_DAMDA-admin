@@ -8,7 +8,7 @@ import TitleEdit from '@/components/form/components/TitleEdit';
 
 function Title({ formData, refetch, children }: FormInputProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
-  const [title, setTitle] = useState(formData.questionTitle);
+  const [title, setTitle] = useState(.questionTitle);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { mutate } = useMutation(putForm, {

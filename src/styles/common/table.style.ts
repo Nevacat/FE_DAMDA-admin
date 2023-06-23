@@ -26,7 +26,6 @@ export const Th = styled.th`
   text-align: left;
   vertical-align: middle;
   white-space: nowrap;
-  vertical-align: middle;
 `;
 
 export const Td = styled.td`
@@ -36,5 +35,4 @@ export const Td = styled.td`
   font-weight: 500;
   vertical-align: middle;
   word-break: keep-all;
-  vertical-align: middle;
 `;
