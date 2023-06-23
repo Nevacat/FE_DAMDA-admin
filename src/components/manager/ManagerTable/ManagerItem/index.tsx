@@ -1,33 +1,70 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
 
 import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
+import { useMutation } from '@tanstack/react-query';
+import { putManagerInfo } from '@/api/manager';
+import useManagerStore from '@/store/managerForm';
 
 function ManagerItem({ data }: any) {
+  const {
+    id,
+    managerName,
+    managerPhoneNumber,
+    certificateStatus,
+    certificateStatusEtc,
+    level,
+    vehicle,
+    fieldExperience,
+    mainJobStatus,
+    mainJobStatusEtc,
+    memo,
+    currManagerStatus,
+  } = data;
+  const formData = {
+    id,
+    managerName,
+    managerPhoneNumber,
+    certificateStatus,
+    certificateStatusEtc,
+    level,
+    vehicle,
+    fieldExperience,
+    mainJobStatus,
+    mainJobStatusEtc,
+    memo,
+    currManagerStatus,
+  };
+
+  const { mutate } = useMutation(putManagerInfo);
+
   // 오픈 여부
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isMemoOpen, setIsMemoOpen] = useState(false);
   const [isVehicleOpen, setIsVehicleOpen] = useState(false);
+  const [isCertificateOpen, setIsCertificateOpen] = useState(false);
+  const [isEtcOpen, setIsEtcOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditingLevel, setIsEditingLevel] = useState(false);
-  const [isEditingCertificate, setIsEditingCertificate] = useState(false);
 
-  // 활동 지역 외
-  const nameBlurHandler = () => {
+  const [inputValue, setInputValue] = useState(certificateStatusEtc);
+
+  // --------- 활동 지역 외 ---------
+  const nameBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    mutate({ id, formData: { ...formData, managerName: e.target.value } });
     setIsEditingName(false);
-    // 변경 api 요청
   };
 
-  const phoneBlurHandler = () => {
+  const phoneBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    mutate({ id, formData: { ...formData, managerPhoneNumber: e.target.value } });
     setIsEditingPhone(false);
-    // 변경 api 요청
   };
 
   const levelBlurHandler = () => {
@@ -35,12 +72,43 @@ function ManagerItem({ data }: any) {
     // 변경 api 요청
   };
 
-  const certificateBlurHandler = () => {
-    setIsEditingCertificate(false);
-    // 변경 api 요청
+  const selectOptionHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.innerText;
+    let transformedValue;
+
+    switch (value) {
+      case '1급 (오프라인 취득)':
+        transformedValue = 'FIRST_RATE_OFF';
+        break;
+
+      case '2급 (오프라인 취득)':
+        transformedValue = 'SECOND_RATE_OFF';
+        break;
+
+      case '1급 (온라인 취득)':
+        transformedValue = 'FIRST_RATE_ON';
+        break;
+
+      case '2급 (온라인 취득)':
+        transformedValue = 'SECOND_RATE_ON';
+        break;
+
+      case '없음':
+        transformedValue = 'NONE';
+        break;
+
+      default:
+        break;
+    }
+
+    mutate({
+      id,
+      formData: { ...formData, certificateStatus: transformedValue, certificateStatusEtc: null },
+    });
   };
 
   const vehicleChangeHandler = () => {
+    mutate({ id, formData: { ...formData, vehicle: vehicle ? false : true } });
     setIsVehicleOpen(false);
   };
 
@@ -48,6 +116,10 @@ function ManagerItem({ data }: any) {
     setIsStatusOpen(false);
 
     // 상태 변경 api 요청
+  };
+
+  const etcSubmitHandler = () => {
+    mutate({ id, formData: { ...formData, certificateStatus: 'ETC', certificateStatusEtc: inputValue } });
   };
 
   let statusText;
@@ -107,51 +179,204 @@ function ManagerItem({ data }: any) {
     default:
   }
 
+  const selectLevelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    mutate({ id, formData: { ...formData, level: e.currentTarget.innerText } });
+    setIsEditingLevel(false);
+  };
+
+  const memoBlurHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    mutate({ id, formData: { ...formData, memo: e.target.value } });
+    setIsMemoOpen(false);
+  };
+
+  const locationOpenHandler = (e: React.MouseEvent) => {
+    const target = e.target as HTMLTableCellElement;
+    if (target.tagName === 'TD') {
+      setIsLocationOpen(!isLocationOpen);
+    }
+  };
+
   return (
     <G.Tr>
       <S.ManagerTd onClick={() => setIsEditingName(true)}>
-        {isEditingName ? <input autoFocus type="text" onBlur={nameBlurHandler} value="홍길동" /> : data.name}
+        {isEditingName ? (
+          <input autoFocus type="text" onBlur={nameBlurHandler} defaultValue={managerName} />
+        ) : (
+          managerName
+        )}
       </S.ManagerTd>
+
       <S.ManagerTd onClick={() => setIsEditingPhone(true)} onBlur={() => setIsEditingPhone(false)}>
         {isEditingPhone ? (
-          <input autoFocus type="text" onBlur={phoneBlurHandler} value="010-0000-1111" />
+          <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
         ) : (
-          '010-0000-1111'
+          managerPhoneNumber
         )}
       </S.ManagerTd>
-      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
-        서울 금천구
+
+      <S.ManagerTd style={{ position: 'relative' }} onClick={locationOpenHandler}>
+        {/* 지역 데이터 */}
         {isLocationOpen && <LocationSelectionForm />}
       </S.ManagerTd>
-      <S.ManagerTd onClick={() => setIsEditingLevel(true)}>
-        {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} value="5" /> : '5'}
+
+      <S.ManagerTd onClick={() => setIsEditingLevel(!isEditingLevel)}>
+        {level}
+        {isEditingLevel && (
+          <S.CertificateForm size="small">
+            <div style={{ position: 'relative' }}>
+              <ul>
+                <li>
+                  <S.OptionButton type="button" onClick={selectLevelHandler}>
+                    1
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectLevelHandler}>
+                    2
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectLevelHandler}>
+                    3
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectLevelHandler}>
+                    4
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectLevelHandler}>
+                    5
+                  </S.OptionButton>
+                </li>
+              </ul>
+
+              {isEtcOpen && (
+                <S.InputWrapper>
+                  <input
+                    type="text"
+                    defaultValue={certificateStatusEtc}
+                    autoFocus
+                    placeholder="자격증 이름"
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCertificateOpen(true);
+                    }}
+                  />
+
+                  <button type="button" onClick={etcSubmitHandler}>
+                    제출
+                  </button>
+                </S.InputWrapper>
+              )}
+            </div>
+          </S.CertificateForm>
+        )}
+        {/* {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} defaultValue={level} /> : level} */}
       </S.ManagerTd>
-      <S.ManagerTd onClick={() => setIsEditingCertificate(true)}>
-        {isEditingCertificate ? (
-          <input autoFocus type="text" onBlur={certificateBlurHandler} value="1급 (off)" />
-        ) : (
-          '1급 (off)'
+
+      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsCertificateOpen(!isCertificateOpen)}>
+        {certificateStatus}
+
+        {isCertificateOpen && (
+          <S.CertificateForm>
+            <div style={{ position: 'relative' }}>
+              <ul>
+                <li>
+                  <S.OptionButton type="button" onClick={selectOptionHandler}>
+                    1급 (오프라인 취득)
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectOptionHandler}>
+                    2급 (오프라인 취득)
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectOptionHandler}>
+                    1급 (온라인 취득)
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectOptionHandler}>
+                    2급 (온라인 취득)
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton type="button" onClick={selectOptionHandler}>
+                    없음
+                  </S.OptionButton>
+                </li>
+
+                <li>
+                  <S.OptionButton
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsEtcOpen(!isEtcOpen);
+                    }}
+                  >
+                    기타
+                  </S.OptionButton>
+                </li>
+              </ul>
+
+              {isEtcOpen && (
+                <S.InputWrapper>
+                  <input
+                    type="text"
+                    defaultValue={certificateStatusEtc}
+                    autoFocus
+                    placeholder="자격증 이름"
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsCertificateOpen(true);
+                    }}
+                  />
+
+                  <button type="button" onClick={etcSubmitHandler}>
+                    제출
+                  </button>
+                </S.InputWrapper>
+              )}
+            </div>
+          </S.CertificateForm>
         )}
       </S.ManagerTd>
+
       <S.ManagerTd>
-        <StateButton state={'green'} onClick={() => setIsVehicleOpen(!isVehicleOpen)}>
-          가능
+        <StateButton state={vehicle ? 'green' : 'red'} onClick={() => setIsVehicleOpen(!isVehicleOpen)}>
+          {vehicle ? '가능' : '불가능'}
         </StateButton>
 
         {isVehicleOpen && (
           <S.StateChangeContainer>
-            <StateButton state={'red'} onClick={vehicleChangeHandler}>
-              불가능
+            <StateButton state={vehicle ? 'red' : 'green'} onClick={vehicleChangeHandler}>
+              {vehicle ? '불가능' : '가능'}
             </StateButton>
           </S.StateChangeContainer>
         )}
       </S.ManagerTd>
+
       <S.ManagerTd>
         <StateButton state={'blue'}>지원폼</StateButton>
       </S.ManagerTd>
+
       <S.ManagerTd>
         <StateButton state={'blue'}>예약 내역</StateButton>
       </S.ManagerTd>
+
       <S.ManagerTd style={{ position: 'relative' }}>
         <StateButton
           state={data.managerStatus === '대기' ? 'purple' : data.managerStatus === '보류' ? 'orange' : 'red'}
@@ -162,10 +387,13 @@ function ManagerItem({ data }: any) {
 
         {isStatusOpen && stateChangeButtons}
       </S.ManagerTd>
-      <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)} onMouseLeave={() => setIsMemoOpen(false)}>
+
+      <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)}>
         <StateButton state={'blue'}>메모</StateButton>
 
-        {isMemoOpen && <textarea name="" id=""></textarea>}
+        {isMemoOpen && (
+          <textarea autoFocus={isMemoOpen} name="" id="" defaultValue={memo} onBlur={memoBlurHandler}></textarea>
+        )}
       </S.ManagerTd>
     </G.Tr>
   );
