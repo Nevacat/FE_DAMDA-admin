@@ -1,15 +1,12 @@
 import React, { ChangeEvent, RefObject, createRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { citiesData } from '@/constants/locationData';
-// import useManagerFormStore from '@/store/managerForm';
 
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs';
 import * as S from './style';
 
 function LocationSelectionForm() {
-  // const { activity_region, setActivityRegion, setFilterLocation, setRemoveTag } = useManagerFormStore((state) => state);
   const [isLocationOptionsOpen, setIsLocationOptionsOpen] = useState(false);
-  console.log(isLocationOptionsOpen);
   const [selectedRegion, setSelectedRegion] = useState('');
   const listRef: RefObject<HTMLDivElement> = createRef();
   const [activityRegion, setActivityRegion] = useState({ 서울특별시: [], 경기도: [] });
@@ -37,20 +34,12 @@ function LocationSelectionForm() {
     const isChecked = e.target.checked;
 
     if (isChecked) {
-      // setActivityRegion(selectedRegion, district);
       if (selectedRegion === '서울특별시') {
-        setActivityRegion((prev: any) => ({
-          ...prev,
-          서울특별시: [...prev.서울특별시, district],
-        }));
+        // 매니저 활동 지역 추가 api 요청
       } else if (selectedRegion === '경기도') {
-        setActivityRegion((prev: any) => ({
-          ...prev,
-          경기도: [...prev.경기도, district],
-        }));
+        // 매니저 활동 지역 삭제 api 요청
       }
     } else {
-      // setFilterLocation(district);
       if (selectedRegion === '서울특별시') {
         setActivityRegion((prev) => ({
           ...prev,
@@ -67,19 +56,18 @@ function LocationSelectionForm() {
 
   const filterTagHandler = (districtItem: string) => {
     // setRemoveTag(districtItem);
-    if (activityRegion.서울특별시.includes(districtItem)) {
-      setActivityRegion((prev) => ({
-        ...prev,
-        서울특별시: prev.서울특별시.filter((item) => item !== districtItem),
-      }));
-    }
-
-    if (activityRegion.경기도.includes(districtItem)) {
-      setActivityRegion((prev) => ({
-        ...prev,
-        경기도: prev.경기도.filter((item) => item !== districtItem),
-      }));
-    }
+    // if (activityRegion.서울특별시.includes(districtItem)) {
+    //   setActivityRegion((prev) => ({
+    //     ...prev,
+    //     서울특별시: prev.서울특별시.filter((item) => item !== districtItem),
+    //   }));
+    // }
+    // if (activityRegion.경기도.includes(districtItem)) {
+    //   setActivityRegion((prev) => ({
+    //     ...prev,
+    //     경기도: prev.경기도.filter((item) => item !== districtItem),
+    //   }));
+    // }
   };
 
   // 지역 태그
@@ -171,7 +159,7 @@ function LocationSelectionForm() {
                       name="manager_available_district"
                       id={district}
                       value={district}
-                      checked={activityRegion[selectedRegion].includes(district)}
+                      // checked={activityRegion[selectedRegion].includes(district)}
                       onChange={cityChangeHandler}
                     />
                     <label htmlFor={district}>{district}</label>

@@ -5,6 +5,7 @@ interface Store {
   waitingManagers: ManagerType[];
   pendingManagers: ManagerType[];
   inactiveManagers: ManagerType[];
+  isLocationOpen: boolean;
 }
 
 interface Actions {
@@ -12,6 +13,7 @@ interface Actions {
   setWaitingManagers: (managers: ManagerType[]) => void;
   setPendingManagers: (managers: ManagerType[]) => void;
   setInActiveManagers: (managers: ManagerType[]) => void;
+  setIsLocationOpen: (isOpen: boolean) => void;
 }
 
 const useManagerStore = create<Store & Actions>((set) => ({
@@ -19,6 +21,7 @@ const useManagerStore = create<Store & Actions>((set) => ({
   waitingManagers: [],
   pendingManagers: [],
   inactiveManagers: [],
+  isLocationOpen: false,
 
   setActiveManagers: (managers) => {
     set({ activeManagers: managers });
@@ -31,6 +34,9 @@ const useManagerStore = create<Store & Actions>((set) => ({
   },
   setInActiveManagers: (managers) => {
     set({ inactiveManagers: managers });
+  },
+  setIsLocationOpen: (isOpen) => {
+    set({ isLocationOpen: isOpen });
   },
 }));
 

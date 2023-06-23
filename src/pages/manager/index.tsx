@@ -6,26 +6,15 @@ import ManagerLayout from '@/components/manager/ManagerLayout';
 
 import * as S from '@/styles/pages/manager.style';
 
-interface ManagerPageProps {
-  activeManagersResponse: ManagerType[];
-}
-
-function ManagerPage(props: ManagerPageProps) {
+function ManagerPage() {
   const { data: activeManagers } = useQuery({
     queryKey: ['active'],
-    queryFn: () => getManagers('active'),
-    initialData: props.activeManagersResponse,
+    queryFn: () => getManagers('ACTIVE'),
   });
+
+  // if (!activeManagers) return;
 
   return <ManagerLayout activeManagers={activeManagers} />;
 }
 
 export default ManagerPage;
-
-export async function getStaticProps() {
-  const activeManagersResponse = await getManagers('active');
-
-  return {
-    props: { activeManagersResponse },
-  };
-}
