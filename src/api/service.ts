@@ -13,3 +13,8 @@ export const getCompletedServiceData = async (reservationId: number) => {
   const res = await instance.get<CompletedServiceRes>(`/review/auto/${reservationId}`);
   return res.data;
 };
+
+export const getCompletedServiceImages = async (reservationId: number) => {
+  const res = await instance.get(`/service/complete/detail/${reservationId}`);
+  return res.data;
+};

@@ -6,7 +6,7 @@ export const ReservationForm = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 25px;
   padding: 20px;
-  max-width: 800px;
+  width: 780px;
 `;
 
 export const UserInfo = styled.div`

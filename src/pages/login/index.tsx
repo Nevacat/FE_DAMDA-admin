@@ -16,21 +16,25 @@ function Login() {
   } = useForm();
 
   const submitLogin = async (data: FieldValues) => {
+    const loginData = {
+      username: data.username.trim(),
+      password: data.password.trim(),
+    };
+
     try {
-      await login(data);
+      await login(loginData);
       setLogin();
       router.push('/');
     } catch (error) {
-      // alert('아이디와 비밀번호를 확인해주세요');
-      alert('아이디 admin , 비밀번호 1234');
+      alert('아이디와 비밀번호를 확인해주세요');
     }
   };
 
   useEffect(() => {
-    console.log(isLogin);
-    // if (isLogin) {
-    //   router.back();
-    // }
+    if (isLogin) {
+      alert('이미 로그인 되어있습니다.');
+      router.back();
+    }
   }, []);
 
   return (

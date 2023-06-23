@@ -2,13 +2,13 @@ import { PageTitle } from '@/styles/common/PageTitle';
 import * as S from '@/styles/pages/reviewCreate.style';
 import React, { SetStateAction } from 'react';
 import ImageUploader from './ImageUploader';
-import { FormDataType, ImagesType } from '@/pages/review/create';
+import { FormDataType, ImagesType } from '@/types/components/createReview';
 import { CompletedServiceData } from '@/types/api/service';
 import { useRouter } from 'next/router';
 
 interface ReviewCreateProps {
   formData: FormDataType;
-  user: CompletedServiceData;
+  user: CompletedServiceData | null;
   images: ImagesType;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onChangeInput: (e: React.ChangeEvent<HTMLFormElement>) => void;
@@ -28,27 +28,27 @@ function ReviewCreateLayout({ formData, user, images, setModalOpen, onSubmit, on
         <S.Row>
           <S.Label htmlFor="name">이름</S.Label>
           <div className="cover" onClick={() => setModalOpen(true)}>
-            <S.Input id="name" placeholder="고객을 선택해주세요." value={user.name} />
+            <S.Input id="name" placeholder="고객을 선택해주세요." value={user?.name} />
           </div>
         </S.Row>
         <S.Row>
           <S.Label htmlFor="address">주소</S.Label>
-          <S.Input id="address" value={user.address} />
+          <S.Input id="address" value={user?.address} />
         </S.Row>
         <S.Row>
           <S.Label htmlFor="date">예약 일자</S.Label>
-          <S.Input id="date" type="date" value={user.reservationDate} />
+          <S.Input id="date" type="date" value={user?.reservationDate.slice(0, 10)} />
         </S.Row>
         <S.Row>
           <S.Name>전후 사진</S.Name>
           <S.UploaderContainer>
             <S.SelectImage>
               <S.Name>서비스 전</S.Name>
-              <ImageUploader type={'before'} registeredImages={user.before} moreImages={images.before} />
+              <ImageUploader type={'before'} registeredImages={user?.before} moreImages={images.before} />
             </S.SelectImage>
             <S.SelectImage>
               <S.Name>서비스 후</S.Name>
-              <ImageUploader type={'after'} registeredImages={user.after} moreImages={images.after} />
+              <ImageUploader type={'after'} registeredImages={user?.after} moreImages={images.after} />
             </S.SelectImage>
           </S.UploaderContainer>
         </S.Row>

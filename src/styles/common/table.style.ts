@@ -8,7 +8,11 @@ export const TableContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
 `;
-export const Thead = styled.thead``;
+
+export const Thead = styled.thead`
+  border-bottom: 1px solid #eeeff2;
+`;
+
 export const Tbody = styled.tbody``;
 export const Tr = styled.tr`
   border-bottom: 1px solid ${theme.colors.yolda_gray_7};
@@ -22,8 +26,8 @@ export const Th = styled.th`
   text-align: left;
   vertical-align: middle;
   white-space: nowrap;
-  text-align: center;
 `;
+
 export const Td = styled.td`
   padding: 5px 10px;
   max-width: 220px;
@@ -31,5 +35,4 @@ export const Td = styled.td`
   font-weight: 500;
   vertical-align: middle;
   word-break: keep-all;
-  text-align: center;
 `;

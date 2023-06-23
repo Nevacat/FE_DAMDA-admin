@@ -6,26 +6,132 @@ import Select from '@/components/form/components/Select';
 import Radio from '@/components/form/components/Radio';
 import DateInput from '@/components/form/components/DateInput';
 import String from '@/components/form/components/String';
+import { Draggable } from 'react-beautiful-dnd';
+import Drag from '@/components/form/components/svg/Drag';
+import { DragHandle } from '@/styles/pages/form/form.styled';
 
-function FormElements({ formData }: FormElementsProps) {
-  if (formData.questionIdentify === 'ADDRESS') return <AddressInput formData={formData} />;
+function FormElements({ formData, refetch, index }: FormElementsProps) {
+  if (formData.questionIdentify === 'ADDRESS')
+    return (
+      <Draggable
+        key={formData.questionNumber.toString()}
+        draggableId={formData.questionNumber.toString()}
+        index={index}
+      >
+        {(provided) => (
+          <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+            <AddressInput formData={formData} refetch={refetch}>
+              <DragHandle {...provided.dragHandleProps}>
+                <Drag />
+              </DragHandle>
+            </AddressInput>
+          </div>
+        )}
+      </Draggable>
+    );
 
   const isDuration =
     formData.questionIdentify === 'SERVICEDURATION' ? <div className="duration">{formData.placeHolder}</div> : null;
 
   switch (formData.questionType) {
     case 'TITLE':
-      return <Title formData={formData} />;
+      return <Title formData={formData} refetch={refetch} />;
     case 'STRING':
-      return <String formData={formData} />;
+      return (
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <String formData={formData} refetch={refetch}>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
+              </String>
+            </div>
+          )}
+        </Draggable>
+      );
     case 'ADDRESS':
-      return <AddressInput formData={formData} />;
+      return (
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <AddressInput formData={formData} refetch={refetch}>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
+              </AddressInput>
+            </div>
+          )}
+        </Draggable>
+      );
     case 'SELECT':
-      return <Select formData={formData} />;
+      return (
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <Select formData={formData} refetch={refetch}>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
+              </Select>
+            </div>
+          )}
+        </Draggable>
+      );
     case 'RADIO':
-      return <Radio formData={formData}>{isDuration}</Radio>;
+      return (
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <Radio
+                formData={formData}
+                refetch={refetch}
+                dragChild={
+                  <DragHandle {...provided.dragHandleProps}>
+                    <Drag />
+                  </DragHandle>
+                }
+              >
+                {isDuration}
+              </Radio>
+            </div>
+          )}
+        </Draggable>
+      );
     case 'DATE':
-      return <DateInput formData={formData} />;
+      return (
+        <Draggable
+          key={formData.questionNumber.toString()}
+          draggableId={formData.questionNumber.toString()}
+          index={index}
+        >
+          {(provided) => (
+            <div className="drag" {...provided.draggableProps} ref={provided.innerRef}>
+              <DateInput formData={formData} refetch={refetch}>
+                <DragHandle {...provided.dragHandleProps}>
+                  <Drag />
+                </DragHandle>
+              </DateInput>
+            </div>
+          )}
+        </Draggable>
+      );
   }
 }
 

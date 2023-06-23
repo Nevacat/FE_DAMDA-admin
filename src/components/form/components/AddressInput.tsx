@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getServiceAvailableLocation } from '@/api/form';
+import React, { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getServiceAvailableLocation, putForm } from '@/api/form';
 import { FormAddressWrapper } from '@/styles/pages/form/form.styled';
 import { FormAddressProps } from '@/types/components/form';
 import { AiOutlineDown } from 'react-icons/ai';
 import { motion, Variants } from 'framer-motion';
-import { AdditionalInfo } from '@/types/api/form';
+import { AdditionalInfo, AdminForm } from '@/types/api/form';
+import TitleEdit from '@/components/form/components/TitleEdit';
 
 const variants: Variants = {
   hover: {
@@ -13,8 +14,18 @@ const variants: Variants = {
   },
 };
 
-function AddressInput({ formData }: FormAddressProps) {
+function AddressInput({ formData, refetch, children }: FormAddressProps) {
+  const [isTitleEdit, setIsTitleEdit] = useState(false);
+  const [title, setTitle] = useState(formData.questionTitle);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { data, isLoading } = useQuery(['address'], getServiceAvailableLocation);
+  const { mutate } = useMutation(putForm, {
+    onSuccess: () => {
+      refetch();
+      setIsTitleEdit(false);
+    },
+  });
+
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
   const [currentAddressInfo, setCurrentAddressInfo] = useState<AdditionalInfo[]>([]);
 
@@ -42,9 +53,33 @@ function AddressInput({ formData }: FormAddressProps) {
     }
   }, [selectedIndex]);
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const onEditMode = () => {
+    setIsTitleEdit((prev) => !prev);
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+
+    if (isTitleEdit) {
+      const copiedData: AdminForm = { ...formData };
+      copiedData.questionTitle = title;
+
+      mutate({ data: copiedData });
+    }
+  };
+
   return (
     <FormAddressWrapper>
-      <h1>{formData.questionTitle}</h1>
+      {children}
+
+      <div className="header">
+        {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
+        <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />
+      </div>
 
       <div className="address-list">
         {data && (
