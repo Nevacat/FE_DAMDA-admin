@@ -5,12 +5,12 @@ import ChangeButton from '@/components/form/components/ChangeButton';
 import Plus from '@/components/form/components/svg/plus';
 import CheckGreen from '@/components/form/components/svg/CheckGreen';
 import { useMutation } from '@tanstack/react-query';
-import { deleteCategory, putCategoryList, putForm } from '@/api/form';
+import { putCategoryList, putForm } from '@/api/form';
 import TitleEdit from '@/components/form/components/TitleEdit';
-import { AdminForm, CategoryList } from '@/types/api/form';
+import { AdminForm } from '@/types/api/form';
 import { toast, ToastContainer, TypeOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DeleteRed from '@/components/form/components/svg/DeleteRed';
+import RadioDelete from '@/components/form/components/RadioDelete';
 
 function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
   const [isAddClicked, setIsAddClicked] = useState(false);
@@ -31,11 +31,6 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
       refetch();
       setIsAddClicked(false);
       setInput('');
-    },
-  });
-  const { mutate: deleteCategoryHandle } = useMutation(deleteCategory, {
-    onSuccess: () => {
-      refetch();
     },
   });
 
@@ -85,15 +80,6 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
     setTitle(e.target.value);
   };
 
-  const onDeleteClick = (category: CategoryList) => {
-    const value = confirm('ㄹ?ㅇ?');
-
-    if (value) {
-      const categoryNumber = category.id;
-      deleteCategoryHandle({ categoryNumber });
-    }
-  };
-
   return (
     <FormRadioWrapper>
       <ToastContainer />
@@ -107,9 +93,7 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
           {formData.categoryList?.map((category, index) => (
             <span className="radio-item" key={index}>
               {category.category}
-              <span className="delete" onClick={() => onDeleteClick(category)}>
-                <DeleteRed />
-              </span>
+              <RadioDelete category={category} refetch={refetch} />
             </span>
           ))}
           {isAddClicked && <input ref={addInput} type="text" placeholder="입력중" onChange={onChange} />}
