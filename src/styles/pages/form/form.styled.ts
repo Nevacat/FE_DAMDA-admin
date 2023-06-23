@@ -365,12 +365,6 @@ export const FormRadioWrapper = styled.div`
       border: 1px solid ${({ theme }) => theme.colors.yolda_gray_4};
       color: ${({ theme }) => theme.colors.yolda_gray_4};
       border-radius: 5px;
-
-      .delete {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-      }
     }
   }
 `;
@@ -431,6 +425,11 @@ export const FormDateInputWrapper = styled.div`
     flex-direction: column;
     gap: 16px;
 
+    .placeholder {
+      display: flex;
+      align-items: center;
+    }
+
     .radio-item-wrapper {
       display: flex;
       gap: 12px;
@@ -439,6 +438,7 @@ export const FormDateInputWrapper = styled.div`
         padding: 10px;
         width: 100px;
         height: 50px;
+        position: relative;
 
         font-weight: 500;
         font-size: 16px;
@@ -614,4 +614,10 @@ export const DragHandle = styled.div`
   position: absolute;
   left: -22px;
   top: 0;
+`;
+
+export const FormRadioDelete = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
 `;
