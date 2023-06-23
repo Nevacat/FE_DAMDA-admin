@@ -5,7 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 const useCompletedService = (onSuccess: (data: CompletedServiceRes) => void) => {
   const { mutate } = useMutation((reservationId: number) => getCompletedServiceData(reservationId), {
     onSuccess,
-    onError: onSuccess, //임시 (테스트용)
+    onError: (error) => {
+      alert('이미 리뷰작성이 완료 된 사용자입니다');
+    },
   });
 
   return mutate;

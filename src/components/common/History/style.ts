@@ -6,10 +6,12 @@ export const Histories = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
   width: 400px;
-  max-height: 80vh;
-  padding: 20px;
+  padding: 20px 20px 0;
+
+  .message {
+    text-align: center;
+  }
 `;
 
 export const HistoryItem = styled.div``;

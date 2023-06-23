@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormChangeBtn, FormChangeModal } from '@/styles/pages/form/form.styled';
 import Change from '@/components/form/components/svg/change';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { FormChangeButtonProps } from '@/types/components/form';
 import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';
