@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { FormInputProps } from '@/types/components/form';
+import { FormInputProps, FormTitleProps } from '@/types/components/form';
 import { FormTittleWrapper } from '@/styles/pages/form/form.styled';
 import { useMutation } from '@tanstack/react-query';
 import { putForm } from '@/api/form';
 import { AdminForm } from '@/types/api/form';
 import TitleEdit from '@/components/form/components/TitleEdit';
 
-function Title({ formData, refetch, children }: FormInputProps) {
+function Title({ formData, refetch }: FormTitleProps) {
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const [title, setTitle] = useState(formData.questionTitle);
   const inputRef = useRef<HTMLInputElement | null>(null);
