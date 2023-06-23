@@ -21,7 +21,7 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
         <T.Td>{review.name}</T.Td>
         <T.Td>{review.address}</T.Td>
         <S.ReviewContent>{review.title}</S.ReviewContent>
-        <T.Td>{review.createdAt}</T.Td>
+        <T.Td>{review.createAt.slice(0, 10)}</T.Td>
         <T.Td>
           {review.best ? (
             <StateButton state={'green'}>베스트 리뷰</StateButton>
