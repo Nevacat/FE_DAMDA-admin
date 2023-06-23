@@ -30,7 +30,7 @@ function String({ formData, refetch, children }: FormInputProps) {
     setTitle(e.target.value);
   };
 
-  const onPlaceHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPlaceHolderChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setPlaceHolder(e.target.value);
   };
 
@@ -60,7 +60,24 @@ function String({ formData, refetch, children }: FormInputProps) {
     }
   };
 
-  if (formData.questionIdentify === 'RESERVATIONREQUEST') return <></>;
+  if (formData.questionIdentify === 'RESERVATIONREQUEST')
+    return (
+      <FormInputWrapper>
+        {children}
+        <div className="header">
+          {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}
+          <TitleEdit isTitleEdit={isTitleEdit} onEditMode={onEditMode} />
+        </div>
+
+        <div className="textarea">
+          <textarea placeholder={placeHolder} onChange={onPlaceHolderChange} disabled={!isPlaceholderEdit} />
+          <TitleEdit isTitleEdit={isPlaceholderEdit} onEditMode={onPlaceHolderEdit} />
+        </div>
+        <div className="footer">
+          <span>0 / 150</span>
+        </div>
+      </FormInputWrapper>
+    );
 
   return (
     <FormInputWrapper>

@@ -13,13 +13,13 @@ export const StateButton = styled.div<{ state?: ServiceStateType | Colors }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   padding: 5px 15px;
   width: max-content;
   height: 32px;
   border-radius: 8px;
   user-select: none;
   cursor: default;
-
   //아무 state가 들어오지 않은 경우 기본컬러 회색
   color: ${theme.colors.yolda_gray_4};
   background-color: ${theme.colors.yolda_gray_7};

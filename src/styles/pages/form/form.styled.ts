@@ -5,6 +5,10 @@ export const FormLayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  .Toastify {
+    position: absolute;
+  }
 `;
 
 export const FormTitle = styled.div`
@@ -71,6 +75,7 @@ export const FormAddressWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
 
   .header {
     width: 300px;
@@ -238,6 +243,7 @@ export const FormSelectWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    overflow-x: hidden;
     span {
       display: flex;
       justify-content: space-between;
@@ -256,6 +262,17 @@ export const FormSelectWrapper = styled.div`
     border-radius: 0 0 5px 5px;
   }
 
+  .plus-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .add {
+    padding: 12px;
+    width: 100%;
+  }
+
   .button {
     position: absolute;
     top: 50px;
@@ -267,6 +284,7 @@ export const FormRadioWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
 
   h1 {
     font-weight: 800;
@@ -340,6 +358,7 @@ export const FormRadioWrapper = styled.div`
       width: 100px;
       height: 50px;
       padding: 10px;
+      position: relative;
 
       display: flex;
       align-items: center;
@@ -355,6 +374,7 @@ export const FormDateInputWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 390px;
+  position: relative;
 
   .header {
     display: flex;
@@ -405,6 +425,11 @@ export const FormDateInputWrapper = styled.div`
     flex-direction: column;
     gap: 16px;
 
+    .placeholder {
+      display: flex;
+      align-items: center;
+    }
+
     .radio-item-wrapper {
       display: flex;
       gap: 12px;
@@ -413,6 +438,7 @@ export const FormDateInputWrapper = styled.div`
         padding: 10px;
         width: 100px;
         height: 50px;
+        position: relative;
 
         font-weight: 500;
         font-size: 16px;
@@ -502,6 +528,35 @@ export const FormInputWrapper = styled.div`
     right: -50px;
     top: 50px;
   }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 14px 16px;
+    border: 1px solid ${({ theme }) => theme.colors.yolda_gray_1};
+    border-radius: 5px;
+    resize: none;
+
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      background-color: inherit;
+    }
+  }
+  .footer {
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 160%;
+    color: ${({ theme }) => theme.colors.yolda_gray_2};
+  }
+  .textarea {
+    height: 100px;
+    display: flex;
+    gap: 12px;
+  }
 `;
 
 export const FormChangeBtn = styled.div`
@@ -553,4 +608,16 @@ export const FormChangeModal = styled(motion.div)`
 
 export const EditButtonWrapper = styled(motion.div)`
   height: fit-content;
+`;
+
+export const DragHandle = styled.div`
+  position: absolute;
+  left: -22px;
+  top: 0;
+`;
+
+export const FormRadioDelete = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -10px;
 `;
