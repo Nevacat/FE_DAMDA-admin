@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import * as S from './style';
 import ModalContainer from '@/components/common/ModalContainer';
-import Image from 'next/image';
 import { StateButton } from '@/styles/common/StateButton';
 import { selectBestReview } from '@/api/review';
 import { ReviewContext } from '@/pages/review';
@@ -19,7 +18,7 @@ function ConfirmBest({ setIsOpen, reviewId }: ConfirmProps) {
 
   const onConfirm = async () => {
     try {
-      // await selectBestReview(reviewId)
+      await selectBestReview(reviewId);
       reviewMutate(0);
       setIsOpen(false);
     } catch (err) {

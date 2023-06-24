@@ -1,22 +1,29 @@
-import { deleteReviewImage, postReview } from '@/api/review';
+import { deleteReviewImage, postReviewAutoData, postReviewManual } from '@/api/review';
 import CompletedUserList from '@/components/reviewCreate/CompletedUserList';
 import ReviewCreateLayout from '@/components/reviewCreate/ReviewCreateLayout';
 import useCompletedService from '@/hook/useCompletedService';
 import useCompletedServices from '@/hook/useCompletedServices';
 import { CompletedServiceData, CompletedServiceRes, ServiceData, ServiceRes } from '@/types/api/service';
-import { BeforeAfter, FormDataType, ImageFormsType, ImagesType, UploaderProps } from '@/types/components/createReview';
+import { BeforeAfter, InputDataType, ImagesType, UploaderProps } from '@/types/components/createReview';
 import { useRouter } from 'next/router';
 import React, { createContext, useState } from 'react';
+
+export interface UserDataInputType {
+  address: string;
+  serviceDate: string;
+  name: string;
+}
 
 export const ImageUploaderContext = createContext<UploaderProps | null>(null);
 
 function ReviewCreate() {
   const router = useRouter();
-  // const beforeImageForm = new FormData();
-  // const afterImageForm = new FormData();
-  const [formData, setFormData] = useState<FormDataType>({ title: '', content: '' }); // 사용자가 추가한 리뷰 제목과 본문
+  const [isAutoMode, setIsAutoMode] = useState(true);
+  const [contentInput, setContentInput] = useState<InputDataType>({ title: '', content: '' }); // 사용자가 추가한 리뷰 제목과 본문
+  const [userDataInput, setUserDataInput] = useState<UserDataInputType>({ address: '', serviceDate: '', name: '' }); //직접입력모드 시 작성한 사용자 정보
   const [images, setImages] = useState<ImagesType>({ before: [], after: [] }); // 사용자가 추가한 이미지 (렌더링용)
-  const [imageForms, setImageForms] = useState<ImageFormsType>({ before: [], after: [] }); // api로 전송 할 이미지 formData
+  const [beforeFormData, setBeforeFormData] = useState<File[]>([]); //사용자가 추가한 이미지 (데이터전송용)
+  const [afterFormData, setAfterFormData] = useState<File[]>([]); //사용자가 추가한 이미지 (데이터전송용)
   const [users, setUsers] = useState<ServiceData[]>([]); // 서비스 완료 유저 목록
   const [user, setUser] = useState<CompletedServiceData | null>(null); // 선택 된 서비스 완료 유저
   const [page, setPage] = useState({
@@ -51,6 +58,7 @@ function ReviewCreate() {
   const onSelectUser = (reservationId: number) => {
     getUserData(reservationId);
     setPage({ ...page, page: 1 });
+    setIsAutoMode(true);
     setModalOpen(false);
   };
 
@@ -71,16 +79,23 @@ function ReviewCreate() {
     if (name === 'before' || name == 'after') return;
 
     if (name === 'title' || name === 'content') {
-      setFormData({ ...formData, [name]: e.target.value });
+      setContentInput({ ...contentInput, [name]: e.target.value });
       return;
     }
-    /* 
-    if ('직접입력모드') {
-      setAutoFill({
-        ...autoFill,
-        [name]: e.target.value,
-      });
-    } */
+
+    if (!isAutoMode) {
+      setUserDataInput({ ...userDataInput, [name]: e.target.value });
+    }
+  };
+
+  /**
+   * 직접입력모드로 전환
+   */
+  const autoModeOff = () => {
+    setUserDataInput({ address: '', serviceDate: '', name: '' });
+    setUser(null);
+    setIsAutoMode(false);
+    setModalOpen(false);
   };
 
   /**
@@ -92,14 +107,12 @@ function ReviewCreate() {
     if (!file) return;
 
     // const formData = new FormData();
-    setImageForms((prevImages) => {
-      if (type === 'before') {
-        return { ...prevImages, before: [file, ...prevImages.before] };
-      } else if (type === 'after') {
-        return { ...prevImages, after: [file, ...prevImages.after] };
-      }
-      return prevImages;
-    });
+
+    if (type === 'before') {
+      setBeforeFormData((prevImages) => [file, ...prevImages]);
+    } else if (type === 'after') {
+      setAfterFormData((prevImages) => [file, ...prevImages]);
+    }
 
     const reader = new FileReader();
 
@@ -131,17 +144,11 @@ function ReviewCreate() {
   const deleteAddedImage = (type: 'before' | 'after', idx: number) => {
     if (type === 'before') {
       setImages({ ...images, before: images.before.filter((image, nowIdx) => nowIdx !== idx) });
-      setImageForms((prevImages) => ({
-        ...prevImages,
-        before: imageForms.before.filter((image, nowIdx) => nowIdx !== idx),
-      }));
+      setBeforeFormData((prevImages) => prevImages.filter((image, nowIdx) => nowIdx !== idx));
     }
     if (type === 'after') {
       setImages({ ...images, after: images.after.filter((image, nowIdx) => nowIdx !== idx) });
-      setImageForms((prevImages) => ({
-        ...prevImages,
-        after: imageForms.after.filter((image, nowIdx) => nowIdx !== idx),
-      }));
+      setAfterFormData((prevImages) => prevImages.filter((image, nowIdx) => nowIdx !== idx));
     }
   };
 
@@ -174,23 +181,43 @@ function ReviewCreate() {
    */
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.content === '') return alert('내용을 입력해주세요');
-    if (formData.title === '') return alert('제목을 입력해주세요');
-    if (!user) return alert('고객을 선택해주세요');
+    if (contentInput.content === '') return alert('내용을 입력해주세요');
+    if (contentInput.title === '') return alert('제목을 입력해주세요');
 
-    const reservationId = user.reservationId;
-    const data = {
-      ...formData,
-      ...imageForms,
-    };
+    let formData = new FormData();
 
-    console.log(data);
+    formData.append('title', contentInput.title);
+    formData.append('content', contentInput.content);
 
-    try {
-      await postReview(reservationId, data);
-      router.push('/review');
-    } catch (err) {
-      console.log(err);
+    if (beforeFormData.length > 0) {
+      beforeFormData.forEach((before) => formData.append('before', before));
+    }
+    if (afterFormData.length > 0) {
+      afterFormData.forEach((after) => formData.append('after', after));
+    }
+
+    if (isAutoMode) {
+      if (!user) return alert('고객을 선택해주세요');
+
+      const reservationId = user.reservationId;
+
+      try {
+        await postReviewAutoData(reservationId, formData);
+        router.push('/review');
+      } catch (err) {
+        alert('리뷰 등록에 실패하였습니다');
+      }
+    } else {
+      formData.append('address', userDataInput.address);
+      formData.append('serviceDate', userDataInput.serviceDate);
+      formData.append('name', userDataInput.name);
+
+      try {
+        await postReviewManual(formData);
+        router.push('/review');
+      } catch (err) {
+        alert('리뷰 등록에 실패하였습니다');
+      }
     }
   };
 
@@ -198,9 +225,11 @@ function ReviewCreate() {
     <>
       <ImageUploaderContext.Provider value={{ selectImage, deleteAddedImage, deleteRegisteredImages }}>
         <ReviewCreateLayout
-          formData={formData}
+          contentInput={contentInput}
+          userDataInput={userDataInput}
           user={user}
           images={images}
+          isAutoMode={isAutoMode}
           setModalOpen={setModalOpen}
           onChangeInput={onChangeInput}
           onSubmit={onSubmit}
@@ -210,6 +239,7 @@ function ReviewCreate() {
         <CompletedUserList
           users={users}
           page={page}
+          autoModeOff={autoModeOff}
           getUserList={getUserList}
           setModalOpen={setModalOpen}
           onSelectUser={onSelectUser}

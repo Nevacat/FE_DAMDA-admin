@@ -3,12 +3,7 @@ export interface ImagesType {
   after: string[];
 }
 
-export interface ImageFormsType {
-  before: File[];
-  after: File[];
-}
-
-export interface FormDataType {
+export interface InputDataType {
   title: string;
   content: string;
 }

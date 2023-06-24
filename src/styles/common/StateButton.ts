@@ -3,22 +3,26 @@ import { css } from '@emotion/react';
 import { ServiceStateType } from '@/types/serviceState';
 import theme from '../theme';
 
-type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red';
+type Colors = 'orange' | 'purple' | 'blue' | 'green' | 'red' | 'gray';
 
 /**
  * @description state에는 버튼의 색상 혹은 버튼의 상태(State)로 인자 전달
  * State 는 types폴더의 ServiceState enum 확인
  */
-export const StateButton = styled.div<{ state: ServiceStateType | Colors }>`
+export const StateButton = styled.div<{ state?: ServiceStateType | Colors }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   padding: 5px 15px;
   width: max-content;
   height: 32px;
   border-radius: 8px;
   user-select: none;
   cursor: default;
+  //아무 state가 들어오지 않은 경우 기본컬러 회색
+  color: ${theme.colors.yolda_gray_4};
+  background-color: ${theme.colors.yolda_gray_7};
 
   ${({ state }) =>
     //주황색
@@ -58,5 +62,13 @@ export const StateButton = styled.div<{ state: ServiceStateType | Colors }>`
     css`
       color: #fd6a6a;
       background-color: #fff0f0;
+    `}
+
+  ${({ state }) =>
+    //회색
+    state === 'gray' &&
+    css`
+      color: ${theme.colors.yolda_gray_4};
+      background-color: ${theme.colors.yolda_gray_7};
     `}
 `;

@@ -18,6 +18,13 @@ export interface ReviewData {
   address: string;
   title: string;
   content: string;
-  createdAt: string;
+  createAt: string;
   best: boolean;
+}
+
+export interface ReviewPostReq {
+  title: string;
+  content: string;
+  before?: File[];
+  after?: File[];
 }

@@ -14,30 +14,9 @@ function ReviewPage() {
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [page, setPage] = useState({ page: 1, totalCount: 10 });
   const reviewMutate = useReview((data: ReviewRes) => {
-    // const currentData = data.data
-    // setReviews(currentData.content)
-    // setPage({ ...page, totalCount: currentData.totalElements})
-    setReviews([
-      {
-        reviewId: 1,
-        name: '김디버깅',
-        address: '경기도 하남시 망월동',
-        title: '친절하게 정리해주셔서 너무 고맙습니다~~!!',
-        content: '친절하게 정리해주셔서 너무 고맙습니다~~!!',
-        createdAt: '2023-06-15',
-        best: false,
-      },
-      {
-        reviewId: 2,
-        name: '박디버깅',
-        address: '경기도 남양주시 별내동',
-        title: '열다를 만나고 삶의 질이 달라졌어요!!',
-        content: '열다를 만나고 삶의 질이 달라졌어요!!',
-        createdAt: '2023-06-15',
-        best: true,
-      },
-    ]);
-    setPage({ ...page, totalCount: 20 });
+    const currentData = data.data;
+    setReviews(currentData.content);
+    setPage({ ...page, totalCount: currentData.totalElements });
   });
 
   const onPaging = (selectedPage: number) => {

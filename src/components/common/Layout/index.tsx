@@ -15,7 +15,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <S.Layout>
-      {router.pathname !== '/login' && <SideMenu />}
+      {router.pathname !== '/login' && <SideMenu router={router} />}
       <S.Main>{children}</S.Main>
     </S.Layout>
   );

@@ -19,7 +19,7 @@ function ConfirmDelete({ reviewId, setIsOpen }: ConfirmProps) {
 
   const onConfirm = async () => {
     try {
-      // await deleteReview(reviewId)
+      await deleteReview(reviewId);
       reviewMutate(0);
       setIsOpen(false);
     } catch (err) {
