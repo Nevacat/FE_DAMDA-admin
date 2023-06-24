@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { putManagerInfo } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
-import ReservationHistory from '../../ReservationHistory';
+import History from '@/components/common/History';
 
 import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
-import { useMutation } from '@tanstack/react-query';
-import { putManagerInfo } from '@/api/manager';
 
 interface ActiveManagerItemProps {
   activeManager: ManagerType;
@@ -15,6 +15,7 @@ interface ActiveManagerItemProps {
 
 function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const {
+    id,
     managerName,
     managerPhoneNumber,
     certificateStatus,
@@ -28,6 +29,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
     currManagerStatus,
   } = activeManager;
   const formData = {
+    id,
     managerName,
     managerPhoneNumber,
     certificateStatus,
@@ -142,7 +144,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
       <S.ManagerTd>
         <StateButton state={'blue'} onClick={() => setIsHistoryOpen(true)}>
           예약 내역
-          {isHistoryOpen && <ReservationHistory setIsOpen={setIsHistoryOpen} />}
+          {isHistoryOpen && <History type="MANAGER" userId={id} username={managerName} setIsOpen={setIsHistoryOpen} />}
         </StateButton>
       </S.ManagerTd>
 

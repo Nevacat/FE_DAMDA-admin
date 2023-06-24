@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { putManagerInfo } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
+import History from '@/components/common/History';
 
 import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
-import { useMutation } from '@tanstack/react-query';
-import { putManagerInfo } from '@/api/manager';
 import useManagerStore from '@/store/managerForm';
 
 function ManagerItem({ data }: any) {
@@ -48,6 +49,7 @@ function ManagerItem({ data }: any) {
   const [isVehicleOpen, setIsVehicleOpen] = useState(false);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isEtcOpen, setIsEtcOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -374,7 +376,10 @@ function ManagerItem({ data }: any) {
       </S.ManagerTd>
 
       <S.ManagerTd>
-        <StateButton state={'blue'}>예약 내역</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsHistoryOpen(true)}>
+          예약 내역
+          {isHistoryOpen && <History type="MANAGER" userId={id} username={managerName} setIsOpen={setIsHistoryOpen} />}
+        </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd style={{ position: 'relative' }}>
