@@ -24,8 +24,8 @@ function MainLayout() {
 
   const today = new Date();
   const [date, setDate] = React.useState<{ startDate: Date | null; endDate: Date | null }>({
-    startDate: today,
-    endDate: today,
+    startDate: null,
+    endDate: null,
   });
 
   const { data: resData, refetch } = useQuery<MainData>(['MainData', date, page], () =>
