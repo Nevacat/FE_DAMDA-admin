@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { useQuery } from '@tanstack/react-query';
 import { getCompletedServiceImages } from '@/api/service';
+import Loading from '../Loading';
 
 interface CompletedServiceProps {
   reservationId: number;
@@ -32,7 +33,11 @@ function CompletedService({ reservationId, setIsOpen }: CompletedServiceProps) {
       <>
         <TopBarGray title="매니저 서비스 완료 폼" setIsOpen={setIsOpen} />
         <S.CompletedFormContainer>
-          {isLoading && <div className="message">데이터를 불러오고 있습니다.</div>}
+          {isLoading && (
+            <div className="message">
+              <Loading />
+            </div>
+          )}
           {isError && <div className="message">제출 된 서비스 완료 폼이 없습니다</div>}
           {formData && (
             <>

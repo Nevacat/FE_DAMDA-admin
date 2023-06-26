@@ -10,7 +10,10 @@ export const Histories = styled.div`
   padding: 20px 20px 0;
 
   .message {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
   }
 `;
 

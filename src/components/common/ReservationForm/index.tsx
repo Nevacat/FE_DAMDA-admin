@@ -5,6 +5,7 @@ import TopBarGray from '@/components/common/TopBarGray';
 import { useQuery } from '@tanstack/react-query';
 import { getReservationFormDetail } from '@/api/user';
 import { ReservationFormDetailData } from '@/types/api/user';
+import Loading from '../Loading';
 
 interface ReservationFormProp {
   reservationId: number;
@@ -24,7 +25,11 @@ function ReservationForm({ reservationId, setIsOpen }: ReservationFormProp) {
     <ModalContainer setIsOpen={setIsOpen}>
       <>
         <TopBarGray title="고객예약 폼" setIsOpen={setIsOpen} />
-        {isLoading && <div className="message">데이터를 불러오고 있습니다.</div>}
+        {isLoading && (
+          <div className="message">
+            <Loading />
+          </div>
+        )}
         {formData && (
           <S.ReservationForm>
             <S.UserInfo>
