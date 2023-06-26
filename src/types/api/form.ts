@@ -53,7 +53,7 @@ export interface UpdateQuestionOrder {
 
 export interface QuestionOrder {
   questionNumber: number;
-  order: number;
+  questionOrder: number;
   page: number;
 }
 
