@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { putManagerInfo } from '@/api/manager';
+import { putManagerInfo, putManagerStatus } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
 import History from '@/components/common/History';
@@ -49,6 +49,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   };
 
   const { mutate } = useMutation(putManagerInfo);
+  const { mutate: statusHandler } = useMutation(putManagerStatus);
 
   // 오픈 여부
   const [isLocationOpen, setIsLocationOpen] = useState(false);
@@ -100,7 +101,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         break;
     }
 
-    mutate({ id, formData: { ...formData, currManagerStatus: value } });
+    statusHandler({ id, status: { currStatus: value } });
     setIsStatusOpen(false);
   };
 
