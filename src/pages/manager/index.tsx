@@ -11,10 +11,29 @@ function ManagerPage() {
     queryKey: ['active'],
     queryFn: () => getManagers('ACTIVE'),
   });
+  const { data: waitingManagers } = useQuery({
+    queryKey: ['waiting'],
+    queryFn: () => getManagers('WAITING'),
+  });
+  const { data: pendingManagers } = useQuery({
+    queryKey: ['pending'],
+    queryFn: () => getManagers('PENDING'),
+  });
+  const { data: inactiveManagers } = useQuery({
+    queryKey: ['inactive'],
+    queryFn: () => getManagers('INACTIVE'),
+  });
 
   // if (!activeManagers) return;
 
-  return <ManagerLayout activeManagers={activeManagers} />;
+  return (
+    <ManagerLayout
+      activeManagers={activeManagers}
+      waitingManagers={waitingManagers}
+      pendingManagers={pendingManagers}
+      inactiveManagers={inactiveManagers}
+    />
+  );
 }
 
 export default ManagerPage;

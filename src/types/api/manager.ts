@@ -10,3 +10,8 @@ export interface ManagerHistoryRes {
 }
 
 export interface ManagerHistoryData extends UserHistoryData {}
+
+export interface ManagerRegionRequest {
+  id: number;
+  region: { 서울특별시?: string[]; 경기도?: string[] };
+}

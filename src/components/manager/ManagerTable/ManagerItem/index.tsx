@@ -257,26 +257,6 @@ function ManagerItem({ data }: any) {
                   </S.OptionButton>
                 </li>
               </ul>
-
-              {isEtcOpen && (
-                <S.InputWrapper>
-                  <input
-                    type="text"
-                    defaultValue={certificateStatusEtc}
-                    autoFocus
-                    placeholder="자격증 이름"
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsCertificateOpen(true);
-                    }}
-                  />
-
-                  <button type="button" onClick={etcSubmitHandler}>
-                    제출
-                  </button>
-                </S.InputWrapper>
-              )}
             </div>
           </S.CertificateForm>
         )}

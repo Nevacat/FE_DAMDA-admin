@@ -45,10 +45,10 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {waiting &&
             category === 'all' &&
-            waiting.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            waiting?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
           {waiting &&
             category === 'waiting' &&
-            waiting.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            waiting?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* ----------- PENDING ----------- */}
           {pending && category === 'all' && '보류 매니저' && (
@@ -58,7 +58,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {pending &&
             category === 'all' &&
-            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            pending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
           {/* 기존 매니저 중 보류 매니저.map() */}
           {pending && category === 'pending' && (
             <tr>
@@ -67,7 +67,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {pending &&
             category === 'pending' &&
-            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            pending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* 예비 매니저 중 보류 매니저.map() */}
           {pending && category === 'pending' && (
@@ -77,7 +77,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {pending &&
             category === 'pending' &&
-            pending.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            pending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* ----------- INACTIVE ----------- */}
           {inactive && category === 'all' && '활동 불가 매니저' && (
@@ -87,7 +87,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {inactive &&
             category === 'all' &&
-            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            inactive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
           {/* 기존 매니저 중 활동 불가 매니저.map() */}
           {inactive && category === 'inactive' && (
             <tr>
@@ -96,7 +96,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {inactive &&
             category === 'inactive' &&
-            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            inactive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
           {/* 예비 매니저 중 활동 불가 매니저.map() */}
           {inactive && category === 'inactive' && (
@@ -106,7 +106,7 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           )}
           {inactive &&
             category === 'inactive' &&
-            inactive.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+            inactive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
         </tbody>
       </G.Table>
     </G.TableContainer>

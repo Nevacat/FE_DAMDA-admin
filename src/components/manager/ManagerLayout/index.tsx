@@ -4,12 +4,13 @@ import ManagerTable from '../ManagerTable';
 import ActiveManager from '../ManagerTable/ActiveManager';
 
 import * as S from './style';
+import { ManagerType } from '@/types/manager';
 
 interface ManagerLayoutProps {
-  activeManagers: ManagerType[];
+  [key: string]: ManagerType[];
 }
 
-function ManagerLayout({ activeManagers }: any) {
+function ManagerLayout({ activeManagers, waitingManagers, pendingManagers, inactiveManagers }: any) {
   const [category, setCategory] = useState('all');
 
   return (
@@ -38,19 +39,9 @@ function ManagerLayout({ activeManagers }: any) {
 
       {/* 필터링 버튼에 따라 다른 데이터 전달 */}
       <ManagerTable
-        waiting={[
-          { name: 'W1', managerStatus: '대기' },
-          { name: 'W2', managerStatus: '대기' },
-          { name: 'W2', managerStatus: '대기' },
-        ]}
-        pending={[
-          { name: 'P1', managerStatus: '보류' },
-          { name: 'P2', managerStatus: '보류' },
-        ]}
-        inactive={[
-          { name: 'I1', managerStatus: '활동 불가' },
-          { name: 'I2', managerStatus: '활동 불가' },
-        ]}
+        waiting={waitingManagers}
+        pending={pendingManagers}
+        inactive={inactiveManagers}
         category={category}
       />
     </div>

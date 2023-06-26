@@ -1,13 +1,13 @@
-import { ManagerHistoryRes } from '@/types/api/manager';
+import { ManagerHistoryRes, ManagerRegionRequest } from '@/types/api/manager';
 import { instance } from './instance';
 
 export const getManagers = async (status: string) => {
-  const response = await instance.get<ManagerType[]>(`/admin/manager?status=${status}`);
-  return response.data;
+  const response = await instance.get(`/admin/manager?status=${status}`);
+  return response.data.data.content;
 };
 
 export const putManagerInfo = async ({ id, formData }: any) => {
-  const response = await instance.put(`/admin/manager${id}/info`, formData);
+  const response = await instance.put(`/admin/manager/${id}/info`, formData);
   return response.data;
 };
 
@@ -20,4 +20,9 @@ export const getManagerHistory = async ({ managerId, page }: { managerId: number
   });
   console.log(res);
   return res.data;
+};
+
+export const putManagerRegion = async ({ id, region }: ManagerRegionRequest) => {
+  const response = await instance.put(`/admin/manager/${id}/region`, region);
+  return response.data;
 };
