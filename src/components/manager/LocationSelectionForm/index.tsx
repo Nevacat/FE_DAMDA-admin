@@ -5,10 +5,11 @@ import { citiesData } from '@/constants/locationData';
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs';
 import * as S from './style';
 import { useMutation } from '@tanstack/react-query';
-import { putManagerRegion } from '@/api/manager';
+import { deleteManagerRegion, putManagerRegion } from '@/api/manager';
 
 function LocationSelectionForm({ region, id }: any) {
   const { mutate } = useMutation(putManagerRegion);
+  const { mutate: deleteRegion } = useMutation(deleteManagerRegion);
 
   const [isLocationOptionsOpen, setIsLocationOptionsOpen] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
@@ -38,37 +39,21 @@ function LocationSelectionForm({ region, id }: any) {
 
     if (isChecked) {
       if (selectedRegion === '서울특별시') {
-        // 매니저 활동 지역 추가 api 요청
-        mutate({
-          id,
-          region: {
-            서울특별시: [...region.서울특별시, district],
-          },
-        });
+        mutate({ id, region: { SEOUL: district } });
       } else if (selectedRegion === '경기도') {
-        // 매니저 활동 지역 삭제 api 요청
-        mutate({
-          id,
-          region: {
-            경기도: [...region.경기도, district],
-          },
-        });
+        mutate({ id, region: { GYEONGGI: district } });
       }
     } else {
-      if (selectedRegion === '서울특별시') {
-        mutate({
-          id,
-          region: {
-            서울특별시: region.서울특별시.filter((seoul: string) => seoul !== district),
-          },
-        });
-      } else if (selectedRegion === '경기도') {
-        mutate({
-          id,
-          region: {
-            경기도: region.경기도.filter((gyeonggi: string) => gyeonggi !== district),
-          },
-        });
+      const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+
+      if (checkedCount >= 1) {
+        if (selectedRegion === '서울특별시') {
+          deleteRegion({ id, region: { SEOUL: district } });
+        } else if (selectedRegion === '경기도') {
+          deleteRegion({ id, region: { GYEONGGI: district } });
+        }
+      } else {
+        e.target.checked = true;
       }
     }
   };

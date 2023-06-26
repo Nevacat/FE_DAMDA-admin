@@ -23,6 +23,11 @@ export const getManagerHistory = async ({ managerId, page }: { managerId: number
 };
 
 export const putManagerRegion = async ({ id, region }: ManagerRegionRequest) => {
-  const response = await instance.put(`/admin/manager/${id}/region`, region);
+  const response = await instance.put(`/admin/region/add/${id}`, region);
+  return response.data;
+};
+
+export const deleteManagerRegion = async ({ id, region }: ManagerRegionRequest) => {
+  const response = await instance.put(`/admin/region/delete/${id}`, region);
   return response.data;
 };

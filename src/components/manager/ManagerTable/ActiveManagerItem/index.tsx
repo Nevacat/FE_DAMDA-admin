@@ -150,23 +150,28 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
 
   let transformedStatus;
   if (certificateStatus === 'ETC') {
-    return certificateStatusEtc;
+    transformedStatus = certificateStatusEtc;
   } else {
     switch (certificateStatus) {
       case 'FIRST_RATE_OFF':
-        return (transformedStatus = '1급 (off)');
+        transformedStatus = '1급 (off)';
+        break;
 
       case 'SECOND_RATE_OFF':
-        return (transformedStatus = '2급 (off)');
+        transformedStatus = '2급 (off)';
+        break;
 
       case 'FIRST_RATE_ON':
-        return (transformedStatus = '1급 (on)');
+        transformedStatus = '1급 (on)';
+        break;
 
       case 'SECOND_RATE_ON':
-        return (transformedStatus = '2급 (on)');
+        transformedStatus = '2급 (on)';
+        break;
 
       case 'NONE':
-        return (transformedStatus = '없음');
+        transformedStatus = '없음';
+        break;
 
       default:
         break;
