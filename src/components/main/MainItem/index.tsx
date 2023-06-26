@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as T from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import { ReviewData } from '@/types/api/review';
 import { Reservation } from '@/types/api/main';
 import * as S from './style';
 import { ServiceState } from '@/types/serviceState';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { putStatusCancel, putStatusComplete } from '@/api/main';
 
 interface MainItemProps {
   Data: Reservation;
@@ -15,8 +17,13 @@ enum PayState {
   PAYMENT_COMPLETED = '입금',
 }
 
-type ServiceStateType = keyof typeof ServiceState;
-type PayStateType = keyof typeof PayState;
+const ActionType = {
+  MANAGER_MATCHING_COMPLETED: '예약 취소',
+  WAITING_FOR_MANAGER_REQUEST: '예약 취소',
+  WAITING_FOR_ACCEPT_MATCHING: '예약 취소',
+  SERVICE_COMPLETED: '결제완료',
+  RESERVATION_CANCELLATION: '',
+};
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -33,10 +40,40 @@ function addCommasToPrice(price: number) {
 }
 
 function MainItem({ Data }: MainItemProps) {
-  const state: ServiceStateType = Data.reservationStatus as ServiceStateType;
-  const payState: PayStateType = Data.payMentStatus as PayStateType;
-
+  const state: any = ServiceState[Data.reservationStatus];
+  const payState: any = PayState[Data.payMentStatus];
+  const ActionState: any = ActionType[Data.reservationStatus];
   const formattedPrice = addCommasToPrice(Data.totalPrice); // price 값에 쉼표 추가
+
+  const queryClient = useQueryClient();
+  const { mutate: cancelMutation } = useMutation(putStatusCancel, {
+    onSuccess: () => {
+      // Trigger refetch after successful cancelMutation
+      queryClient.refetchQueries(); // Replace 'reservationData' with the appropriate key for your query
+    },
+  });
+
+  const { mutate: completeMutation } = useMutation(putStatusComplete, {
+    onSuccess: () => {
+      // Trigger refetch after successful completeMutation
+      queryClient.refetchQueries(); // Replace 'reservationData' with the appropriate key for your query
+    },
+  });
+
+  const onUpdateStatus = (Action: string, ListId: number) => {
+    if (Action === '예약 취소') {
+      cancelMutation(ListId);
+    }
+    if (Action === '결제완료') {
+      completeMutation(ListId);
+    }
+  };
+
+  const onPopup = (state: string, ListId: number) => {
+    if (state === '매칭수락 대기') {
+      // 팝업 처리 로직 추가
+    }
+  };
 
   return (
     <>
@@ -58,12 +95,22 @@ function MainItem({ Data }: MainItemProps) {
           ))}
         </T.Td>
         <T.Td>
-          <StateButton state={Data.reservationStatus}>{state}</StateButton>
+          <StateButton state={Data.reservationStatus} onClick={() => onPopup(state, Data.id)}>
+            {state}
+          </StateButton>
         </T.Td>
         <T.Td>
-          <S.Paybox state={Data.payMentStatus}>{payState}</S.Paybox>
+          <S.PayBox state={Data.payMentStatus}>{payState}</S.PayBox>
         </T.Td>
-        <T.Td></T.Td>
+        <T.Td>
+          <S.ActionBox
+            reservationState={Data.reservationStatus}
+            payState={Data.payMentStatus}
+            onClick={() => onUpdateStatus(ActionState, Data.id)}
+          >
+            {Data.payMentStatus === 'NOT_PAID_FOR_ANYTHING' ? ActionState : ''}
+          </S.ActionBox>
+        </T.Td>
       </T.Tr>
     </>
   );
