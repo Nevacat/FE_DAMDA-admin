@@ -43,23 +43,23 @@ function CompletedService({ reservationId, setIsOpen }: CompletedServiceProps) {
             <>
               <S.StateTitle>정리 전</S.StateTitle>
               <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={2.7} scrollbar={{ draggable: true }}>
-                <SwiperSlide>
-                  {formData.before.map((before, idx) => (
-                    <S.Box key={idx}>
+                {formData.before.map((before, idx) => (
+                  <SwiperSlide key={idx}>
+                    <S.Box>
                       <Image src={before} alt="service-before" fill />
                     </S.Box>
-                  ))}
-                </SwiperSlide>
+                  </SwiperSlide>
+                ))}
               </Swiper>
               <S.StateTitle>정리 후</S.StateTitle>
               <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={2.7} scrollbar={{ draggable: true }}>
-                <SwiperSlide>
-                  {formData.before.map((before, idx) => (
-                    <S.Box key={idx}>
+                {formData.after.map((before, idx) => (
+                  <SwiperSlide key={idx}>
+                    <S.Box>
                       <Image src={before} alt="service-before" fill />
                     </S.Box>
-                  ))}
-                </SwiperSlide>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </>
           )}

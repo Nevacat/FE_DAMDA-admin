@@ -4,6 +4,7 @@ import { PageTitle } from '@/styles/common/PageTitle';
 import { PaginationContainer } from '../common/PaginationContainer/style';
 import Pagination from 'react-js-pagination';
 import { SearchForm } from '@/styles/common/SearchForm';
+import { StateButton } from '@/styles/common/StateButton';
 
 interface UserLayoutProp {
   page: {

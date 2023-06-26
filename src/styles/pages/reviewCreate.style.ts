@@ -20,6 +20,10 @@ export const Row = styled.div`
   grid-template-columns: 60px 1fr 1fr;
   gap: 17px;
 
+  &.align_center {
+    align-items: center;
+  }
+
   textarea {
     ${theme.font.regular_14}
     grid-column: 2/4;
