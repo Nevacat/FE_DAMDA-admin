@@ -115,7 +115,6 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         break;
     }
 
-    console.log(value);
     statusHandler({ id, status: { currManagerStatus: value } });
     setIsStatusOpen(false);
   };
@@ -163,6 +162,20 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const etcSubmitHandler = () => {
     mutate({ id, formData: { ...formData, certificateStatus: 'ETC', certificateStatusEtc: inputValue } });
   };
+
+  let transformedPhoneNumber;
+  switch (managerPhoneNumber.length) {
+    case 10:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+      break;
+
+    case 11:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+      break;
+
+    default:
+      break;
+  }
 
   let transformedStatus;
   if (certificateStatus === 'ETC') {
@@ -214,7 +227,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         {isEditingPhone ? (
           <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
         ) : (
-          managerPhoneNumber
+          transformedPhoneNumber
         )}
       </S.ManagerTd>
 

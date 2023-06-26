@@ -245,6 +245,20 @@ function ManagerItem({ data }: any) {
     }
   }
 
+  let transformedPhoneNumber;
+  switch (managerPhoneNumber.length) {
+    case 10:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+      break;
+
+    case 11:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+      break;
+
+    default:
+      break;
+  }
+
   const selectLevelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     mutate({ id, formData: { ...formData, level: e.currentTarget.innerText } });
     setIsEditingLevel(false);
@@ -276,7 +290,7 @@ function ManagerItem({ data }: any) {
         {isEditingPhone ? (
           <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
         ) : (
-          managerPhoneNumber
+          transformedPhoneNumber
         )}
       </S.ManagerTd>
 
