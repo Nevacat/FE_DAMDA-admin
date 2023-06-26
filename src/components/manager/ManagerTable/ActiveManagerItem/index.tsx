@@ -52,15 +52,12 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
 
   const { mutate } = useMutation(putManagerInfo, {
     onSuccess() {
-      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['managers']);
     },
   });
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
-      queryClient.invalidateQueries(['active']);
-      queryClient.invalidateQueries(['waiting']);
-      queryClient.invalidateQueries(['pending']);
-      queryClient.invalidateQueries(['inactive']);
+      queryClient.invalidateQueries(['managers']);
     },
   });
 
@@ -91,8 +88,8 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   };
 
   const vehicleChangeHandler = () => {
-    setIsVehicleOpen(false);
     mutate({ id, formData: { ...formData, vehicle: vehicle ? false : true } });
+    setIsVehicleOpen(false);
   };
 
   const stateChangeHandler = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -110,11 +107,16 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         value = 'INACTIVE';
         break;
 
+      case '활동 중':
+        value = 'ACTIVE';
+        break;
+
       default:
         break;
     }
 
-    statusHandler({ id, status: { currStatus: value } });
+    console.log(value);
+    statusHandler({ id, status: { currManagerStatus: value } });
     setIsStatusOpen(false);
   };
 
@@ -192,9 +194,10 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
     }
   }
 
-  const memoBlurHandler = (e: React.ChangeEvent<HTMLTextAreaElement> | any) => {
+  const memoBlurHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     mutate({ id, formData: { ...formData, memo: value } });
+    setIsMemoOpen(false);
   };
 
   return (
@@ -385,17 +388,11 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         )}
       </S.ManagerTd>
 
-      <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)} onMouseLeave={() => setIsMemoOpen(false)}>
+      <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)}>
         <StateButton state={'blue'}>메모</StateButton>
 
         {isMemoOpen && (
-          <textarea
-            name=""
-            id=""
-            onBlur={memoBlurHandler}
-            onMouseLeave={memoBlurHandler}
-            defaultValue={memo}
-          ></textarea>
+          <textarea autoFocus={isMemoOpen} name="" id="" defaultValue={memo} onBlur={memoBlurHandler}></textarea>
         )}
       </S.ManagerTd>
     </G.Tr>

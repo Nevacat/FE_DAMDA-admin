@@ -32,6 +32,11 @@ export const deleteManagerRegion = async ({ id, region }: ManagerRegionRequest) 
   return response.data;
 };
 
-export const putManagerStatus = async ({ id, status }: { id: number; status: { currStatus: string } }) => {
+export const putManagerStatus = async ({ id, status }: { id: number; status: { currManagerStatus: string } }) => {
   const response = await instance.put(`/admin/manager/${id}/status`, status);
+};
+
+export const getAllManagers = async () => {
+  const response = await instance.get('/admin/manager');
+  return response.data.data.content;
 };

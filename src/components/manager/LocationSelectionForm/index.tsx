@@ -61,7 +61,7 @@ function LocationSelectionForm({ region, id }: any) {
   const filterTagHandler = (districtItem: string) => {};
 
   // 지역 태그
-  const seoul = region.서울특별시.map((seoul: string, index: number) => (
+  const seoul = region?.서울특별시.map((seoul: string, index: number) => (
     <div key={index}>
       서울 {seoul}
       <button type="button" onClick={() => filterTagHandler(seoul)}>
@@ -70,7 +70,7 @@ function LocationSelectionForm({ region, id }: any) {
     </div>
   ));
 
-  const gyeonggi = region.경기도.map((gyeonggi: string, index: number) => (
+  const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => (
     <div key={index}>
       경기 {gyeonggi}
       <button type="button" onClick={() => filterTagHandler(gyeonggi)}>
