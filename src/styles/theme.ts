@@ -5,6 +5,8 @@ const colors = {
   main_blue: '#0061FF',
   sub_blue_1: '#00BDFF',
   sub_blue_2: '#80CFFF',
+  sub_blue_3: '#CCECFF',
+  sub_blue_4: '#E5F5FF',
   red_1: '#DF001F',
   green_1: '#04D741',
   yellow_1: '#F9E500',
@@ -13,6 +15,8 @@ const colors = {
   yolda_gray_3: '#858585',
   yolda_gray_4: '#A6A6A6',
   yolda_gray_5: '#C7C7C7',
+  yolda_gray_6: '#CBD5E0',
+  yolda_gray_7: '#EEEFF2',
 };
 
 const font = {

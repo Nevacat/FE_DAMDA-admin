@@ -1,20 +1,21 @@
-import useAuthStore from '@/store/auth';
 import SideMenu from '../SideMenu';
 import * as S from './style';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useAuthValidate } from '@/hook/useAuthValidate';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { user } = useAuthStore((state) => state);
+  const validateMutate = useAuthValidate();
 
   useEffect(() => {
-    // if (!user.isLogin) router.push('/login');
+    // 페이지 전환 시 로그인 여부 인증
+    validateMutate();
   }, []);
 
   return (
     <S.Layout>
-      {router.pathname !== '/login' && <SideMenu />}
+      {router.pathname !== '/login' && <SideMenu router={router} />}
       <S.Main>{children}</S.Main>
     </S.Layout>
   );

@@ -1,7 +1,8 @@
+import MainLayout from '@/components/main/MainLayout';
 import * as S from '@/styles/pages/reserve.style';
 
 function ReservePage() {
-  return <div>예약관리</div>;
+  return <MainLayout />;
 }
 
 export default ReservePage;

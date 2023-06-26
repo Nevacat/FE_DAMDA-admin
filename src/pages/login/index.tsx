@@ -1,44 +1,50 @@
-import { getToken } from '@/api/auth';
-import { handleLogin } from '@/utils/handleLogin';
-import { useRouter } from 'next/router';
+import { useForm, FieldValues } from 'react-hook-form';
 import React, { useEffect } from 'react';
-import * as S from '@/styles/pages/login.style';
-import { useAuth } from '@/hook/useAuth';
+import { useRouter } from 'next/router';
+import { login } from '@/api/auth';
+import useAuthStore from '@/store/auth';
+import LoginLayout from '@/components/login/LoginLayout';
 
 function Login() {
   const router = useRouter();
-  const getUserData = useAuth();
+  const { isLogin, setLogin } = useAuthStore((state) => state);
 
-  const handleRedirect = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm();
 
-    if (code) {
-      await getToken(code);
-      // getUserData();
+  const submitLogin = async (data: FieldValues) => {
+    const loginData = {
+      username: data.username.trim(),
+      password: data.password.trim(),
+    };
+
+    try {
+      await login(loginData);
+      setLogin();
       router.push('/');
-    } else {
-      handleLogin();
+    } catch (error) {
+      alert('아이디와 비밀번호를 확인해주세요');
     }
   };
 
   useEffect(() => {
-    handleRedirect();
+    if (isLogin) {
+      alert('이미 로그인 되어있습니다.');
+      router.back();
+    }
   }, []);
 
   return (
-    <S.LoginPage>
-      <h2>
-        3초 후 <br /> 열다 카카오톡 서비스로 이동합니다 :)
-      </h2>
-
-      <div className="login_button">
-        <p>기다려도 로그인이 되지 않는다면?</p>
-        <button className="ir-text" onClick={handleLogin}>
-          Kakao 로그인
-        </button>
-      </div>
-    </S.LoginPage>
+    <LoginLayout
+      register={register}
+      handleSubmit={handleSubmit}
+      submitLogin={submitLogin}
+      isSubmitting={isSubmitting}
+      errors={errors}
+    />
   );
 }
 

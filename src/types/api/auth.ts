@@ -1,7 +1,3 @@
-export interface LoginRes {
-  data: string;
-}
-
 export interface UserRes {
   data: UserData;
 }
