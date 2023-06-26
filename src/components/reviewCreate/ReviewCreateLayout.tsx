@@ -36,16 +36,17 @@ function ReviewCreateLayout({
       <S.ReviewForm onSubmit={onSubmit} onChange={onChangeInput}>
         <S.Row>
           <S.Label htmlFor="title">제목</S.Label>
-          <S.Input id="title" placeholder="제목" value={contentInput.title} autoComplete="off" />
+          <S.Input id="title" placeholder="제목" value={contentInput.title} autoComplete="off" maxLength={25} />
         </S.Row>
-        <S.Row>
+        <S.Row className="align_center">
           <S.Label htmlFor="name">이름</S.Label>
           <div className="cover" onClick={() => isAutoMode && setModalOpen(true)}>
             <S.Input
               id="name"
               placeholder="고객을 선택해주세요."
-              value={isAutoMode ? user?.name : userDataInput.name}
+              value={isAutoMode && user ? user.name : userDataInput.name}
               autoComplete="off"
+              maxLength={18}
             />
           </div>
           {!isAutoMode && (
@@ -56,14 +57,19 @@ function ReviewCreateLayout({
         </S.Row>
         <S.Row>
           <S.Label htmlFor="address">주소</S.Label>
-          <S.Input id="address" value={isAutoMode ? user?.address : userDataInput.address} autoComplete="off" />
+          <S.Input
+            id="address"
+            value={isAutoMode && user ? user.address : userDataInput.address}
+            autoComplete="off"
+            maxLength={25}
+          />
         </S.Row>
         <S.Row>
           <S.Label htmlFor="serviceDate">예약 일자</S.Label>
           <S.Input
             id="serviceDate"
             type="date"
-            value={isAutoMode ? user?.reservationDate.slice(0, 10) : userDataInput.serviceDate}
+            value={isAutoMode && user ? user.reservationDate.slice(0, 10) : userDataInput.serviceDate}
             autoComplete="off"
           />
         </S.Row>

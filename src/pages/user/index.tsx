@@ -67,6 +67,7 @@ function UserPage() {
 
   const onUserListPaging = (page: number) => {
     setUserListPage({ ...userListPage, page });
+    userListMutate({ page: page - 1, search: savedSearchInput });
   };
 
   useEffect(() => {

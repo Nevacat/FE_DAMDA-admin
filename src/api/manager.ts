@@ -18,7 +18,6 @@ export const getManagerHistory = async ({ managerId, page }: { managerId: number
       size: 5,
     },
   });
-  console.log(res);
   return res.data;
 };
 
