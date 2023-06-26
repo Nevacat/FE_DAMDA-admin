@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putManagerInfo, putManagerStatus } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
@@ -48,8 +48,21 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
     currManagerStatus,
   };
 
-  const { mutate } = useMutation(putManagerInfo);
-  const { mutate: statusHandler } = useMutation(putManagerStatus);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(putManagerInfo, {
+    onSuccess() {
+      queryClient.invalidateQueries(['active']);
+    },
+  });
+  const { mutate: statusHandler } = useMutation(putManagerStatus, {
+    onSuccess() {
+      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['waiting']);
+      queryClient.invalidateQueries(['pending']);
+      queryClient.invalidateQueries(['inactive']);
+    },
+  });
 
   // 오픈 여부
   const [isLocationOpen, setIsLocationOpen] = useState(false);
