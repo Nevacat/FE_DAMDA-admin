@@ -31,9 +31,21 @@ function ReviewTable({ reviews }: ReviewTableProps) {
           </T.Tr>
         </T.Thead>
         <T.Tbody>
-          {reviews.map((review) => (
-            <ReviewItem key={review.reviewId} review={review} />
-          ))}
+          {reviews.length > 0 ? (
+            reviews.map((review) => <ReviewItem key={review.reviewId} review={review} />)
+          ) : (
+            <tr>
+              <td
+                colSpan={6}
+                style={{
+                  textAlign: 'center',
+                  lineHeight: 5,
+                }}
+              >
+                등록 된 리뷰가 없습니다.
+              </td>
+            </tr>
+          )}
         </T.Tbody>
       </T.Table>
     </T.TableContainer>

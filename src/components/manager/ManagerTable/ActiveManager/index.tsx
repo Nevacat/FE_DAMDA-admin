@@ -29,13 +29,9 @@ function ActiveManager({ activeManagers }: ActiveManagerProps) {
         </G.Thead>
 
         <tbody>
-          {/* {activeManagers.map((activeManager) => (
+          {/* {activeManagers?.data.map((activeManager: ManagerType) => (
             <ActiveManagerItem key={activeManager.id} activeManager={activeManager} />
           ))} */}
-
-          <ActiveManagerItem />
-          <ActiveManagerItem />
-          <ActiveManagerItem />
         </tbody>
       </G.Table>
     </M.ManagerTableContainer>

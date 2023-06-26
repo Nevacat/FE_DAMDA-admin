@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { putManagerInfo } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
-import ReservationHistory from '../../ReservationHistory';
+import History from '@/components/common/History';
 
 import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
@@ -12,6 +14,37 @@ interface ActiveManagerItemProps {
 }
 
 function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
+  const {
+    id,
+    managerName,
+    managerPhoneNumber,
+    certificateStatus,
+    certificateStatusEtc,
+    level,
+    vehicle,
+    fieldExperience,
+    mainJobStatus,
+    mainJobStatusEtc,
+    memo,
+    currManagerStatus,
+  } = activeManager;
+  const formData = {
+    id,
+    managerName,
+    managerPhoneNumber,
+    certificateStatus,
+    certificateStatusEtc,
+    level,
+    vehicle,
+    fieldExperience,
+    mainJobStatus,
+    mainJobStatusEtc,
+    memo,
+    currManagerStatus,
+  };
+
+  const { mutate } = useMutation(putManagerInfo);
+
   // 오픈 여부
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
@@ -25,20 +58,19 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const [isEditingLevel, setIsEditingLevel] = useState(false);
   const [isEditingCertificate, setIsEditingCertificate] = useState(false);
 
-  // 활동 지역 외
-  const nameBlurHandler = () => {
+  // --------- 활동 지역 외 ---------
+  const nameBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    mutate({ id: activeManager.id, formData: { ...formData, managerName: e.target.value } });
     setIsEditingName(false);
-    // 변경 api 요청
   };
 
-  const phoneBlurHandler = () => {
+  const phoneBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    mutate({ id: activeManager.id, formData: { ...formData, managerPhoneNumber: e.target.value } });
     setIsEditingPhone(false);
-    // 변경 api 요청
   };
 
   const levelBlurHandler = () => {
     setIsEditingLevel(false);
-    // 변경 api 요청
   };
 
   const certificateBlurHandler = () => {
@@ -59,29 +91,38 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   return (
     <G.Tr>
       <S.ManagerTd onClick={() => setIsEditingName(true)}>
-        {isEditingName ? <input autoFocus type="text" onBlur={nameBlurHandler} value="홍길동" /> : '홍길동'}
-      </S.ManagerTd>
-      <S.ManagerTd onClick={() => setIsEditingPhone(true)} onBlur={() => setIsEditingPhone(false)}>
-        {isEditingPhone ? (
-          <input autoFocus type="text" onBlur={phoneBlurHandler} value="010-0000-1111" />
+        {isEditingName ? (
+          <input autoFocus type="text" onBlur={nameBlurHandler} defaultValue={managerName} />
         ) : (
-          '010-0000-1111'
+          managerName
         )}
       </S.ManagerTd>
+
+      <S.ManagerTd onClick={() => setIsEditingPhone(true)} onBlur={() => setIsEditingPhone(false)}>
+        {isEditingPhone ? (
+          <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
+        ) : (
+          managerPhoneNumber
+        )}
+      </S.ManagerTd>
+
       <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
         서울 금천구
         {isLocationOpen && <LocationSelectionForm />}
       </S.ManagerTd>
+
       <S.ManagerTd onClick={() => setIsEditingLevel(true)}>
-        {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} value="5" /> : '5'}
+        {isEditingLevel ? <input autoFocus type="text" onBlur={levelBlurHandler} value="5" /> : level}
       </S.ManagerTd>
+
       <S.ManagerTd onClick={() => setIsEditingCertificate(true)}>
         {isEditingCertificate ? (
           <input autoFocus type="text" onBlur={certificateBlurHandler} value="1급 (off)" />
         ) : (
-          '1급 (off)'
+          certificateStatus
         )}
       </S.ManagerTd>
+
       <S.ManagerTd>
         <StateButton state={'green'} onClick={() => setIsVehicleOpen(!isVehicleOpen)}>
           가능
@@ -95,15 +136,18 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
           </S.StateChangeContainer>
         )}
       </S.ManagerTd>
+
       <S.ManagerTd>
         <StateButton state={'blue'}>지원폼</StateButton>
       </S.ManagerTd>
+
       <S.ManagerTd>
         <StateButton state={'blue'} onClick={() => setIsHistoryOpen(true)}>
           예약 내역
-          {isHistoryOpen && <ReservationHistory setIsOpen={setIsHistoryOpen} />}
+          {isHistoryOpen && <History type="MANAGER" userId={id} username={managerName} setIsOpen={setIsHistoryOpen} />}
         </StateButton>
       </S.ManagerTd>
+
       <S.ManagerTd style={{ position: 'relative' }}>
         <StateButton state={'green'} onClick={() => setIsStatusOpen(!isStatusOpen)}>
           활동 중
@@ -123,6 +167,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
           </S.StateChangeContainer>
         )}
       </S.ManagerTd>
+
       <S.ManagerTd onMouseEnter={() => setIsMemoOpen(true)} onMouseLeave={() => setIsMemoOpen(false)}>
         <StateButton state={'blue'}>메모</StateButton>
 

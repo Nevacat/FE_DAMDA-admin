@@ -2,20 +2,33 @@ import { PageTitle } from '@/styles/common/PageTitle';
 import * as S from '@/styles/pages/reviewCreate.style';
 import React, { SetStateAction } from 'react';
 import ImageUploader from './ImageUploader';
-import { FormDataType, ImagesType } from '@/types/components/createReview';
+import { InputDataType, ImagesType } from '@/types/components/createReview';
 import { CompletedServiceData } from '@/types/api/service';
 import { useRouter } from 'next/router';
+import { StateButton } from '@/styles/common/StateButton';
+import { UserDataInputType } from '@/pages/review/create';
 
 interface ReviewCreateProps {
-  formData: FormDataType;
+  contentInput: InputDataType;
+  userDataInput: UserDataInputType;
   user: CompletedServiceData | null;
   images: ImagesType;
+  isAutoMode: boolean;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onChangeInput: (e: React.ChangeEvent<HTMLFormElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-function ReviewCreateLayout({ formData, user, images, setModalOpen, onSubmit, onChangeInput }: ReviewCreateProps) {
+function ReviewCreateLayout({
+  contentInput,
+  userDataInput,
+  user,
+  images,
+  isAutoMode,
+  setModalOpen,
+  onSubmit,
+  onChangeInput,
+}: ReviewCreateProps) {
   const router = useRouter();
   return (
     <>
@@ -23,21 +36,36 @@ function ReviewCreateLayout({ formData, user, images, setModalOpen, onSubmit, on
       <S.ReviewForm onSubmit={onSubmit} onChange={onChangeInput}>
         <S.Row>
           <S.Label htmlFor="title">제목</S.Label>
-          <S.Input id="title" placeholder="제목" value={formData.title} />
+          <S.Input id="title" placeholder="제목" value={contentInput.title} autoComplete="off" />
         </S.Row>
         <S.Row>
           <S.Label htmlFor="name">이름</S.Label>
-          <div className="cover" onClick={() => setModalOpen(true)}>
-            <S.Input id="name" placeholder="고객을 선택해주세요." value={user?.name} />
+          <div className="cover" onClick={() => isAutoMode && setModalOpen(true)}>
+            <S.Input
+              id="name"
+              placeholder="고객을 선택해주세요."
+              value={isAutoMode ? user?.name : userDataInput.name}
+              autoComplete="off"
+            />
           </div>
+          {!isAutoMode && (
+            <StateButton state="blue" onClick={() => setModalOpen(true)}>
+              고객 조회
+            </StateButton>
+          )}
         </S.Row>
         <S.Row>
           <S.Label htmlFor="address">주소</S.Label>
-          <S.Input id="address" value={user?.address} />
+          <S.Input id="address" value={isAutoMode ? user?.address : userDataInput.address} autoComplete="off" />
         </S.Row>
         <S.Row>
-          <S.Label htmlFor="date">예약 일자</S.Label>
-          <S.Input id="date" type="date" value={user?.reservationDate.slice(0, 10)} />
+          <S.Label htmlFor="serviceDate">예약 일자</S.Label>
+          <S.Input
+            id="serviceDate"
+            type="date"
+            value={isAutoMode ? user?.reservationDate.slice(0, 10) : userDataInput.serviceDate}
+            autoComplete="off"
+          />
         </S.Row>
         <S.Row>
           <S.Name>전후 사진</S.Name>
@@ -54,7 +82,7 @@ function ReviewCreateLayout({ formData, user, images, setModalOpen, onSubmit, on
         </S.Row>
         <S.Row>
           <S.Label htmlFor="content">내용</S.Label>
-          <textarea id="content" placeholder="input text" value={formData.content} />
+          <textarea id="content" placeholder="input text" value={contentInput.content} />
         </S.Row>
         <S.Buttons>
           <S.Button

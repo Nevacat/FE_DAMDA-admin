@@ -15,13 +15,22 @@ interface CompletedUserListType {
     page: number;
     totalCount: number;
   };
+  autoModeOff: () => void;
   getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onSelectUser: (reservationId: number) => void;
   onPaging: (page: number) => void;
 }
 
-function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUser, onPaging }: CompletedUserListType) {
+function CompletedUserList({
+  users,
+  page,
+  autoModeOff,
+  getUserList,
+  setModalOpen,
+  onSelectUser,
+  onPaging,
+}: CompletedUserListType) {
   useEffect(() => {
     getUserList(0);
   }, []);
@@ -67,7 +76,9 @@ function CompletedUserList({ users, page, getUserList, setModalOpen, onSelectUse
           </S.TableCover>
         </S.List>
         <S.Buttons>
-          <StateButton state="blue">직접입력</StateButton>
+          <StateButton state="blue" onClick={autoModeOff}>
+            직접입력
+          </StateButton>
           <PaginationContainer>
             <Pagination
               activePage={page.page}
