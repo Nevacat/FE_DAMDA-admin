@@ -106,6 +106,7 @@ function Modal({
           break;
 
         default:
+          transformedCategory = singleFAQ?.data.qnaCategory;
           break;
       }
 
@@ -114,6 +115,7 @@ function Modal({
         qnaCategory: transformedCategory,
         contents: data.contents,
       };
+      console.log(formData);
       mutate({ id: qnaId, faq: formData });
     };
 
