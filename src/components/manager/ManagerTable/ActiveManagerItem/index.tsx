@@ -148,33 +148,30 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
     mutate({ id, formData: { ...formData, certificateStatus: 'ETC', certificateStatusEtc: inputValue } });
   };
 
-  const changeCertificateToKorea = () => {
-    let transformedStatus;
-    if (certificateStatus === 'ETC') {
-      return certificateStatusEtc;
-    } else {
-      switch (certificateStatus) {
-        case 'FIRST_RATE_OFF':
-          return (transformedStatus = '1급 (오프라인 취득)');
+  let transformedStatus;
+  if (certificateStatus === 'ETC') {
+    return certificateStatusEtc;
+  } else {
+    switch (certificateStatus) {
+      case 'FIRST_RATE_OFF':
+        return (transformedStatus = '1급 (off)');
 
-        case 'SECOND_RATE_OFF':
-          return (transformedStatus = '2급 (오프라인 취득)');
+      case 'SECOND_RATE_OFF':
+        return (transformedStatus = '2급 (off)');
 
-        case 'FIRST_RATE_ON':
-          return (transformedStatus = '1급 (온라인 취득)');
+      case 'FIRST_RATE_ON':
+        return (transformedStatus = '1급 (on)');
 
-        case 'SECOND_RATE_ON':
-          return (transformedStatus = '2급 (온라인 취득)');
+      case 'SECOND_RATE_ON':
+        return (transformedStatus = '2급 (on)');
 
-        case 'NONE':
-          return (transformedStatus = '없음');
-          break;
+      case 'NONE':
+        return (transformedStatus = '없음');
 
-        default:
-          break;
-      }
+      default:
+        break;
     }
-  };
+  }
 
   const memoBlurHandler = (e: React.ChangeEvent<HTMLTextAreaElement> | any) => {
     const value = e.target.value;
@@ -251,7 +248,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
       </S.ManagerTd>
 
       <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsCertificateOpen(!isCertificateOpen)}>
-        {changeCertificateToKorea()}
+        {transformedStatus}
 
         {isCertificateOpen && (
           <S.CertificateForm>
