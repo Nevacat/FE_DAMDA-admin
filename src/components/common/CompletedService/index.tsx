@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { useQuery } from '@tanstack/react-query';
 import { getCompletedServiceImages } from '@/api/service';
+import Loading from '../Loading';
 
 interface CompletedServiceProps {
   reservationId: number;
@@ -32,29 +33,33 @@ function CompletedService({ reservationId, setIsOpen }: CompletedServiceProps) {
       <>
         <TopBarGray title="매니저 서비스 완료 폼" setIsOpen={setIsOpen} />
         <S.CompletedFormContainer>
-          {isLoading && <div className="message">데이터를 불러오고 있습니다.</div>}
+          {isLoading && (
+            <div className="message">
+              <Loading />
+            </div>
+          )}
           {isError && <div className="message">제출 된 서비스 완료 폼이 없습니다</div>}
           {formData && (
             <>
               <S.StateTitle>정리 전</S.StateTitle>
               <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={2.7} scrollbar={{ draggable: true }}>
-                <SwiperSlide>
-                  {formData.before.map((before, idx) => (
-                    <S.Box key={idx}>
+                {formData.before.map((before, idx) => (
+                  <SwiperSlide key={idx}>
+                    <S.Box>
                       <Image src={before} alt="service-before" fill />
                     </S.Box>
-                  ))}
-                </SwiperSlide>
+                  </SwiperSlide>
+                ))}
               </Swiper>
               <S.StateTitle>정리 후</S.StateTitle>
               <Swiper modules={[Scrollbar, A11y]} spaceBetween={8} slidesPerView={2.7} scrollbar={{ draggable: true }}>
-                <SwiperSlide>
-                  {formData.before.map((before, idx) => (
-                    <S.Box key={idx}>
+                {formData.after.map((before, idx) => (
+                  <SwiperSlide key={idx}>
+                    <S.Box>
                       <Image src={before} alt="service-before" fill />
                     </S.Box>
-                  ))}
-                </SwiperSlide>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </>
           )}
