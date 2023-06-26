@@ -33,11 +33,21 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
   const { mutate: addCategory } = useMutation(putCategoryList, {
     onSuccess: () => {
       refetch();
+      setIsAddClicked(false);
       setInput('');
     },
   });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const notify = (message: string) =>
+    toast(message, {
+      type: 'error',
+      position: 'top-center',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      draggable: true,
+    });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -87,6 +97,8 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
   const addButtonOnClick = () => {
     setIsAddClicked((prev) => !prev);
 
+    console.log(isAddClicked);
+
     setTimeout(() => {
       if (addInput.current) {
         addInput.current.focus();
@@ -94,17 +106,9 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
     }, 100);
 
     if (isAddClicked) {
-      if (!validTime(input)) {
-        toast('시간 형식이 맞지 않습니다. 유형은 아래와 같습니다. \n 오전 10시 \n 오후 3시', {
-          type: 'error',
-          position: 'top-center',
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-        });
-      }
-    } else {
+      if (input === '') return notify('시간을 입력해주세요.');
+      if (!validTime(input))
+        return notify(' 시간 형식이 맞지 않습니다. 유형은 아래와 같습니다. 오전 10시\n 오후 10시\n');
       addCategory({ data: [input], questionNumber: formData.questionNumber });
     }
   };
