@@ -568,6 +568,7 @@ export const FormChangeModal = styled(motion.div)`
   position: absolute;
   box-shadow: -3px 4px 15px rgba(181, 181, 181, 0.25), 0px 4px 4px rgba(204, 194, 233, 0.25);
   backdrop-filter: blur(4px);
+  z-index: 100;
 
   .header {
     display: flex;
