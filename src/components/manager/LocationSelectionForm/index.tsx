@@ -4,12 +4,21 @@ import { citiesData } from '@/constants/locationData';
 
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs';
 import * as S from './style';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteManagerRegion, putManagerRegion } from '@/api/manager';
 
 function LocationSelectionForm({ region, id }: any) {
-  const { mutate } = useMutation(putManagerRegion);
-  const { mutate: deleteRegion } = useMutation(deleteManagerRegion);
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(putManagerRegion, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
+  const { mutate: deleteRegion } = useMutation(deleteManagerRegion, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
 
   const [isLocationOptionsOpen, setIsLocationOptionsOpen] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
