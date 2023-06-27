@@ -55,40 +55,10 @@ function LocationSelectionForm({ region, id }: any) {
     }
   };
 
-  const filterTagHandler = (e: React.MouseEvent<HTMLButtonElement>, district: string) => {
-    e.stopPropagation();
-
-    const checkedCount = region.서울특별시.length + region.경기도.length;
-
-    if (checkedCount >= 1) {
-      if (region.서울특별시.includes(district)) {
-        deleteRegion({ id, region: { SEOUL: district } });
-      } else if (region.경기도.includes(district)) {
-        deleteRegion({ id, region: { GYEONGGI: district } });
-      }
-    } else if (checkedCount === 0) {
-      return;
-    }
-  };
-
   // 지역 태그
-  const seoul = region?.서울특별시.map((seoul: string, index: number) => (
-    <div key={index}>
-      서울 {seoul}
-      {/* <button type="button" onClick={(e) => filterTagHandler(e, seoul)}>
-        <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button> */}
-    </div>
-  ));
+  const seoul = region?.서울특별시.map((seoul: string, index: number) => <div key={index}>서울 {seoul}</div>);
 
-  const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => (
-    <div key={index}>
-      경기 {gyeonggi}
-      {/* <button type="button" onClick={(e) => filterTagHandler(e, gyeonggi)}>
-        <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button> */}
-    </div>
-  ));
+  const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => <div key={index}>경기 {gyeonggi}</div>);
 
   return (
     <S.LocationSelectionForm>
