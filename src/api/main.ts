@@ -1,12 +1,23 @@
 import { MainData } from '@/types/api/main';
 import { instance } from './instance';
+import { toast } from 'react-toastify';
 
-export const getExcelZipDownload = async () => {
-  const res = await instance.get('zip/excel/download',{
+export const getExcelZipDownload = async (startDate: string | null, endDate: string | null) => {
+  let url = `zip/excel/download?`;
+
+  if (startDate !== null) {
+    url += `&startDate=${startDate}`;
+  }
+
+  if (endDate !== null) {
+    url += `&endDate=${endDate}`;
+  }
+
+  const res = await instance.get(url, {
     responseType: 'blob',
   });
   console.log(res);
-  return res.data;
+  return res.config;
 };
 
 export const getSubmitData = async (page: number, startDate: string | null, endDate: string | null) => {
@@ -32,5 +43,15 @@ export const putStatusComplete = async (id: number) => {
 
 export const putStatusCancel = async (id: number) => {
   const res = await instance.put(`status/cancellation/${id}`);
+  return res.data;
+};
+
+export const getMatchingData = async (id: number) => {
+  const res = await instance.get(`matching/list/${id}`);
+  return res.data;
+};
+
+export const postMatching = async (reservationId: number, id: string) => {
+  const res = await instance.post(`matching/order/${reservationId}?matchIds=${id}`);
   return res.data;
 };

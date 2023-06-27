@@ -7,6 +7,8 @@ import * as S from './style';
 import { ServiceState } from '@/types/serviceState';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putStatusCancel, putStatusComplete } from '@/api/main';
+import MatchingPopup from '../MatchingPopup';
+import { toast } from 'react-toastify';
 
 interface MainItemProps {
   Data: Reservation;
@@ -50,31 +52,43 @@ function MainItem({ Data }: MainItemProps) {
     onSuccess: () => {
       // Trigger refetch after successful cancelMutation
       queryClient.refetchQueries(); // Replace 'reservationData' with the appropriate key for your query
+      toast.success('예약이 취소되었습니다.');
+    },
+    onError: () => {
+      toast.error('예약 취소에 실패했습니다.');
     },
   });
 
   const { mutate: completeMutation } = useMutation(putStatusComplete, {
     onSuccess: () => {
-      // Trigger refetch after successful completeMutation
-      queryClient.refetchQueries(); // Replace 'reservationData' with the appropriate key for your query
+      queryClient.refetchQueries();
+      toast.success('결제가 완료되었습니다.');
+    },
+    onError: () => {
+      toast.error('결제에 실패했습니다.');
     },
   });
 
   const onUpdateStatus = (Action: string, ListId: number) => {
-    if (Action === '예약 취소') {
-      cancelMutation(ListId);
-    }
-    if (Action === '결제완료') {
+    const confirmMessage =
+      Action === '예약 취소' ? '예약을 취소하시겠습니까?' : Action === '결제완료' ? '결제를 완료하시겠습니까?' : '';
+
+    if (confirmMessage && window.confirm(confirmMessage)) {
+      if (Action === '예약 취소') {
+        cancelMutation(ListId);
+      }
+    } else if (Action === '결제완료') {
       completeMutation(ListId);
     }
   };
 
-  const onPopup = (state: string, ListId: number) => {
-    if (state === '매칭수락 대기') {
-      // 팝업 처리 로직 추가
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const togglePopup = () => {
+    if (Data.reservationStatus === 'WAITING_FOR_ACCEPT_MATCHING') {
+      setIsPopupOpen(!isPopupOpen);
     }
+    return;
   };
-
   return (
     <>
       <T.Tr>
@@ -95,7 +109,7 @@ function MainItem({ Data }: MainItemProps) {
           ))}
         </T.Td>
         <T.Td>
-          <StateButton state={Data.reservationStatus} onClick={() => onPopup(state, Data.id)}>
+          <StateButton state={Data.reservationStatus} onClick={togglePopup}>
             {state}
           </StateButton>
         </T.Td>
@@ -112,6 +126,7 @@ function MainItem({ Data }: MainItemProps) {
           </S.ActionBox>
         </T.Td>
       </T.Tr>
+      {isPopupOpen && <MatchingPopup reservationId={Data.id} togglePopup={togglePopup} />}
     </>
   );
 }
