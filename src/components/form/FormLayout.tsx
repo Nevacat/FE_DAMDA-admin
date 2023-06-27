@@ -82,12 +82,12 @@ function FormLayout() {
   const updateOrder = () => {
     const updatedFirstPageData = firstPageData.map((form, index) => ({
       questionNumber: form.questionNumber,
-      order: index + 1,
+      questionOrder: index + 1,
       page: form.page,
     }));
     const updatedSecPageData = secPageData.map((form, index) => ({
       questionNumber: form.questionNumber,
-      order: index + 1,
+      questionOrder: index + 1,
       page: form.page,
     }));
     const updatedData = [...updatedFirstPageData, ...updatedSecPageData];
