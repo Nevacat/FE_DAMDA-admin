@@ -19,7 +19,6 @@ export const ManagerSupportForm = styled.aside`
 
   header {
     position: relative;
-    margin-bottom: 20px;
 
     h2 {
       padding: 13px 24px;
@@ -29,16 +28,26 @@ export const ManagerSupportForm = styled.aside`
       background-color: ${theme.colors.yolda_gray_7};
     }
 
-    img {
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: absolute;
       top: 12px;
       right: 24px;
+      border: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
     }
   }
 `;
 
 export const FormInfo = styled.article`
+  padding: 20px 0 32px;
+
   h3 {
+    margin-bottom: 16px;
     ${theme.font.bold_14}
     line-height: 160%;
   }
@@ -47,7 +56,7 @@ export const FormInfo = styled.article`
     display: flex;
     align-items: center;
     padding: 4px 16px;
-    margin-bottom: 32px;
+    margin-bottom: 8px;
     border-bottom: 1px solid ${theme.colors.yolda_gray_7};
     font-size: 14px;
     font-weight: 300;
@@ -57,10 +66,20 @@ export const FormInfo = styled.article`
       width: 137px;
     }
 
-    dd.field-experience {
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 160%;
+    dd {
+      &.field-experience {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 160%;
+      }
+
+      .day:not(:last-of-type) {
+        margin-right: 4px;
+      }
+
+      .location:not(:last-of-type) {
+        margin-right: 4px;
+      }
     }
   }
 `;

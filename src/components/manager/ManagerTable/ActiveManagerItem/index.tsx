@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getManagerForm, putManagerInfo, putManagerStatus } from '@/api/manager';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { putManagerInfo, putManagerStatus } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
 import History from '@/components/common/History';
@@ -50,12 +50,6 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   };
 
   const queryClient = useQueryClient();
-
-  const { data } = useQuery({
-    queryKey: ['manager-form'],
-    queryFn: () => getManagerForm(id),
-  });
-
   const { mutate } = useMutation(putManagerInfo, {
     onSuccess() {
       queryClient.invalidateQueries(['managers']);
@@ -384,7 +378,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
       <S.ManagerTd>
         <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
           지원폼
-          {isFormOpen && <ManagerSupportForm />}
+          {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />}
         </StateButton>
       </S.ManagerTd>
 

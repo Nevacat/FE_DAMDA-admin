@@ -39,3 +39,8 @@ export const getAllManagers = async () => {
   const response = await instance.get('/admin/manager');
   return response.data.data.content;
 };
+
+export const getManagerForm = async (id: number) => {
+  const response = await instance.get(`/admin/manager/${id}`);
+  return response.data.data;
+};
