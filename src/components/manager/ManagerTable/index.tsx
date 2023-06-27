@@ -25,20 +25,41 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
           <col width="5%" />
           <col width="11%" />
           <col width="14%" />
+          <col width="1%" />
         </colgroup>
 
         <G.Thead>
           <tr>
-            <S.ManagerTh scope="col">이름</S.ManagerTh>
-            <S.ManagerTh scope="col">연락처</S.ManagerTh>
-            <S.ManagerTh scope="col">활동지역</S.ManagerTh>
-            <S.ManagerTh scope="col">레벨</S.ManagerTh>
-            <S.ManagerTh scope="col">자격증</S.ManagerTh>
-            <S.ManagerTh scope="col">운전여부</S.ManagerTh>
-            <S.ManagerTh scope="col">지원 폼</S.ManagerTh>
-            <S.ManagerTh scope="col">예약 내역</S.ManagerTh>
-            <S.ManagerTh scope="col">상태</S.ManagerTh>
-            <S.ManagerTh scope="col">메모</S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              이름
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              연락처
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              활동지역
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              레벨
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              자격증
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              운전여부
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              지원 폼
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              예약 내역
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              상태
+            </S.ManagerTh>
+            <S.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+              메모
+            </S.ManagerTh>
           </tr>
         </G.Thead>
       </>
