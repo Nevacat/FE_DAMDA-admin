@@ -149,21 +149,6 @@ function ManagerTable({
                 category === 'all' &&
                 inactive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
-              {category === 'all' && (
-                <PaginationContainer>
-                  <Pagination
-                    hideFirstLastPages={true}
-                    linkClassPrev="prev"
-                    linkClassNext="next"
-                    activePage={waitingPage}
-                    itemsCountPerPage={30}
-                    totalItemsCount={waitingTotal + pendingTotal + inactiveTotal}
-                    pageRangeDisplayed={Math.ceil(waitingTotal + pendingTotal + inactiveTotal / 10)}
-                    onChange={allPageHandler}
-                  />
-                </PaginationContainer>
-              )}
-
               {/* ---------------------- 매니저 신청 관리 ----------------------*/}
               {waiting &&
                 category === 'waiting' &&
