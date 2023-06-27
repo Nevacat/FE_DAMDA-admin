@@ -231,7 +231,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
         )}
       </S.ManagerTd>
 
-      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(true)}>
+      <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsLocationOpen(!isLocationOpen)}>
         {region.서울특별시.map((seoul, index) => (
           <span key={index}>서울 {seoul}</span>
         ))}

@@ -19,20 +19,6 @@ function LocationSelectionForm({ region, id }: any) {
     setSelectedRegion(e.target.value);
   };
 
-  const closeHandler = (e: MouseEvent) => {
-    if (isLocationOptionsOpen && listRef.current && !listRef.current.contains(e.target as Node)) {
-      setIsLocationOptionsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', closeHandler);
-
-    return () => {
-      window.removeEventListener('click', closeHandler);
-    };
-  });
-
   const cityChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const district = e.target.value;
     const isChecked = e.target.checked;
@@ -116,13 +102,14 @@ function LocationSelectionForm({ region, id }: any) {
         {/* Options */}
         {isLocationOptionsOpen && (
           <S.ListWrapper ref={listRef}>
-            <ul>
+            <ul onClick={(e) => e.stopPropagation()}>
               <li>
                 <input
                   type="radio"
                   name="manager_available_region"
                   id="seoul"
                   value="서울특별시"
+                  onClick={(e) => e.stopPropagation()}
                   onChange={regionChangeHandler}
                 />
                 <label htmlFor="seoul">서울특별시</label>
@@ -134,6 +121,7 @@ function LocationSelectionForm({ region, id }: any) {
                   name="manager_available_region"
                   id="gyeonggi"
                   value="경기도"
+                  onClick={(e) => e.stopPropagation()}
                   onChange={regionChangeHandler}
                 />
                 <label htmlFor="gyeonggi">경기도</label>
@@ -141,7 +129,7 @@ function LocationSelectionForm({ region, id }: any) {
             </ul>
 
             {isLocationOptionsOpen && selectedRegion && citiesData[selectedRegion] && (
-              <ul>
+              <ul onClick={(e) => e.stopPropagation()}>
                 {citiesData[selectedRegion].map((district: string) => (
                   <li key={district}>
                     <input
@@ -150,6 +138,7 @@ function LocationSelectionForm({ region, id }: any) {
                       id={district}
                       value={district}
                       checked={region[selectedRegion].includes(district)}
+                      onClick={(e) => e.stopPropagation()}
                       onChange={cityChangeHandler}
                     />
                     <label htmlFor={district}>{district}</label>
