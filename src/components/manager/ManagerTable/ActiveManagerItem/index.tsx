@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { putManagerInfo, putManagerStatus } from '@/api/manager';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getManagerForm, putManagerInfo, putManagerStatus } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
 import History from '@/components/common/History';
@@ -9,6 +9,7 @@ import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 import { ManagerType } from '@/types/manager';
+import ManagerSupportForm from '../../ManagerSupportForm';
 
 interface ActiveManagerItemProps {
   activeManager: ManagerType;
@@ -50,6 +51,11 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
 
   const queryClient = useQueryClient();
 
+  const { data } = useQuery({
+    queryKey: ['manager-form'],
+    queryFn: () => getManagerForm(id),
+  });
+
   const { mutate } = useMutation(putManagerInfo, {
     onSuccess() {
       queryClient.invalidateQueries(['managers']);
@@ -68,6 +74,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const [isVehicleOpen, setIsVehicleOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isEtcOpen, setIsEtcOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -375,7 +382,10 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
       </S.ManagerTd>
 
       <S.ManagerTd>
-        <StateButton state={'blue'}>지원폼</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
+          지원폼
+          {isFormOpen && <ManagerSupportForm />}
+        </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd>
