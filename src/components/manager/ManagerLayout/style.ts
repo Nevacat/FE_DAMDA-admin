@@ -9,7 +9,7 @@ export const Header = styled.header`
   }
 `;
 
-export const ButtonGroup = styled.div`
+export const ButtonGroup = styled.div<{ category: string }>`
   button {
     width: 170px;
     height: 46px;
@@ -23,6 +23,11 @@ export const ButtonGroup = styled.div`
 
     &:not(:last-of-type) {
       margin-right: 4px;
+    }
+
+    &:hover {
+      color: #ffffff !important;
+      background-color: ${theme.colors.main_blue} !important;
     }
   }
 `;

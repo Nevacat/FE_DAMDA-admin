@@ -22,17 +22,45 @@ function ManagerLayout({ activeManagers, waitingManagers, pendingManagers, inact
       {/* 활동 중 매니저 데이터 */}
       <ActiveManager activeManagers={activeManagers} />
 
-      <S.ButtonGroup>
-        <button type="button" onClick={() => setCategory('all')}>
+      <S.ButtonGroup category={category}>
+        <button
+          style={{
+            backgroundColor: category === 'all' ? '#0061FF' : '#efefef',
+            color: category === 'all' ? '#ffffff' : '#212121',
+          }}
+          type="button"
+          onClick={() => setCategory('all')}
+        >
           전체
         </button>
-        <button type="button" onClick={() => setCategory('waiting')}>
+        <button
+          style={{
+            backgroundColor: category === 'waiting' ? '#0061FF' : '#efefef',
+            color: category === 'waiting' ? '#ffffff' : '#212121',
+          }}
+          type="button"
+          onClick={() => setCategory('waiting')}
+        >
           매니저 신청 관리
         </button>
-        <button type="button" onClick={() => setCategory('pending')}>
+        <button
+          style={{
+            backgroundColor: category === 'pending' ? '#0061FF' : '#efefef',
+            color: category === 'pending' ? '#ffffff' : '#212121',
+          }}
+          type="button"
+          onClick={() => setCategory('pending')}
+        >
           보류 매니저
         </button>
-        <button type="button" onClick={() => setCategory('inactive')}>
+        <button
+          style={{
+            backgroundColor: category === 'inactive' ? '#0061FF' : '#efefef',
+            color: category === 'inactive' ? '#ffffff' : '#212121',
+          }}
+          type="button"
+          onClick={() => setCategory('inactive')}
+        >
           활동 불가 매니저
         </button>
       </S.ButtonGroup>
