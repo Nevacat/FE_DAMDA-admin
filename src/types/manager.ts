@@ -2,7 +2,7 @@ interface ActivityRegion {
   [key: string]: string[];
 }
 
-interface ManagerType {
+export interface ManagerType {
   id: number;
   managerName: string;
   managerPhoneNumber: string;

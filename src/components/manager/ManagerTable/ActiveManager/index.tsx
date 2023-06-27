@@ -4,6 +4,7 @@ import ActiveManagerItem from '../ActiveManagerItem';
 
 import * as G from '@/styles/common/table.style';
 import * as M from '../style';
+import { ManagerType } from '@/types/manager';
 
 interface ActiveManagerProps {
   activeManagers: ManagerType[];
@@ -29,9 +30,9 @@ function ActiveManager({ activeManagers }: ActiveManagerProps) {
         </G.Thead>
 
         <tbody>
-          {/* {activeManagers?.data.map((activeManager: ManagerType) => (
+          {activeManagers?.map((activeManager: ManagerType) => (
             <ActiveManagerItem key={activeManager.id} activeManager={activeManager} />
-          ))} */}
+          ))}
         </tbody>
       </G.Table>
     </M.ManagerTableContainer>
