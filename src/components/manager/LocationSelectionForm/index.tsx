@@ -1,4 +1,4 @@
-import React, { ChangeEvent, RefObject, createRef, useEffect, useState } from 'react';
+import React, { ChangeEvent, RefObject, createRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { citiesData } from '@/constants/locationData';
 
@@ -8,7 +8,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteManagerRegion, putManagerRegion } from '@/api/manager';
 
 function LocationSelectionForm({ region, id }: any) {
+  const cityCheckboxRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+
   const { mutate } = useMutation(putManagerRegion, {
     onSuccess() {
       queryClient.invalidateQueries(['managers']);
@@ -53,24 +55,38 @@ function LocationSelectionForm({ region, id }: any) {
     }
   };
 
-  const filterTagHandler = (districtItem: string) => {};
+  const filterTagHandler = (e: React.MouseEvent<HTMLButtonElement>, district: string) => {
+    e.stopPropagation();
+
+    const checkedCount = region.서울특별시.length + region.경기도.length;
+
+    if (checkedCount >= 1) {
+      if (region.서울특별시.includes(district)) {
+        deleteRegion({ id, region: { SEOUL: district } });
+      } else if (region.경기도.includes(district)) {
+        deleteRegion({ id, region: { GYEONGGI: district } });
+      }
+    } else if (checkedCount === 0) {
+      return;
+    }
+  };
 
   // 지역 태그
   const seoul = region?.서울특별시.map((seoul: string, index: number) => (
     <div key={index}>
       서울 {seoul}
-      <button type="button" onClick={() => filterTagHandler(seoul)}>
+      {/* <button type="button" onClick={(e) => filterTagHandler(e, seoul)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button>
+      </button> */}
     </div>
   ));
 
   const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => (
     <div key={index}>
       경기 {gyeonggi}
-      <button type="button" onClick={() => filterTagHandler(gyeonggi)}>
+      {/* <button type="button" onClick={(e) => filterTagHandler(e, gyeonggi)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button>
+      </button> */}
     </div>
   ));
 
@@ -149,6 +165,7 @@ function LocationSelectionForm({ region, id }: any) {
                       checked={region[selectedRegion].includes(district)}
                       onClick={(e) => e.stopPropagation()}
                       onChange={cityChangeHandler}
+                      ref={cityCheckboxRef}
                     />
                     <label htmlFor={district}>{district}</label>
                   </li>
