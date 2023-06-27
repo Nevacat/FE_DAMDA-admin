@@ -41,9 +41,11 @@ function LocationSelectionForm({ region, id }: any) {
         mutate({ id, region: { GYEONGGI: district } });
       }
     } else {
-      const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      // const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
 
-      if (checkedCount >= 1) {
+      const checkedCount = region.서울특별시.length + region.경기도.length;
+
+      if (checkedCount > 0) {
         if (selectedRegion === '서울특별시') {
           deleteRegion({ id, region: { SEOUL: district } });
         } else if (selectedRegion === '경기도') {
