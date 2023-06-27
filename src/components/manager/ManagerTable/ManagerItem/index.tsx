@@ -67,7 +67,10 @@ function ManagerItem({ data }: any) {
 
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['waiting']);
+      queryClient.invalidateQueries(['pending']);
+      queryClient.invalidateQueries(['inactive']);
     },
   });
 

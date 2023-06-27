@@ -52,12 +52,15 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const queryClient = useQueryClient();
   const { mutate } = useMutation(putManagerInfo, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
     },
   });
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['waiting']);
+      queryClient.invalidateQueries(['pending']);
+      queryClient.invalidateQueries(['inactive']);
     },
   });
 

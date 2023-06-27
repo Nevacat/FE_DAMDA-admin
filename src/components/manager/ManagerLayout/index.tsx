@@ -1,17 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Pagination from 'react-js-pagination';
 
 import ManagerTable from '../ManagerTable';
 import ActiveManager from '../ManagerTable/ActiveManager';
+import { PaginationContainer } from '@/components/common/PaginationContainer/style';
 
 import * as S from './style';
 import { ManagerType } from '@/types/manager';
+import useManagerPageStore from '@/store/manager';
 
 interface ManagerLayoutProps {
   [key: string]: ManagerType[];
 }
 
-function ManagerLayout({ activeManagers, waitingManagers, pendingManagers, inactiveManagers }: any) {
+function ManagerLayout({
+  activeManagers,
+  waitingManagers,
+  pendingManagers,
+  inactiveManagers,
+  activeRefetch,
+  waitingRefetch,
+  pendingRefetch,
+  inactiveRefetch,
+}: any) {
   const [category, setCategory] = useState('all');
+
+  const {
+    activePage,
+    waitingPage,
+    pendingPage,
+    inactivePage,
+    setActivePage,
+    setWaitingPage,
+    setPendingPage,
+    setInactivePage,
+  } = useManagerPageStore((state) => state);
+
+  const { total: activeTotal } = activeManagers || {};
+  const { total: waitingTotal } = waitingManagers || {};
+  const { total: pendingTotal } = pendingManagers || {};
+  const { total: inactiveTotal } = inactiveManagers || {};
+
+  const activePageHandler = (pageNumber: number) => {
+    setActivePage(pageNumber);
+    activeRefetch();
+  };
 
   return (
     <div>
@@ -20,7 +53,19 @@ function ManagerLayout({ activeManagers, waitingManagers, pendingManagers, inact
       </S.Header>
 
       {/* 활동 중 매니저 데이터 */}
-      <ActiveManager activeManagers={activeManagers} />
+      <ActiveManager activeManagers={activeManagers?.content} />
+      <PaginationContainer>
+        <Pagination
+          hideFirstLastPages={true}
+          linkClassPrev="prev"
+          linkClassNext="next"
+          activePage={activePage}
+          itemsCountPerPage={7}
+          totalItemsCount={activeTotal}
+          pageRangeDisplayed={Math.ceil(activeTotal / 7)}
+          onChange={activePageHandler}
+        />
+      </PaginationContainer>
 
       <S.ButtonGroup category={category}>
         <button
@@ -67,9 +112,9 @@ function ManagerLayout({ activeManagers, waitingManagers, pendingManagers, inact
 
       {/* 필터링 버튼에 따라 다른 데이터 전달 */}
       <ManagerTable
-        waiting={waitingManagers}
-        pending={pendingManagers}
-        inactive={inactiveManagers}
+        waiting={waitingManagers?.content}
+        pending={pendingManagers?.content}
+        inactive={inactiveManagers?.content}
         category={category}
       />
     </div>
