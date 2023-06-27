@@ -13,7 +13,6 @@ export const StateButton = styled.div<{ state?: ServiceStateType | Colors }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
   padding: 5px 15px;
   width: max-content;
   height: 32px;

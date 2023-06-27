@@ -7,6 +7,13 @@ export const ReservationForm = styled.div`
   gap: 25px;
   padding: 20px;
   width: 780px;
+
+  .message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+  }
 `;
 
 export const UserInfo = styled.div`

@@ -114,9 +114,9 @@ export const SelectedLocation = styled.div`
   div {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 110px;
+    width: 92px;
     height: 32px;
     padding-left: 12px;
     border-radius: 5px;
@@ -124,7 +124,7 @@ export const SelectedLocation = styled.div`
     font-size: 13px;
     background-color: ${({ theme }) => theme.colors.main_blue};
 
-    button {
+    /* button {
       position: absolute;
       right: 8px;
       display: flex;
@@ -140,6 +140,6 @@ export const SelectedLocation = styled.div`
     img {
       display: block;
       color: #ffffff;
-    }
+    } */
   }
 `;

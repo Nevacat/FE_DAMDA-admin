@@ -8,24 +8,14 @@ import { MainData, Statistical } from '@/types/api/main';
 import MainTable from './MainTable';
 import Pagination from 'react-js-pagination';
 import { PaginationContainer } from '../common/PaginationContainer/style';
-
-function formatDate(date: Date | null): string | null {
-  if (date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-  return null;
-}
+import { formatDate } from './DateFormat';
+import MatchingPopup from './MatchingPopup';
 
 function MainLayout() {
   const [page, setPage] = React.useState(1);
-
-  const today = new Date();
   const [date, setDate] = React.useState<{ startDate: Date | null; endDate: Date | null }>({
-    startDate: today,
-    endDate: today,
+    startDate: null,
+    endDate: null,
   });
 
   const { data: resData, refetch } = useQuery<MainData>(['MainData', date, page], () =>
@@ -76,6 +66,7 @@ function MainLayout() {
           onChange={(pageNumber) => setPage(pageNumber)}
         />
       </PaginationContainer>
+
     </S.MainSection>
   );
 }

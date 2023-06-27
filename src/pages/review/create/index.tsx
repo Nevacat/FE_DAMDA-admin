@@ -38,7 +38,6 @@ function ReviewCreate() {
    */
   const getUserList = useCompletedServices((data: ServiceRes) => {
     const currentData = data.data;
-    console.log(currentData);
     setUsers(currentData.content);
 
     setPage({ ...page, totalCount: currentData.totalElements });
@@ -81,6 +80,13 @@ function ReviewCreate() {
     if (name === 'title' || name === 'content') {
       setContentInput({ ...contentInput, [name]: e.target.value });
       return;
+    }
+
+    if (!isAutoMode && name === 'serviceDate') {
+      const selectedDate = new Date(e.target.value).getTime();
+      const todayDate = new Date().getTime();
+
+      if (selectedDate > todayDate) return alert('오늘 날짜보다 먼 날짜는 선택할 수 없습니다');
     }
 
     if (!isAutoMode) {
@@ -183,6 +189,9 @@ function ReviewCreate() {
     e.preventDefault();
     if (contentInput.content === '') return alert('내용을 입력해주세요');
     if (contentInput.title === '') return alert('제목을 입력해주세요');
+
+    if (!isAutoMode && beforeFormData.length === 0) return alert('최소 한 장 이상의 서비스 전 사진을 등록해주세요.');
+    if (!isAutoMode && afterFormData.length === 0) return alert('최소 한 장 이상의 서비스 후 사진을 등록해주세요.');
 
     let formData = new FormData();
 

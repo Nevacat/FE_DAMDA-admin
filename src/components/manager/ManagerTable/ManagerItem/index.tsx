@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { putManagerInfo } from '@/api/manager';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { putManagerInfo, putManagerStatus } from '@/api/manager';
 
 import LocationSelectionForm from '../../LocationSelectionForm';
 import History from '@/components/common/History';
@@ -8,13 +8,13 @@ import History from '@/components/common/History';
 import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
-import useManagerStore from '@/store/managerForm';
 
 function ManagerItem({ data }: any) {
   const {
     id,
     managerName,
     managerPhoneNumber,
+    region,
     certificateStatus,
     certificateStatusEtc,
     level,
@@ -29,6 +29,7 @@ function ManagerItem({ data }: any) {
     id,
     managerName,
     managerPhoneNumber,
+    region,
     certificateStatus,
     certificateStatusEtc,
     level,
@@ -40,7 +41,13 @@ function ManagerItem({ data }: any) {
     currManagerStatus,
   };
 
-  const { mutate } = useMutation(putManagerInfo);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(putManagerInfo, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
 
   // 오픈 여부
   const [isLocationOpen, setIsLocationOpen] = useState(false);
@@ -57,6 +64,12 @@ function ManagerItem({ data }: any) {
   const [isEditingLevel, setIsEditingLevel] = useState(false);
 
   const [inputValue, setInputValue] = useState(certificateStatusEtc);
+
+  const { mutate: statusHandler } = useMutation(putManagerStatus, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
 
   // --------- 활동 지역 외 ---------
   const nameBlurHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -114,10 +127,31 @@ function ManagerItem({ data }: any) {
     setIsVehicleOpen(false);
   };
 
-  const stateChangeHandler = () => {
-    setIsStatusOpen(false);
+  const stateChangeHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    let value = e.currentTarget.innerText;
+    switch (value) {
+      case '활동 중':
+        value = 'ACTIVE';
+        break;
 
-    // 상태 변경 api 요청
+      case '보류':
+        value = 'PENDING';
+        break;
+
+      case '활동 불가':
+        value = 'INACTIVE';
+        break;
+
+      case '대기':
+        value = 'WAITING';
+
+      default:
+        break;
+    }
+
+    console.log(value);
+    statusHandler({ id, status: { currManagerStatus: value } });
+    setIsStatusOpen(false);
   };
 
   const etcSubmitHandler = () => {
@@ -126,8 +160,8 @@ function ManagerItem({ data }: any) {
 
   let statusText;
   let stateChangeButtons;
-  switch (data.managerStatus) {
-    case '대기':
+  switch (data.currManagerStatus) {
+    case 'WAITING':
       statusText = '대기';
       stateChangeButtons = (
         <S.StateChangeContainer>
@@ -144,7 +178,7 @@ function ManagerItem({ data }: any) {
       );
       break;
 
-    case '보류':
+    case 'PENDING':
       statusText = '보류';
       stateChangeButtons = (
         <S.StateChangeContainer>
@@ -161,7 +195,7 @@ function ManagerItem({ data }: any) {
       );
       break;
 
-    case '활동 불가':
+    case 'INACTIVE':
       statusText = '활동 불가';
       stateChangeButtons = (
         <S.StateChangeContainer>
@@ -179,6 +213,50 @@ function ManagerItem({ data }: any) {
       break;
 
     default:
+  }
+
+  let transformedStatus;
+  if (certificateStatus === 'ETC') {
+    transformedStatus = certificateStatusEtc;
+  } else {
+    switch (certificateStatus) {
+      case 'FIRST_RATE_OFF':
+        transformedStatus = '1급 (off)';
+        break;
+
+      case 'SECOND_RATE_OFF':
+        transformedStatus = '2급 (off)';
+        break;
+
+      case 'FIRST_RATE_ON':
+        transformedStatus = '1급 (on)';
+        break;
+
+      case 'SECOND_RATE_ON':
+        transformedStatus = '2급 (on)';
+        break;
+
+      case 'NONE':
+        transformedStatus = '없음';
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  let transformedPhoneNumber;
+  switch (managerPhoneNumber.length) {
+    case 10:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+      break;
+
+    case 11:
+      transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+      break;
+
+    default:
+      break;
   }
 
   const selectLevelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -212,13 +290,19 @@ function ManagerItem({ data }: any) {
         {isEditingPhone ? (
           <input autoFocus type="text" onBlur={phoneBlurHandler} defaultValue={managerPhoneNumber} />
         ) : (
-          managerPhoneNumber
+          transformedPhoneNumber
         )}
       </S.ManagerTd>
 
       <S.ManagerTd style={{ position: 'relative' }} onClick={locationOpenHandler}>
         {/* 지역 데이터 */}
-        {isLocationOpen && <LocationSelectionForm />}
+        {region.서울특별시.map((seoul: string, index: number) => (
+          <span key={index}>서울 {seoul}</span>
+        ))}
+        {region.경기도.map((gyeonggi: string, index: number) => (
+          <span key={index}>경기 {gyeonggi}</span>
+        ))}
+        {isLocationOpen && <LocationSelectionForm region={region} id={id} formData={formData} />}
       </S.ManagerTd>
 
       <S.ManagerTd onClick={() => setIsEditingLevel(!isEditingLevel)}>
@@ -257,26 +341,6 @@ function ManagerItem({ data }: any) {
                   </S.OptionButton>
                 </li>
               </ul>
-
-              {isEtcOpen && (
-                <S.InputWrapper>
-                  <input
-                    type="text"
-                    defaultValue={certificateStatusEtc}
-                    autoFocus
-                    placeholder="자격증 이름"
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsCertificateOpen(true);
-                    }}
-                  />
-
-                  <button type="button" onClick={etcSubmitHandler}>
-                    제출
-                  </button>
-                </S.InputWrapper>
-              )}
             </div>
           </S.CertificateForm>
         )}
@@ -284,7 +348,7 @@ function ManagerItem({ data }: any) {
       </S.ManagerTd>
 
       <S.ManagerTd style={{ position: 'relative' }} onClick={() => setIsCertificateOpen(!isCertificateOpen)}>
-        {certificateStatus}
+        {transformedStatus}
 
         {isCertificateOpen && (
           <S.CertificateForm>

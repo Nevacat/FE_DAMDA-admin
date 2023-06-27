@@ -26,6 +26,12 @@ export const StateTitle = styled.div`
 export const Box = styled.div`
   width: 150px;
   height: 150px;
-  border-radius: 5px;
   background-color: ${theme.colors.yolda_gray_7};
+  border-radius: 5px;
+  overflow: hidden;
+
+  img {
+    border-radius: 5px;
+    object-fit: cover;
+  }
 `;

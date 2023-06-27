@@ -1,7 +1,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { BiCalendarEvent } from 'react-icons/bi';
 interface DateFilterProps {
   date: { startDate: Date | null; endDate: Date | null };
   setDate: (dates: { startDate: Date | null; endDate: Date | null }) => void;
@@ -9,7 +9,7 @@ interface DateFilterProps {
 
 function DateFilter({ date, setDate }: DateFilterProps) {
   const { startDate, endDate } = date;
-
+  const Today = new Date();
   const handleChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     setDate({ startDate: start, endDate: end });
@@ -19,11 +19,12 @@ function DateFilter({ date, setDate }: DateFilterProps) {
     <>
       <DatePicker
         dateFormat="yyyy/MM/dd"
-        selected={startDate}
+        selected={Today}
         onChange={handleChange}
         startDate={startDate}
         endDate={endDate}
         selectsRange
+        placeholderText="ALL DATE"
       />
     </>
   );
