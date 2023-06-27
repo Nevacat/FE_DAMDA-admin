@@ -20,20 +20,28 @@ function ManagerTable({ waiting, pending, inactive, category }: any) {
     (inactive && category === 'inactive')
   ) {
     content = (
-      <G.Thead>
-        <tr>
-          <S.ManagerTh scope="col">이름</S.ManagerTh>
-          <S.ManagerTh scope="col">연락처</S.ManagerTh>
-          <S.ManagerTh scope="col">활동지역</S.ManagerTh>
-          <S.ManagerTh scope="col">레벨</S.ManagerTh>
-          <S.ManagerTh scope="col">자격증</S.ManagerTh>
-          <S.ManagerTh scope="col">운전여부</S.ManagerTh>
-          <S.ManagerTh scope="col">지원 폼</S.ManagerTh>
-          <S.ManagerTh scope="col">예약 내역</S.ManagerTh>
-          <S.ManagerTh scope="col">상태</S.ManagerTh>
-          <S.ManagerTh scope="col">메모</S.ManagerTh>
-        </tr>
-      </G.Thead>
+      <>
+        <colgroup>
+          <col width="5%" />
+          <col width="11%" />
+          <col width="14%" />
+        </colgroup>
+
+        <G.Thead>
+          <tr>
+            <S.ManagerTh scope="col">이름</S.ManagerTh>
+            <S.ManagerTh scope="col">연락처</S.ManagerTh>
+            <S.ManagerTh scope="col">활동지역</S.ManagerTh>
+            <S.ManagerTh scope="col">레벨</S.ManagerTh>
+            <S.ManagerTh scope="col">자격증</S.ManagerTh>
+            <S.ManagerTh scope="col">운전여부</S.ManagerTh>
+            <S.ManagerTh scope="col">지원 폼</S.ManagerTh>
+            <S.ManagerTh scope="col">예약 내역</S.ManagerTh>
+            <S.ManagerTh scope="col">상태</S.ManagerTh>
+            <S.ManagerTh scope="col">메모</S.ManagerTh>
+          </tr>
+        </G.Thead>
+      </>
     );
   }
 
