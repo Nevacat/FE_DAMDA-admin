@@ -18,6 +18,7 @@ export const Tr = styled.tr`
   border-bottom: 1px solid ${theme.colors.yolda_gray_7};
 `;
 export const Th = styled.th`
+  width: 100px;
   ${theme.font.bold_14}
   padding: 5px 10px;
   height: 72px;
@@ -26,6 +27,7 @@ export const Th = styled.th`
   text-align: left;
   vertical-align: middle;
   white-space: nowrap;
+  text-align: center;
 `;
 
 export const Td = styled.td`
@@ -35,4 +37,5 @@ export const Td = styled.td`
   font-weight: 500;
   vertical-align: middle;
   word-break: keep-all;
+  text-align: center;
 `;
