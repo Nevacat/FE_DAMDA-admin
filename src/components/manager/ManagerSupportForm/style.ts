@@ -54,7 +54,7 @@ export const FormInfo = styled.article`
 
   div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 4px 16px;
     margin-bottom: 8px;
     border-bottom: 1px solid ${theme.colors.yolda_gray_7};
@@ -63,14 +63,26 @@ export const FormInfo = styled.article`
     line-height: 160%;
 
     dt {
+      flex-shrink: 0;
       width: 137px;
     }
 
     dd {
+      word-break: break-word;
+
       &.field-experience {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
         font-size: 14px;
         font-weight: 300;
         line-height: 160%;
+      }
+
+      &.location-group {
+        display: flex;
+        flex-wrap: wrap;
+        width: 158px;
       }
 
       .day:not(:last-of-type) {

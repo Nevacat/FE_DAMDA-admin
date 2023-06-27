@@ -17,10 +17,10 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
   });
   console.log(data);
 
-  const formattedPhoneNumber = data.managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  const formattedPhoneNumber = data?.managerPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 
   const renderDaysOfWeek = () => {
-    return data.activityDay.map((day: boolean, index: number) => {
+    return data?.activityDay.map((day: boolean, index: number) => {
       switch (index) {
         case 0:
           return day && <span className="day">월</span>;
@@ -42,12 +42,12 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
     });
   };
 
-  const seoul = data.region.서울특별시.map((seoul: string, index: number) => (
+  const seoul = data?.region.서울특별시.map((seoul: string, index: number) => (
     <span key={index} className="location">
       서울 {seoul}
     </span>
   ));
-  const gyeonggi = data.region.경기도.map((gyeonggi: string, index: number) => (
+  const gyeonggi = data?.region.경기도.map((gyeonggi: string, index: number) => (
     <span key={index} className="location">
       경기도 {gyeonggi}
     </span>
@@ -75,7 +75,7 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
           <dl>
             <div>
               <dt>이름</dt>
-              <dd>{data.managerName}</dd>
+              <dd>{data?.managerName}</dd>
             </div>
 
             <div>
@@ -90,7 +90,7 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
 
             <div>
               <dt>활동 가능 지역</dt>
-              <dd>
+              <dd className="location-group">
                 {seoul}
                 {gyeonggi}
               </dd>
@@ -105,19 +105,19 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
             <div>
               <dt>자격증</dt>
               <dd>
-                {data.certificateStatus !== 'ETC' && data.certificateStatus}
-                {data.certificateStatus === 'ETC' && data.certificateStatusEtc}
+                {data?.certificateStatus !== 'ETC' && data?.certificateStatus}
+                {data?.certificateStatus === 'ETC' && data?.certificateStatusEtc}
               </dd>
             </div>
 
             <div>
               <dt>현장 경험</dt>
-              <dd className="field-experience">{data.fieldExperience}</dd>
+              <dd className="field-experience">{data?.fieldExperience}</dd>
             </div>
 
             <div>
               <dt>본업 유무</dt>
-              <dd>{data.mainJobStatusEtc}</dd>
+              <dd>{data?.mainJobStatusEtc}</dd>
             </div>
           </dl>
         </S.FormInfo>
@@ -128,7 +128,7 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
           <dl>
             <div>
               <dt>자차 운전 여부</dt>
-              <dd>{data.vehicle ? '있음' : '없음'}</dd>
+              <dd>{data?.vehicle ? '있음' : '없음'}</dd>
             </div>
           </dl>
         </S.FormInfo>
