@@ -622,3 +622,10 @@ export const FormRadioDelete = styled.div`
   top: -10px;
   right: -10px;
 `;
+
+export const FormPlaceHolderEdit = styled.div`
+  width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
