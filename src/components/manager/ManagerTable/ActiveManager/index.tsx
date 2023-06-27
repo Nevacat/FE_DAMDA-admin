@@ -14,6 +14,12 @@ function ActiveManager({ activeManagers }: ActiveManagerProps) {
   return (
     <M.ManagerTableContainer>
       <G.Table>
+        <colgroup>
+          <col width="5%" />
+          <col width="11%" />
+          <col width="14%" />
+        </colgroup>
+
         <G.Thead>
           <tr>
             <M.ManagerTh scope="col">이름</M.ManagerTh>

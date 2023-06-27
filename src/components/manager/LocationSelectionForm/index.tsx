@@ -1,15 +1,26 @@
-import React, { ChangeEvent, RefObject, createRef, useEffect, useState } from 'react';
+import React, { ChangeEvent, RefObject, createRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { citiesData } from '@/constants/locationData';
 
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs';
 import * as S from './style';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteManagerRegion, putManagerRegion } from '@/api/manager';
 
 function LocationSelectionForm({ region, id }: any) {
-  const { mutate } = useMutation(putManagerRegion);
-  const { mutate: deleteRegion } = useMutation(deleteManagerRegion);
+  const cityCheckboxRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(putManagerRegion, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
+  const { mutate: deleteRegion } = useMutation(deleteManagerRegion, {
+    onSuccess() {
+      queryClient.invalidateQueries(['managers']);
+    },
+  });
 
   const [isLocationOptionsOpen, setIsLocationOptionsOpen] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
@@ -18,20 +29,6 @@ function LocationSelectionForm({ region, id }: any) {
   const regionChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedRegion(e.target.value);
   };
-
-  const closeHandler = (e: MouseEvent) => {
-    if (isLocationOptionsOpen && listRef.current && !listRef.current.contains(e.target as Node)) {
-      setIsLocationOptionsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', closeHandler);
-
-    return () => {
-      window.removeEventListener('click', closeHandler);
-    };
-  });
 
   const cityChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const district = e.target.value;
@@ -58,24 +55,38 @@ function LocationSelectionForm({ region, id }: any) {
     }
   };
 
-  const filterTagHandler = (districtItem: string) => {};
+  const filterTagHandler = (e: React.MouseEvent<HTMLButtonElement>, district: string) => {
+    e.stopPropagation();
+
+    const checkedCount = region.서울특별시.length + region.경기도.length;
+
+    if (checkedCount >= 1) {
+      if (region.서울특별시.includes(district)) {
+        deleteRegion({ id, region: { SEOUL: district } });
+      } else if (region.경기도.includes(district)) {
+        deleteRegion({ id, region: { GYEONGGI: district } });
+      }
+    } else if (checkedCount === 0) {
+      return;
+    }
+  };
 
   // 지역 태그
   const seoul = region?.서울특별시.map((seoul: string, index: number) => (
     <div key={index}>
       서울 {seoul}
-      <button type="button" onClick={() => filterTagHandler(seoul)}>
+      {/* <button type="button" onClick={(e) => filterTagHandler(e, seoul)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button>
+      </button> */}
     </div>
   ));
 
   const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => (
     <div key={index}>
       경기 {gyeonggi}
-      <button type="button" onClick={() => filterTagHandler(gyeonggi)}>
+      {/* <button type="button" onClick={(e) => filterTagHandler(e, gyeonggi)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
-      </button>
+      </button> */}
     </div>
   ));
 
@@ -116,13 +127,14 @@ function LocationSelectionForm({ region, id }: any) {
         {/* Options */}
         {isLocationOptionsOpen && (
           <S.ListWrapper ref={listRef}>
-            <ul>
+            <ul onClick={(e) => e.stopPropagation()}>
               <li>
                 <input
                   type="radio"
                   name="manager_available_region"
                   id="seoul"
                   value="서울특별시"
+                  onClick={(e) => e.stopPropagation()}
                   onChange={regionChangeHandler}
                 />
                 <label htmlFor="seoul">서울특별시</label>
@@ -134,6 +146,7 @@ function LocationSelectionForm({ region, id }: any) {
                   name="manager_available_region"
                   id="gyeonggi"
                   value="경기도"
+                  onClick={(e) => e.stopPropagation()}
                   onChange={regionChangeHandler}
                 />
                 <label htmlFor="gyeonggi">경기도</label>
@@ -141,7 +154,7 @@ function LocationSelectionForm({ region, id }: any) {
             </ul>
 
             {isLocationOptionsOpen && selectedRegion && citiesData[selectedRegion] && (
-              <ul>
+              <ul onClick={(e) => e.stopPropagation()}>
                 {citiesData[selectedRegion].map((district: string) => (
                   <li key={district}>
                     <input
@@ -150,7 +163,9 @@ function LocationSelectionForm({ region, id }: any) {
                       id={district}
                       value={district}
                       checked={region[selectedRegion].includes(district)}
+                      onClick={(e) => e.stopPropagation()}
                       onChange={cityChangeHandler}
+                      ref={cityCheckboxRef}
                     />
                     <label htmlFor={district}>{district}</label>
                   </li>
