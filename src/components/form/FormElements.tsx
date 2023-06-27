@@ -9,6 +9,7 @@ import String from '@/components/form/components/String';
 import { Draggable } from 'react-beautiful-dnd';
 import Drag from '@/components/form/components/svg/Drag';
 import { DragHandle } from '@/styles/pages/form/form.styled';
+import PlaceHolderEdit from '@/components/form/components/PlaceHolderEdit';
 
 function FormElements({ formData, refetch, index }: FormElementsProps) {
   if (formData.questionIdentify === 'ADDRESS')
@@ -30,8 +31,7 @@ function FormElements({ formData, refetch, index }: FormElementsProps) {
       </Draggable>
     );
 
-  const isDuration =
-    formData.questionIdentify === 'SERVICEDURATION' ? <div className="duration">{formData.placeHolder}</div> : null;
+  const isDuration = formData.questionIdentify === 'SERVICEDURATION' ? <PlaceHolderEdit formData={formData} /> : null;
 
   switch (formData.questionType) {
     case 'TITLE':
