@@ -6,6 +6,14 @@ export const ManagerTd = styled(Td)`
   position: relative;
   padding: 0 12px;
 
+  &.location-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 4px;
+  }
+
   textarea {
     position: absolute;
     top: 58px;
