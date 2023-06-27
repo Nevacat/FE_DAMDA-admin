@@ -25,16 +25,7 @@ function ManagerLayout({
 }: any) {
   const [category, setCategory] = useState('all');
 
-  const {
-    activePage,
-    waitingPage,
-    pendingPage,
-    inactivePage,
-    setActivePage,
-    setWaitingPage,
-    setPendingPage,
-    setInactivePage,
-  } = useManagerPageStore((state) => state);
+  const { activePage, setActivePage } = useManagerPageStore((state) => state);
 
   const { total: activeTotal } = activeManagers || {};
   const { total: waitingTotal } = waitingManagers || {};
@@ -116,6 +107,12 @@ function ManagerLayout({
         pending={pendingManagers?.content}
         inactive={inactiveManagers?.content}
         category={category}
+        waitingTotal={waitingTotal}
+        waitingRefetch={waitingRefetch}
+        pendingRefetch={pendingRefetch}
+        pendingTotal={pendingTotal}
+        inactiveRefetch={inactiveRefetch}
+        inactiveTotal={inactiveTotal}
       />
     </div>
   );

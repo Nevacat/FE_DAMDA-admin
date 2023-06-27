@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getManagers } from '@/api/manager';
+import { getAllManagers, getManagers } from '@/api/manager';
 import useManagerPageStore from '@/store/manager';
 
 import ManagerLayout from '@/components/manager/ManagerLayout';
@@ -16,17 +16,17 @@ function ManagerPage() {
   });
 
   const { data: waitingManagers, refetch: waitingRefetch } = useQuery({
-    queryKey: ['waiting'],
+    queryKey: ['waiting', waitingPage],
     queryFn: () => getManagers('WAITING', waitingPage - 1, 10),
   });
 
   const { data: pendingManagers, refetch: pendingRefetch } = useQuery({
-    queryKey: ['pending'],
+    queryKey: ['pending', pendingPage],
     queryFn: () => getManagers('PENDING', pendingPage - 1, 10),
   });
 
   const { data: inactiveManagers, refetch: inactiveRefetch } = useQuery({
-    queryKey: ['inactive'],
+    queryKey: ['inactive', inactivePage],
     queryFn: () => getManagers('INACTIVE', inactivePage - 1, 10),
   });
 
