@@ -1,3 +1,4 @@
+import { ManagerType } from '@/types/manager';
 import { create } from 'zustand';
 
 interface Store {
