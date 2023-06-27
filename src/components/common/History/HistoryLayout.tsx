@@ -6,6 +6,7 @@ import { StateButton } from '@/styles/common/StateButton';
 import { PaginationContainer } from '../PaginationContainer/style';
 import Pagination from 'react-js-pagination';
 import { UserHistoryData } from '@/types/api/user';
+import Loading from '../Loading';
 
 interface HistoryProp {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,8 +34,12 @@ function HistoryLayout({
       <>
         <TopBarGray title={`${username}님의 예약내역`} setIsOpen={setIsOpen} />
         <S.Histories>
-          {isLoading && <div className="message">데이터를 불러오고있습니다</div>}
-          {userHistory.length === 0 ? (
+          {isLoading && (
+            <div className="message">
+              <Loading />
+            </div>
+          )}
+          {!isLoading && userHistory.length === 0 ? (
             <div className="message">예약내역이 없습니다</div>
           ) : (
             userHistory.map((history) => (

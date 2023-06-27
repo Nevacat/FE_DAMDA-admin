@@ -8,7 +8,6 @@ import { NextRouter, useRouter } from 'next/router';
 function SideMenu({ router }: { router: NextRouter }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = router.pathname;
-  console.log(router);
 
   return (
     <S.SideBar>

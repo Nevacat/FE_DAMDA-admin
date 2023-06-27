@@ -4,12 +4,16 @@ import { citiesData } from '@/constants/locationData';
 
 import { BsChevronUp, BsChevronDown } from 'react-icons/bs';
 import * as S from './style';
+import { useMutation } from '@tanstack/react-query';
+import { deleteManagerRegion, putManagerRegion } from '@/api/manager';
 
-function LocationSelectionForm() {
+function LocationSelectionForm({ region, id }: any) {
+  const { mutate } = useMutation(putManagerRegion);
+  const { mutate: deleteRegion } = useMutation(deleteManagerRegion);
+
   const [isLocationOptionsOpen, setIsLocationOptionsOpen] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState('');
   const listRef: RefObject<HTMLDivElement> = createRef();
-  const [activityRegion, setActivityRegion] = useState({ 서울특별시: [], 경기도: [] });
 
   const regionChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedRegion(e.target.value);
@@ -35,55 +39,41 @@ function LocationSelectionForm() {
 
     if (isChecked) {
       if (selectedRegion === '서울특별시') {
-        // 매니저 활동 지역 추가 api 요청
+        mutate({ id, region: { SEOUL: district } });
       } else if (selectedRegion === '경기도') {
-        // 매니저 활동 지역 삭제 api 요청
+        mutate({ id, region: { GYEONGGI: district } });
       }
     } else {
-      if (selectedRegion === '서울특별시') {
-        setActivityRegion((prev) => ({
-          ...prev,
-          서울특별시: prev.서울특별시.filter((item) => item !== district),
-        }));
-      } else if (selectedRegion === '경기도') {
-        setActivityRegion((prev) => ({
-          ...prev,
-          경기도: prev.경기도.filter((item) => item !== district),
-        }));
+      const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+
+      if (checkedCount >= 1) {
+        if (selectedRegion === '서울특별시') {
+          deleteRegion({ id, region: { SEOUL: district } });
+        } else if (selectedRegion === '경기도') {
+          deleteRegion({ id, region: { GYEONGGI: district } });
+        }
+      } else {
+        e.target.checked = true;
       }
     }
   };
 
-  const filterTagHandler = (districtItem: string) => {
-    // setRemoveTag(districtItem);
-    // if (activityRegion.서울특별시.includes(districtItem)) {
-    //   setActivityRegion((prev) => ({
-    //     ...prev,
-    //     서울특별시: prev.서울특별시.filter((item) => item !== districtItem),
-    //   }));
-    // }
-    // if (activityRegion.경기도.includes(districtItem)) {
-    //   setActivityRegion((prev) => ({
-    //     ...prev,
-    //     경기도: prev.경기도.filter((item) => item !== districtItem),
-    //   }));
-    // }
-  };
+  const filterTagHandler = (districtItem: string) => {};
 
   // 지역 태그
-  const seoul = activityRegion.서울특별시.map((item, index) => (
+  const seoul = region?.서울특별시.map((seoul: string, index: number) => (
     <div key={index}>
-      서울 {item}
-      <button type="button" onClick={() => filterTagHandler(item)}>
+      서울 {seoul}
+      <button type="button" onClick={() => filterTagHandler(seoul)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
       </button>
     </div>
   ));
 
-  const gyeonggi = activityRegion.경기도.map((item, index) => (
+  const gyeonggi = region?.경기도.map((gyeonggi: string, index: number) => (
     <div key={index}>
-      경기 {item}
-      <button type="button" onClick={() => filterTagHandler(item)}>
+      경기 {gyeonggi}
+      <button type="button" onClick={() => filterTagHandler(gyeonggi)}>
         <Image src="/icons/tag-close-icon.svg" alt="tag-close-icon" width={10.5} height={10.5} />
       </button>
     </div>
@@ -159,7 +149,7 @@ function LocationSelectionForm() {
                       name="manager_available_district"
                       id={district}
                       value={district}
-                      // checked={activityRegion[selectedRegion].includes(district)}
+                      checked={region[selectedRegion].includes(district)}
                       onChange={cityChangeHandler}
                     />
                     <label htmlFor={district}>{district}</label>

@@ -8,13 +8,21 @@ export const ReviewForm = styled.form`
   width: 1200px;
   gap: 24px;
   margin: 50px;
+
+  ${StateButton} {
+    margin: 0;
+    font-weight: 500;
+  }
 `;
 
 export const Row = styled.div`
   display: grid;
   grid-template-columns: 60px 1fr 1fr;
-  align-items: center;
   gap: 17px;
+
+  &.align_center {
+    align-items: center;
+  }
 
   textarea {
     ${theme.font.regular_14}
@@ -95,15 +103,12 @@ export const Buttons = styled.div`
   display: flex;
   justify-content: end;
   gap: 20px;
-
-  ${StateButton} {
-    font-weight: 500;
-  }
 `;
 
 export const Button = styled(StateButton.withComponent('button'))`
   border: none;
   outline: none;
+  margin: 0;
   font-weight: 500;
   cursor: pointer;
 `;
