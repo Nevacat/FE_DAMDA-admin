@@ -50,11 +50,19 @@ function SideMenu({ router }: { router: NextRouter }) {
         <S.Folder>
           <div
             className={`category ${
-              pathname === '/review' || pathname === '/review/create' || pathname === '/center' ? 'active' : ''
+              pathname === '/review' ||
+              pathname === '/review/create' ||
+              pathname === '/center' ||
+              pathname === '/center/newFaq'
+                ? 'active'
+                : ''
             }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {pathname === '/review' || pathname === '/review/create' || pathname === '/center' ? (
+            {pathname === '/review' ||
+            pathname === '/review/create' ||
+            pathname === '/center' ||
+            pathname === '/center/newFaq' ? (
               <Image src="/icons/menu-posts-w.svg" alt="게시물 관리" width={24} height={24} />
             ) : (
               <Image src="/icons/menu-posts.svg" alt="게시물 관리" width={24} height={24} />
@@ -71,7 +79,10 @@ function SideMenu({ router }: { router: NextRouter }) {
                 <Image src="/icons/menu-review.svg" alt="고객 후기" width={24} height={24} />
                 고객 후기
               </Link>
-              <Link href={'/center'} className={pathname === '/center' ? 'active' : ''}>
+              <Link
+                href={'/center'}
+                className={pathname === '/center' || pathname === '/center/newFaq' ? 'active' : ''}
+              >
                 <Image src="/icons/menu-center.svg" alt="고객센터" width={24} height={24} />
                 고객 센터
               </Link>
