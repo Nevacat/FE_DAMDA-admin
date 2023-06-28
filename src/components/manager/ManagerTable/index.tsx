@@ -155,7 +155,7 @@ function ManagerTable({
                 waiting?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
               {waiting && category === 'waiting' && (
-                <PaginationContainer>
+                <PaginationContainer style={{ position: 'absolute', right: '24px' }}>
                   <Pagination
                     hideFirstLastPages={true}
                     linkClassPrev="prev"
@@ -168,7 +168,6 @@ function ManagerTable({
                   />
                 </PaginationContainer>
               )}
-
               {/* ---------------------- 보류 매니저 ----------------------*/}
               {/* 기존 매니저 */}
               {pending && category === 'pending' && (
@@ -191,7 +190,7 @@ function ManagerTable({
                 prevWaitingPending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
               {pending && category === 'pending' && (
-                <PaginationContainer>
+                <PaginationContainer style={{ position: 'absolute', right: '24px' }}>
                   <Pagination
                     hideFirstLastPages={true}
                     linkClassPrev="prev"
@@ -227,7 +226,7 @@ function ManagerTable({
                 prevWaitingInActive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
               {inactive && category === 'inactive' && (
-                <PaginationContainer>
+                <PaginationContainer style={{ position: 'absolute', right: '24px' }}>
                   <Pagination
                     hideFirstLastPages={true}
                     linkClassPrev="prev"
