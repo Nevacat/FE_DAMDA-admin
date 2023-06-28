@@ -1,5 +1,6 @@
 export interface UserRes {
   data: UserData;
+  status: number;
 }
 
 export interface UserData {
