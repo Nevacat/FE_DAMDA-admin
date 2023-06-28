@@ -51,6 +51,7 @@ export const Buttons = styled.div`
 
   ${StateButton} {
     width: 160px;
+    margin: 0;
     cursor: pointer;
   }
 `;

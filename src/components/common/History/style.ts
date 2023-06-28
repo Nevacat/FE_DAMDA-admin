@@ -8,6 +8,7 @@ export const Histories = styled.div`
   gap: 15px;
   width: 400px;
   padding: 20px 20px 0;
+  color: #000;
 
   .message {
     display: flex;

@@ -11,6 +11,6 @@ export const login = async (data: FieldValues) => {
  * @description: 헤더에 담긴 토큰을 검증하고, 유저정보를 받아옴
  */
 export const validateToken = async () => {
-  const response = await instance.get<UserRes>('admin/auth');
+  const response = await instance.get<UserRes>('/admin/auth');
   return response.data;
 };
