@@ -38,7 +38,8 @@ export const CertificateForm = styled.div<{ size?: string }>`
   ul {
     position: absolute;
     top: 30px;
-    left: -50%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 200px;
     padding-top: 17px;
     z-index: 20;

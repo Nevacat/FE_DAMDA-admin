@@ -9,6 +9,7 @@ import { StateButton } from '@/styles/common/StateButton';
 import * as G from '@/styles/common/table.style';
 import * as S from './style';
 import { ManagerType } from '@/types/manager';
+import ManagerSupportForm from '../../ManagerSupportForm';
 
 interface ActiveManagerItemProps {
   activeManager: ManagerType;
@@ -49,15 +50,17 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   };
 
   const queryClient = useQueryClient();
-
   const { mutate } = useMutation(putManagerInfo, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
     },
   });
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['waiting']);
+      queryClient.invalidateQueries(['pending']);
+      queryClient.invalidateQueries(['inactive']);
     },
   });
 
@@ -68,6 +71,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   const [isVehicleOpen, setIsVehicleOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isEtcOpen, setIsEtcOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -375,7 +379,10 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
       </S.ManagerTd>
 
       <S.ManagerTd>
-        <StateButton state={'blue'}>지원폼</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
+          지원폼
+          {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />}
+        </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd>

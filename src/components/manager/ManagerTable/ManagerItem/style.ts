@@ -6,6 +6,14 @@ export const ManagerTd = styled(Td)`
   position: relative;
   padding: 0 12px;
 
+  &.location-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 4px;
+  }
+
   textarea {
     position: absolute;
     top: 58px;
@@ -30,7 +38,8 @@ export const CertificateForm = styled.div<{ size?: string }>`
   ul {
     position: absolute;
     top: 30px;
-    left: -50%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 200px;
     padding-top: 17px;
     z-index: 20;
