@@ -168,7 +168,7 @@ function ActiveManagerItem({ activeManager }: ActiveManagerItemProps) {
   };
 
   let transformedPhoneNumber;
-  switch (managerPhoneNumber.length) {
+  switch (managerPhoneNumber?.length) {
     case 10:
       transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
       break;
