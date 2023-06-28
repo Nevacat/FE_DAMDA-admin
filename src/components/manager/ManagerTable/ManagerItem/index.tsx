@@ -8,6 +8,7 @@ import History from '@/components/common/History';
 import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
+import ManagerSupportForm from '../../ManagerSupportForm';
 
 function ManagerItem({ data }: any) {
   const {
@@ -57,6 +58,7 @@ function ManagerItem({ data }: any) {
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isEtcOpen, setIsEtcOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -439,7 +441,10 @@ function ManagerItem({ data }: any) {
       </S.ManagerTd>
 
       <S.ManagerTd>
-        <StateButton state={'blue'}>지원폼</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
+          지원폼
+          {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />}
+        </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd>
