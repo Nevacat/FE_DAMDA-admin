@@ -8,6 +8,7 @@ import History from '@/components/common/History';
 import * as G from '@/styles/common/table.style';
 import { StateButton } from '@/styles/common/StateButton';
 import * as S from './style';
+import ManagerSupportForm from '../../ManagerSupportForm';
 
 function ManagerItem({ data }: any) {
   const {
@@ -57,6 +58,7 @@ function ManagerItem({ data }: any) {
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
   const [isEtcOpen, setIsEtcOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   // 변경 클릭
   const [isEditingName, setIsEditingName] = useState(false);
@@ -67,7 +69,10 @@ function ManagerItem({ data }: any) {
 
   const { mutate: statusHandler } = useMutation(putManagerStatus, {
     onSuccess() {
-      queryClient.invalidateQueries(['managers']);
+      queryClient.invalidateQueries(['active']);
+      queryClient.invalidateQueries(['waiting']);
+      queryClient.invalidateQueries(['pending']);
+      queryClient.invalidateQueries(['inactive']);
     },
   });
 
@@ -246,7 +251,7 @@ function ManagerItem({ data }: any) {
   }
 
   let transformedPhoneNumber;
-  switch (managerPhoneNumber.length) {
+  switch (managerPhoneNumber?.length) {
     case 10:
       transformedPhoneNumber = managerPhoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
       break;
@@ -294,7 +299,7 @@ function ManagerItem({ data }: any) {
         )}
       </S.ManagerTd>
 
-      <S.ManagerTd style={{ position: 'relative' }} onClick={locationOpenHandler}>
+      <S.ManagerTd className="location-group" style={{ position: 'relative' }} onClick={locationOpenHandler}>
         {/* 지역 데이터 */}
         {region.서울특별시.map((seoul: string, index: number) => (
           <span key={index}>서울 {seoul}</span>
@@ -436,7 +441,10 @@ function ManagerItem({ data }: any) {
       </S.ManagerTd>
 
       <S.ManagerTd>
-        <StateButton state={'blue'}>지원폼</StateButton>
+        <StateButton state={'blue'} onClick={() => setIsFormOpen(true)}>
+          지원폼
+          {isFormOpen && <ManagerSupportForm id={id} setIsFormOpen={setIsFormOpen} />}
+        </StateButton>
       </S.ManagerTd>
 
       <S.ManagerTd>

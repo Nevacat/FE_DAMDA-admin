@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const TotalCardWrap = styled.div`
+  cursor: pointer;
   width: 170px;
   height: 120px;
   background-color: ${({ theme }) => theme.colors.sub_blue_3};

@@ -10,6 +10,21 @@ import Pagination from 'react-js-pagination';
 import { PaginationContainer } from '../common/PaginationContainer/style';
 import { formatDate } from './DateFormat';
 import MatchingPopup from './MatchingPopup';
+const cardData = [
+  { name: '예약/매니저 매칭중', label: 'matching' },
+  { name: '매니저 매칭 수락 대기', label: 'waiting' },
+  { name: '서비스 예약 확정', label: 'confirmation' },
+  { name: '서비스 완료', label: 'completed' },
+  { name: '예약 취소', label: 'cancellation' },
+];
+
+const cardStatus = {
+  WAITING_FOR_MANAGER_REQUEST: '예약/매니저 매칭중',
+  WAITING_FOR_ACCEPT_MATCHING: '매니저 매칭 수락 대기',
+  MANAGER_MATCHING_COMPLETED: '서비스 예약 확정',
+  SERVICE_COMPLETED: '서비스 완료',
+  RESERVATION_CANCELLATION: '예약 취소',
+};
 
 function MainLayout() {
   const [page, setPage] = React.useState(1);
@@ -24,14 +39,6 @@ function MainLayout() {
 
   const { statistical, content, total } = resData || {};
 
-  const cardData = [
-    { name: '예약/매니저 매칭중', label: 'matching' },
-    { name: '매니저 매칭 수락 대기', label: 'waiting' },
-    { name: '서비스 예약 확정', label: 'confirmation' },
-    { name: '서비스 완료', label: 'completed' },
-    { name: '예약 취소', label: 'cancellation' },
-  ];
-
   useEffect(() => {
     refetch(); // 페이지번호가 변경될 때 데이터 다시 불러오기
   }, [page, refetch]);
@@ -39,6 +46,12 @@ function MainLayout() {
   useEffect(() => {
     setPage(1); // 날짜필터가 변경되면 페이지를 1로 리셋
   }, [date, refetch]);
+
+  const [selectedStatus, setSelectedStatus] = React.useState<string>('');
+  const reservationContent =
+    selectedStatus.length !== 0
+      ? content?.filter((item) => cardStatus[item.reservationStatus] === selectedStatus)
+      : content;
 
   return (
     <S.MainSection>
@@ -50,10 +63,12 @@ function MainLayout() {
               key={card.name}
               Total={statistical?.[card.label as keyof Statistical] || 0}
               CardName={card.name}
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
             />
           ))}
       </S.TotalCardContainer>
-      <MainTable Content={content} />
+      <MainTable Content={reservationContent} />
       <PaginationContainer>
         <Pagination
           hideFirstLastPages={true}
@@ -66,7 +81,6 @@ function MainLayout() {
           onChange={(pageNumber) => setPage(pageNumber)}
         />
       </PaginationContainer>
-
     </S.MainSection>
   );
 }

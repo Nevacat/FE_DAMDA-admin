@@ -118,28 +118,9 @@ export const SelectedLocation = styled.div`
     align-items: center;
     width: 92px;
     height: 32px;
-    padding-left: 12px;
     border-radius: 5px;
     color: #ffffff;
     font-size: 13px;
     background-color: ${({ theme }) => theme.colors.main_blue};
-
-    /* button {
-      position: absolute;
-      right: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 18px;
-      height: 18px;
-      border: none;
-      background-color: transparent;
-      outline: none;
-    }
-
-    img {
-      display: block;
-      color: #ffffff;
-    } */
   }
 `;

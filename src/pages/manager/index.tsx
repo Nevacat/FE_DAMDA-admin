@@ -1,38 +1,34 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAllManagers, getManagers } from '@/api/manager';
+import useManagerPageStore from '@/store/manager';
 
 import ManagerLayout from '@/components/manager/ManagerLayout';
 
 import * as S from '@/styles/pages/manager.style';
 
 function ManagerPage() {
-  // const { data: activeManagers } = useQuery({
-  //   queryKey: ['active'],
-  //   queryFn: () => getManagers('ACTIVE'),
-  // });
-  // const { data: waitingManagers } = useQuery({
-  //   queryKey: ['waiting'],
-  //   queryFn: () => getManagers('WAITING'),
-  // });
-  // const { data: pendingManagers } = useQuery({
-  //   queryKey: ['pending'],
-  //   queryFn: () => getManagers('PENDING'),
-  // });
-  // const { data: inactiveManagers } = useQuery({
-  //   queryKey: ['inactive'],
-  //   queryFn: () => getManagers('INACTIVE'),
-  // });
+  const { activePage, waitingPage, pendingPage, inactivePage } = useManagerPageStore((state) => state);
 
-  const { data } = useQuery({
-    queryKey: ['managers'],
-    queryFn: getAllManagers,
+  const { data: activeManagers, refetch: activeRefetch } = useQuery({
+    queryKey: ['active', activePage],
+    queryFn: () => getManagers('ACTIVE', activePage - 1, 7),
   });
 
-  const activeManagers = data?.filter((item: any) => item.currManagerStatus === 'ACTIVE');
-  const waitingManagers = data?.filter((item: any) => item.currManagerStatus === 'WAITING');
-  const pendingManagers = data?.filter((item: any) => item.currManagerStatus === 'PENDING');
-  const inactiveManagers = data?.filter((item: any) => item.currManagerStatus === 'INACTIVE');
+  const { data: waitingManagers, refetch: waitingRefetch } = useQuery({
+    queryKey: ['waiting', waitingPage],
+    queryFn: () => getManagers('WAITING', waitingPage - 1, 10),
+  });
+
+  const { data: pendingManagers, refetch: pendingRefetch } = useQuery({
+    queryKey: ['pending', pendingPage],
+    queryFn: () => getManagers('PENDING', pendingPage - 1, 10),
+  });
+
+  const { data: inactiveManagers, refetch: inactiveRefetch } = useQuery({
+    queryKey: ['inactive', inactivePage],
+    queryFn: () => getManagers('INACTIVE', inactivePage - 1, 10),
+  });
 
   // if (!activeManagers) return;
 
@@ -42,6 +38,10 @@ function ManagerPage() {
       waitingManagers={waitingManagers}
       pendingManagers={pendingManagers}
       inactiveManagers={inactiveManagers}
+      activeRefetch={activeRefetch}
+      waitingRefetch={waitingRefetch}
+      pendingRefetch={pendingRefetch}
+      inactiveRefetch={inactiveRefetch}
     />
   );
 }
