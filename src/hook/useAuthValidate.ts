@@ -7,9 +7,15 @@ export const useAuthValidate = () => {
   const router = useRouter();
   const { setLogin, setLogout } = useAuthStore();
   const { mutate } = useMutation(validateToken, {
-    onSuccess: () => {
-      console.log('로그인이 확인되었습니다');
-      setLogin();
+    onSuccess: (data) => {
+      console.log(data.status);
+      if (data.status === 403) {
+        setLogout();
+        router.push('/login');
+        return;
+      } else {
+        setLogin();
+      }
     },
     onError: () => {
       setLogout();
