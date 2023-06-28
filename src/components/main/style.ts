@@ -14,6 +14,9 @@ export const MainSection = styled.section`
       }
     }
   }
+  .active {
+    border: 2px solid ${({ theme }) => theme.colors.sub_blue_1};
+  }
 `;
 
 export const TotalCardContainer = styled.div`
