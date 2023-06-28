@@ -53,6 +53,32 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
     </span>
   ));
 
+  const renderCertificate = () => {
+    if (data?.certificateStatus !== 'ETC') {
+      switch (data?.certificateStatus) {
+        case 'FIRST_RATE_OFF':
+          return '1급 (off)';
+
+        case 'SECOND_RATE_OFF':
+          return '2급 (off)';
+
+        case 'FIRST_RATE_ON':
+          return '1급 (on)';
+
+        case 'SECOND_RATE_ON':
+          return '2급 (on)';
+
+        case 'NONE':
+          return '없음';
+
+        default:
+          break;
+      }
+    } else if (data?.certificateStatus === 'ETC') {
+      return data?.certificateStatusEtc;
+    }
+  };
+
   return (
     <S.ManagerSupportForm>
       <header>
@@ -104,10 +130,7 @@ function ManagerSupportForm({ id, setIsFormOpen }: ManagerSupportFormProps) {
           <dl>
             <div>
               <dt>자격증</dt>
-              <dd>
-                {data?.certificateStatus !== 'ETC' && data?.certificateStatus}
-                {data?.certificateStatus === 'ETC' && data?.certificateStatusEtc}
-              </dd>
+              <dd>{renderCertificate()}</dd>
             </div>
 
             <div>
