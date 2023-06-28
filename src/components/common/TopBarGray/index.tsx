@@ -15,7 +15,16 @@ function TopBarGray({ title, setIsOpen }: TopBarProp) {
   return (
     <S.TopBar>
       <S.Title>{title}</S.Title>
-      <Image onClick={() => setIsOpen(false)} src={'/icons/close-icon.svg'} alt="닫기" width={24} height={24} />
+      <Image
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(false);
+        }}
+        src={'/icons/close-icon.svg'}
+        alt="닫기"
+        width={24}
+        height={24}
+      />
     </S.TopBar>
   );
 }
