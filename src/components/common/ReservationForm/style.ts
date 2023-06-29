@@ -7,6 +7,7 @@ export const ReservationForm = styled.div`
   gap: 25px;
   padding: 20px;
   width: 780px;
+  color: ${theme.colors.yolda_black_1};
 
   .message {
     display: flex;

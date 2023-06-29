@@ -116,7 +116,6 @@ function Select({ formData, refetch, children }: FormSelectProps) {
 
   return (
     <FormSelectWrapper>
-      <ToastContainer />
       {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}

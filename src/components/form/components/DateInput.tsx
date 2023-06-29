@@ -120,7 +120,6 @@ function DateInput({ formData, refetch, children }: FormDateInputProps) {
 
   return (
     <FormDateInputWrapper>
-      <ToastContainer />
       {children}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onChange} ref={inputRef} /> : <h1>{title}</h1>}

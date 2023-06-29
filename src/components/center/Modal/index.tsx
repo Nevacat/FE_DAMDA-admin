@@ -44,7 +44,6 @@ function Modal({
   const { mutate } = useMutation(putFAQData, {
     onSuccess(data) {
       queryClient.setQueryData(['faq', qnaId], data);
-      // window.location.reload();
     },
   });
 
@@ -137,6 +136,7 @@ function Modal({
                   <dd>
                     {isInputEditing ? (
                       <input
+                        className="title"
                         type="text"
                         {...register('title', { required: true })}
                         defaultValue={singleFAQ?.data.title}
@@ -150,7 +150,7 @@ function Modal({
 
                 <div>
                   <dt>유형</dt>
-                  <dd>
+                  <dd className="types">
                     {isInputEditing ? (
                       <N.FormWrapper size="small">
                         <CategoryDropdown
@@ -173,6 +173,7 @@ function Modal({
                   <dd>
                     {isInputEditing ? (
                       <textarea
+                        className="contents"
                         {...register('contents', { required: true })}
                         defaultValue={singleFAQ?.data.contents}
                       ></textarea>
