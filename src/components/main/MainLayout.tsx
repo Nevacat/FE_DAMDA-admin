@@ -11,8 +11,8 @@ import { PaginationContainer } from '../common/PaginationContainer/style';
 import { formatDate } from './DateFormat';
 import MatchingPopup from './MatchingPopup';
 const cardData = [
-  { name: '예약/매니저 매칭중', label: 'matching' },
-  { name: '매니저 매칭 수락 대기', label: 'waiting' },
+  { name: '예약/매니저 매칭중', label: 'waiting' },
+  { name: '매니저 매칭 수락 대기', label: 'matching' },
   { name: '서비스 예약 확정', label: 'confirmation' },
   { name: '서비스 완료', label: 'completed' },
   { name: '예약 취소', label: 'cancellation' },
