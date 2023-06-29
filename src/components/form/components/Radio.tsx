@@ -82,7 +82,6 @@ function Radio({ formData, children, refetch, dragChild }: FormRadioProps) {
 
   return (
     <FormRadioWrapper>
-      <ToastContainer />
       {dragChild}
       <div className="header">
         {isTitleEdit ? <input type="text" value={title} onChange={onInputChange} ref={inputRef} /> : <h1>{title}</h1>}

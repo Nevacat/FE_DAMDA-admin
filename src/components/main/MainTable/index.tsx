@@ -5,9 +5,10 @@ import { MainData, Reservation } from '@/types/api/main';
 
 interface MainTableProps {
   Content: Reservation[] | undefined;
+  page:number;
 }
 
-function MainTable({ Content }: MainTableProps) {
+function MainTable({ Content, page }: MainTableProps) {
   return (
     <T.TableContainer>
       <T.Table>
@@ -43,7 +44,7 @@ function MainTable({ Content }: MainTableProps) {
             <T.Th>Action</T.Th>
           </T.Tr>
         </T.Thead>
-        <T.Tbody>{Content && Content.map((item) => <MainItem key={item.id} Data={item} />)}</T.Tbody>
+        <T.Tbody>{Content && Content.map((item, index) => <MainItem key={item.id} index={index} Data={item} page={page} />)}</T.Tbody>
       </T.Table>
     </T.TableContainer>
   );
