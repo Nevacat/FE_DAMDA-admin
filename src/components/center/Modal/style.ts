@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 export const Overlay = styled(ModalBackground)``;
 
 export const Modal = styled(ModalContainer)`
-  width: 440px;
+  width: 650px;
 
   p {
     padding: 16px 30px;
@@ -65,6 +65,30 @@ export const Info = styled.dl`
       font-weight: 600;
       color: ${theme.colors.yolda_black_1};
     }
+
+    .types {
+      border: 1px solid ${theme.colors.yolda_gray_4};
+      border-radius: 5px;
+    }
+  }
+
+  .title {
+    width: 500px;
+    height: 30px;
+    padding: 4px 8px;
+    border: 1px solid ${theme.colors.yolda_gray_4};
+    border-radius: 5px;
+    outline: none;
+  }
+
+  .contents {
+    width: 500px;
+    height: 200px;
+    padding: 8px;
+    resize: none;
+    border: 1px solid ${theme.colors.yolda_gray_4};
+    border-radius: 5px;
+    outline: none;
   }
 `;
 

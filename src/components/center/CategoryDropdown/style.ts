@@ -14,6 +14,7 @@ export const StyleWrapper = styled.div<{ isOpen: boolean; size: string | undefin
           height: 34px;
           padding: 0;
           padding-left: 12px;
+          border: none;
           font-size: 14px;
           background-color: transparent;
         }
@@ -42,9 +43,10 @@ export const StyleWrapper = styled.div<{ isOpen: boolean; size: string | undefin
 
 export const Options = styled.div`
   position: absolute;
-  top: 42px;
+  top: 35px;
   left: 0;
-  width: 480px;
+  border: 1px solid ${theme.colors.yolda_gray_4};
+  border-top: none;
 
   button {
     color: ${theme.colors.yolda_gray_4} !important;
