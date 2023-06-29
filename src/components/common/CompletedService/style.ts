@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 export const CompletedFormContainer = styled.div`
   width: 440px;
+  color: ${theme.colors.yolda_black_1};
 
   .swiper-wrapper {
     margin-left: 25px;
