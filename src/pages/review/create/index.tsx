@@ -187,11 +187,13 @@ function ReviewCreate() {
    */
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const regexp = /\s/g;
     if (contentInput.content === '') return alert('내용을 입력해주세요');
     if (contentInput.title === '') return alert('제목을 입력해주세요');
 
     if (!isAutoMode && beforeFormData.length === 0) return alert('최소 한 장 이상의 서비스 전 사진을 등록해주세요.');
     if (!isAutoMode && afterFormData.length === 0) return alert('최소 한 장 이상의 서비스 후 사진을 등록해주세요.');
+    if (!isAutoMode && !regexp.test(userDataInput.address.trim())) return alert('주소 입력 형식이 유효하지 않습니다.');
 
     let formData = new FormData();
 
