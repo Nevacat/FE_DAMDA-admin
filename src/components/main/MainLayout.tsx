@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import * as S from './style';
 import TotalCard from './TotalCard';
@@ -10,9 +10,10 @@ import Pagination from 'react-js-pagination';
 import { PaginationContainer } from '../common/PaginationContainer/style';
 import { formatDate } from './DateFormat';
 import MatchingPopup from './MatchingPopup';
+
 const cardData = [
-  { name: '예약/매니저 매칭중', label: 'matching' },
-  { name: '매니저 매칭 수락 대기', label: 'waiting' },
+  { name: '예약/매니저 매칭중', label: 'waiting' },
+  { name: '매니저 매칭 수락 대기', label: 'matching' },
   { name: '서비스 예약 확정', label: 'confirmation' },
   { name: '서비스 완료', label: 'completed' },
   { name: '예약 취소', label: 'cancellation' },
@@ -27,8 +28,8 @@ const cardStatus = {
 };
 
 function MainLayout() {
-  const [page, setPage] = React.useState(1);
-  const [date, setDate] = React.useState<{ startDate: Date | null; endDate: Date | null }>({
+  const [page, setPage] = useState(1);
+  const [date, setDate] = useState<{ startDate: Date | null; endDate: Date | null }>({
     startDate: null,
     endDate: null,
   });
@@ -44,10 +45,27 @@ function MainLayout() {
   }, [page, refetch]);
 
   useEffect(() => {
-    setPage(1); // 날짜필터가 변경되면 페이지를 1로 리셋
+    setPage(1); // 날짜 필터가 변경되면 페이지를 1로 리셋
   }, [date, refetch]);
 
-  const [selectedStatus, setSelectedStatus] = React.useState<string>('');
+  const [selectedStatus, setSelectedStatus] = useState<string>('');
+
+  const handlePageChange = (pageNumber: number) => {
+    if (selectedStatus) {
+      // 필터링된 상태에서 페이지 변경 시
+      const filteredItems = content?.filter(
+        (item) => cardStatus[item.reservationStatus] === selectedStatus
+      );
+      const totalPages = Math.ceil(filteredItems?.length || 0 / 10); // 전체 페이지 수 계산
+      if (pageNumber > totalPages) {
+        // 현재 페이지가 전체 페이지 수를 초과하면 1페이지로 이동
+        setPage(1);
+        return;
+      }
+    }
+    setPage(pageNumber);
+  };
+
   const reservationContent =
     selectedStatus.length !== 0
       ? content?.filter((item) => cardStatus[item.reservationStatus] === selectedStatus)
@@ -68,7 +86,7 @@ function MainLayout() {
             />
           ))}
       </S.TotalCardContainer>
-      <MainTable Content={reservationContent} />
+      <MainTable Content={reservationContent} page={page}/>
       <PaginationContainer>
         <Pagination
           hideFirstLastPages={true}
@@ -78,7 +96,7 @@ function MainLayout() {
           itemsCountPerPage={10}
           totalItemsCount={total || 1}
           pageRangeDisplayed={total ? Math.ceil(total / 10) : 1}
-          onChange={(pageNumber) => setPage(pageNumber)}
+          onChange={handlePageChange}
         />
       </PaginationContainer>
     </S.MainSection>
