@@ -45,21 +45,21 @@ function CategoryDropdown({
           {selectedCategory || transformedCategory}
         </button>
         <IoMdArrowDropdown />
-      </div>
 
-      {isDropdownOpen && (
-        <S.Options>
-          <button type="button" onClick={selectHandler}>
-            가격
-          </button>
-          <button type="button" onClick={selectHandler}>
-            서비스 관련
-          </button>
-          <button type="button" onClick={selectHandler}>
-            기타
-          </button>
-        </S.Options>
-      )}
+        {isDropdownOpen && (
+          <S.Options>
+            <button type="button" onClick={selectHandler}>
+              가격
+            </button>
+            <button type="button" onClick={selectHandler}>
+              서비스 관련
+            </button>
+            <button type="button" onClick={selectHandler}>
+              기타
+            </button>
+          </S.Options>
+        )}
+      </div>
     </S.StyleWrapper>
   );
 }

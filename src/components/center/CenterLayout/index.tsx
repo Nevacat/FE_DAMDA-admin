@@ -35,9 +35,10 @@ function CenterLayout({ faqResponse, mutate }: CenterLayoutProps) {
           </thead>
 
           <G.Tbody>
-            {faqResponse?.map((item: FAQResponse) => (
+            {faqResponse?.map((item: FAQResponse, index: number) => (
               <FAQItem
                 key={item.qnaId}
+                index={index}
                 qnaId={item.qnaId}
                 title={item.title}
                 qnaCategory={item.qnaCategory}
