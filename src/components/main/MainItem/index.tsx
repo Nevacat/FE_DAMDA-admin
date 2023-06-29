@@ -12,6 +12,8 @@ import { toast } from 'react-toastify';
 
 interface MainItemProps {
   Data: Reservation;
+  index: number;
+  page: number;
 }
 
 enum PayState {
@@ -41,7 +43,7 @@ function addCommasToPrice(price: number) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-function MainItem({ Data }: MainItemProps) {
+function MainItem({ Data, index, page }: MainItemProps) {
   const state: any = ServiceState[Data.reservationStatus];
   const payState: any = PayState[Data.payMentStatus];
   const ActionState: any = ActionType[Data.reservationStatus];
@@ -92,7 +94,7 @@ function MainItem({ Data }: MainItemProps) {
   return (
     <>
       <T.Tr>
-        <T.Td style={{ padding: '5px' }}>{Data.id}</T.Td>
+        <T.Td style={{ padding: '5px' }}>{(page - 1) * 10 + index + 1}</T.Td>
         <T.Td>{formatDate(Data.createdAt)}</T.Td>
         <T.Td>{Data.name}</T.Td>
         <T.Td>{Data.phoneNumber}</T.Td>
