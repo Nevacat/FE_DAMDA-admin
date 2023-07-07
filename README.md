@@ -24,10 +24,7 @@
   
 - 데모사이트
   -  유저단 서비스 페이지 : [Yolda](https://fe-damda.vercel.app/)
-  -  어드민 페이지 : [Yolda-admin](https://fe-damda-admin.vercel.app/)
-      - admin 테스트 계정
-      - ID  : admin
-      - PW: 1234
+
 
 ### 🛠️ 사용 기술 스택
 
