@@ -30,7 +30,7 @@ function EditMemo({ userId, memo, setIsOpen, onConfirmEditMemo }: ConfirmProps) 
         <S.Buttons>
           <StateButton onClick={() => setIsOpen(false)}>취소</StateButton>
           <StateButton state={'blue'} onClick={() => onConfirmEditMemo(userId, editedMemo)}>
-            저장
+            수정
           </StateButton>
         </S.Buttons>
       </S.Container>

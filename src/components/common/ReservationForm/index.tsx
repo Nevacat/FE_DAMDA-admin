@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getReservationFormDetail } from '@/api/user';
 import { ReservationFormDetailData } from '@/types/api/user';
 import Loading from '../Loading';
+import { DummyReservationForm } from '@/constants/DummyReservationForm';
 
 interface ReservationFormProp {
   reservationId: number;
@@ -14,12 +15,19 @@ interface ReservationFormProp {
 
 function ReservationForm({ reservationId, setIsOpen }: ReservationFormProp) {
   const [formData, setFormData] = useState<ReservationFormDetailData | null>(null);
-  const { data, isLoading } = useQuery(['reservationForm', 'detail'], () => getReservationFormDetail(reservationId));
+  // const { data, isLoading } = useQuery(['reservationForm', 'detail'], () => getReservationFormDetail(reservationId));
+
+  const isLoading = false;
+
+  // useEffect(() => {
+  //   if (!data) return;
+  //   setFormData(data.data);
+  // }, [data]);
 
   useEffect(() => {
-    if (!data) return;
-    setFormData(data.data);
-  }, [data]);
+    // setFormData(data.data);
+    setFormData(DummyReservationForm);
+  }, []);
 
   return (
     <ModalContainer setIsOpen={setIsOpen}>

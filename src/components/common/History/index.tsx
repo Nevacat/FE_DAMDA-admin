@@ -5,6 +5,7 @@ import ReservationForm from '../ReservationForm';
 import CompletedService from '../CompletedService';
 import HistoryLayout from './HistoryLayout';
 import useManagerHistory from '@/hook/useManagerHistory';
+import { DummyHistory } from '@/constants/DummyHistory';
 
 interface HistoryProps {
   type: 'MANAGER' | 'MEMBER'; // 매니저의 히스토리와 멤버의 히스토리를 불러오는 api가 달라 type을 받아 분기처리합니다
@@ -20,22 +21,22 @@ function History({ type, username, userId, setIsOpen }: HistoryProps) {
   const [isCompletedServiceFormOpen, setIsCompletedServiceFormOpen] = useState(false);
   const [historyPage, setHistoryPage] = useState({ page: 1, totalCount: 5 });
 
-  const { mutate: userHistoryMutate, isLoading: isUserLoading } = useUserHistory((data) => {
-    const currentData = data.data;
-    setUserHistory(currentData.content);
-    setHistoryPage((prev) => ({ ...prev, totalCount: currentData.total }));
-  });
+  // const { mutate: userHistoryMutate, isLoading: isUserLoading } = useUserHistory((data) => {
+  //   const currentData = data.data;
+  //   setUserHistory(currentData.content);
+  //   setHistoryPage((prev) => ({ ...prev, totalCount: currentData.total }));
+  // });
 
-  const { mutate: managerHistoryMutate, isLoading: isManagerLoading } = useManagerHistory((data) => {
-    const currentData = data.data;
-    setUserHistory(currentData.content);
-    setHistoryPage((prev) => ({ ...prev, totalCount: currentData.total }));
-  });
+  // const { mutate: managerHistoryMutate, isLoading: isManagerLoading } = useManagerHistory((data) => {
+  //   const currentData = data.data;
+  //   setUserHistory(currentData.content);
+  //   setHistoryPage((prev) => ({ ...prev, totalCount: currentData.total }));
+  // });
 
   const onHistoryPaging = (page: number) => {
     setHistoryPage((prev) => ({ ...prev, page }));
-    if (type === 'MANAGER') managerHistoryMutate({ managerId: userId, page: page - 1 });
-    if (type === 'MEMBER') userHistoryMutate({ memberId: userId, page: page - 1 });
+    // if (type === 'MANAGER') managerHistoryMutate({ managerId: userId, page: page - 1 });
+    // if (type === 'MEMBER') userHistoryMutate({ memberId: userId, page: page - 1 });
   };
 
   const OpenReservationForm = (reservationId: number) => {
@@ -49,8 +50,9 @@ function History({ type, username, userId, setIsOpen }: HistoryProps) {
   };
 
   useEffect(() => {
-    if (type === 'MANAGER') return managerHistoryMutate({ managerId: userId, page: 0 });
-    if (type === 'MEMBER') return userHistoryMutate({ memberId: userId, page: 0 });
+    // if (type === 'MANAGER') return managerHistoryMutate({ managerId: userId, page: 0 });
+    // if (type === 'MEMBER') return userHistoryMutate({ memberId: userId, page: 0 });
+    setUserHistory(DummyHistory);
   }, []);
 
   return (
@@ -58,7 +60,8 @@ function History({ type, username, userId, setIsOpen }: HistoryProps) {
       <HistoryLayout
         setIsOpen={setIsOpen}
         username={username}
-        isLoading={isUserLoading || isManagerLoading}
+        // isLoading={isUserLoading || isManagerLoading}
+        isLoading={false}
         userHistory={userHistory}
         historyPage={historyPage}
         OpenReservationForm={OpenReservationForm}

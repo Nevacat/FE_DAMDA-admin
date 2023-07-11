@@ -3,7 +3,7 @@ import * as S from './style';
 import ModalContainer from '@/components/common/ModalContainer';
 import { StateButton } from '@/styles/common/StateButton';
 import { selectBestReview } from '@/api/review';
-import { ReviewContext } from '@/pages/review';
+// import { ReviewContext } from '@/pages/review';
 import TopBarGray from '@/components/common/TopBarGray';
 
 interface ConfirmProps {
@@ -12,14 +12,14 @@ interface ConfirmProps {
 }
 
 function ConfirmBest({ setIsOpen, reviewId }: ConfirmProps) {
-  const context = useContext(ReviewContext);
-  if (!context) return;
-  const { reviewMutate } = context;
+  // const context = useContext(ReviewContext);
+  // if (!context) return;
+  // const { reviewMutate } = context;
 
   const onConfirm = async () => {
     try {
-      await selectBestReview(reviewId);
-      reviewMutate(0);
+      // await selectBestReview(reviewId);
+      // reviewMutate(0);
       setIsOpen(false);
     } catch (err) {
       console.log(err);
