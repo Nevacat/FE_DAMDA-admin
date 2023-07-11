@@ -3,7 +3,7 @@ import * as S from '../ConfirmBest/style';
 import ModalContainer from '@/components/common/ModalContainer';
 import Image from 'next/image';
 import { StateButton } from '@/styles/common/StateButton';
-import { ReviewContext } from '@/pages/review';
+// import { ReviewContext } from '@/pages/review';
 import { deleteReview } from '@/api/review';
 import TopBarGray from '@/components/common/TopBarGray';
 
@@ -13,14 +13,14 @@ interface ConfirmProps {
 }
 
 function ConfirmDelete({ reviewId, setIsOpen }: ConfirmProps) {
-  const context = useContext(ReviewContext);
-  if (!context) return;
-  const { reviewMutate } = context;
+  // const context = useContext(ReviewContext);
+  // if (!context) return;
+  // const { reviewMutate } = context;
 
   const onConfirm = async () => {
     try {
-      await deleteReview(reviewId);
-      reviewMutate(0);
+      // await deleteReview(reviewId);
+      // reviewMutate(0);
       setIsOpen(false);
     } catch (err) {
       console.log(err);
