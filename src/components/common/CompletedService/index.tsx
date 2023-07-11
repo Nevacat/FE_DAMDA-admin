@@ -11,6 +11,7 @@ import 'swiper/css/scrollbar';
 import { useQuery } from '@tanstack/react-query';
 import { getCompletedServiceImages } from '@/api/service';
 import Loading from '../Loading';
+import { DummyCompletedService } from '@/constants/DummyCompletedService';
 
 interface CompletedServiceProps {
   reservationId: number;
@@ -19,14 +20,21 @@ interface CompletedServiceProps {
 
 function CompletedService({ reservationId, setIsOpen }: CompletedServiceProps) {
   const [formData, setFormData] = useState<{ before: string[]; after: string[] } | null>(null);
-  const { data, isLoading, isError } = useQuery(['complated_service_images'], () =>
-    getCompletedServiceImages(reservationId),
-  );
+  // const { data, isLoading, isError } = useQuery(['complated_service_images'], () =>
+  //   getCompletedServiceImages(reservationId),
+  // );
+
+  const isLoading = false;
+  const isError = false;
+
+  // useEffect(() => {
+  //   if (!data) return;
+  //   setFormData(data.data);
+  // }, [data]);
 
   useEffect(() => {
-    if (!data) return;
-    setFormData(data.data);
-  }, [data]);
+    setFormData(DummyCompletedService);
+  }, []);
 
   return (
     <ModalContainer setIsOpen={setIsOpen}>
