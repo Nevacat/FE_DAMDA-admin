@@ -16,7 +16,7 @@ interface CompletedUserListType {
     totalCount: number;
   };
   autoModeOff: () => void;
-  getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
+  // getUserList: UseMutateFunction<ServiceRes, unknown, number | undefined>;
   setModalOpen: React.Dispatch<SetStateAction<boolean>>;
   onSelectUser: (reservationId: number) => void;
   onPaging: (page: number) => void;
@@ -26,13 +26,13 @@ function CompletedUserList({
   users,
   page,
   autoModeOff,
-  getUserList,
+  // getUserList,
   setModalOpen,
   onSelectUser,
   onPaging,
 }: CompletedUserListType) {
   useEffect(() => {
-    getUserList(0);
+    // getUserList(0);
   }, []);
   return (
     <ModalContainer setIsOpen={setModalOpen}>

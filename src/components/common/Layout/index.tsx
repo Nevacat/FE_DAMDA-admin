@@ -10,7 +10,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // 페이지 전환 시 로그인 여부 인증
-    validateMutate();
+    // validateMutate();
   }, []);
 
   return (

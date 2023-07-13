@@ -1,6 +1,7 @@
 import { deleteReviewImage, postReviewAutoData, postReviewManual } from '@/api/review';
 import CompletedUserList from '@/components/reviewCreate/CompletedUserList';
 import ReviewCreateLayout from '@/components/reviewCreate/ReviewCreateLayout';
+import { DummyCompletedUser, DummyCompletedUserList } from '@/constants/DummyCompletedService';
 import useCompletedService from '@/hook/useCompletedService';
 import useCompletedServices from '@/hook/useCompletedServices';
 import { CompletedServiceData, CompletedServiceRes, ServiceData, ServiceRes } from '@/types/api/service';
@@ -24,7 +25,8 @@ function ReviewCreate() {
   const [images, setImages] = useState<ImagesType>({ before: [], after: [] }); // 사용자가 추가한 이미지 (렌더링용)
   const [beforeFormData, setBeforeFormData] = useState<File[]>([]); //사용자가 추가한 이미지 (데이터전송용)
   const [afterFormData, setAfterFormData] = useState<File[]>([]); //사용자가 추가한 이미지 (데이터전송용)
-  const [users, setUsers] = useState<ServiceData[]>([]); // 서비스 완료 유저 목록
+  // const [users, setUsers] = useState<ServiceData[]>([]); // 서비스 완료 유저 목록
+  const [users, setUsers] = useState<ServiceData[]>(DummyCompletedUserList); // 서비스 완료 유저 목록
   const [user, setUser] = useState<CompletedServiceData | null>(null); // 선택 된 서비스 완료 유저
   const [page, setPage] = useState({
     // 서비스 완료 유저 목록 페이징
@@ -36,12 +38,12 @@ function ReviewCreate() {
   /**
    * 서비스 완료 유저 목록 요청(mutate)후 유저 리스트 set
    */
-  const getUserList = useCompletedServices((data: ServiceRes) => {
-    const currentData = data.data;
-    setUsers(currentData.content);
+  // const getUserList = useCompletedServices((data: ServiceRes) => {
+  //   const currentData = data.data;
+  //   setUsers(currentData.content);
 
-    setPage({ ...page, totalCount: currentData.totalElements });
-  });
+  //   setPage({ ...page, totalCount: currentData.totalElements });
+  // });
 
   /**
    * 선택 된 서비스 완료 유저 데이터 요청(mutate)후 유저 데이터 set
@@ -55,8 +57,11 @@ function ReviewCreate() {
    * => 선택 된 유저의 아이디를 받아 해당 유저데이터를 호출하고 페이지 초기화
    */
   const onSelectUser = (reservationId: number) => {
-    getUserData(reservationId);
-    setPage({ ...page, page: 1 });
+    // getUserData(reservationId);
+    // setPage({ ...page, page: 1 });
+
+    setUser(DummyCompletedUser);
+
     setIsAutoMode(true);
     setModalOpen(false);
   };
@@ -66,7 +71,7 @@ function ReviewCreate() {
    */
   const onPaging = (selectedPage: number) => {
     setPage({ ...page, page: selectedPage });
-    getUserList(selectedPage - 1);
+    // getUserList(selectedPage - 1);
   };
 
   /**
@@ -163,23 +168,21 @@ function ReviewCreate() {
    * 삭제 시 해당 이미지는 DB에서 영구적으로 지워지게 되며, 최소 한장의 사진은 남아있도록 함
    */
   const deleteRegisteredImages = (type: 'before' | 'after', imageId: number) => {
-    if (!user) return alert('고객을 선택해주세요');
-
-    if (type === 'before') {
-      if (user.before.length <= 1) {
-        return alert('등록 된 사진을 모두 지울 수 없습니다');
-      }
-    }
-    if (type === 'after') {
-      if (user.after.length <= 1) {
-        return alert('등록 된 사진을 모두 지울 수 없습니다');
-      }
-    }
-
-    if (confirm('해당 이미지가 DB에서 영구삭제됩니다. 삭제하시겠습니까?')) {
-      deleteReviewImage(imageId);
-      getUserData(user.reservationId);
-    }
+    // if (!user) return alert('고객을 선택해주세요');
+    // if (type === 'before') {
+    //   if (user.before.length <= 1) {
+    //     return alert('등록 된 사진을 모두 지울 수 없습니다');
+    //   }
+    // }
+    // if (type === 'after') {
+    //   if (user.after.length <= 1) {
+    //     return alert('등록 된 사진을 모두 지울 수 없습니다');
+    //   }
+    // }
+    // if (confirm('해당 이미지가 DB에서 영구삭제됩니다. 삭제하시겠습니까?')) {
+    //   deleteReviewImage(imageId);
+    //   getUserData(user.reservationId);
+    // }
   };
 
   /**
@@ -187,11 +190,13 @@ function ReviewCreate() {
    */
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const regexp = /\s/g;
     if (contentInput.content === '') return alert('내용을 입력해주세요');
     if (contentInput.title === '') return alert('제목을 입력해주세요');
 
     if (!isAutoMode && beforeFormData.length === 0) return alert('최소 한 장 이상의 서비스 전 사진을 등록해주세요.');
     if (!isAutoMode && afterFormData.length === 0) return alert('최소 한 장 이상의 서비스 후 사진을 등록해주세요.');
+    if (!isAutoMode && !regexp.test(userDataInput.address.trim())) return alert('주소 입력 형식이 유효하지 않습니다.');
 
     let formData = new FormData();
 
@@ -205,29 +210,31 @@ function ReviewCreate() {
       afterFormData.forEach((after) => formData.append('after', after));
     }
 
-    if (isAutoMode) {
-      if (!user) return alert('고객을 선택해주세요');
+    // if (isAutoMode) {
+    //   if (!user) return alert('고객을 선택해주세요');
 
-      const reservationId = user.reservationId;
+    //   const reservationId = user.reservationId;
 
-      try {
-        await postReviewAutoData(reservationId, formData);
-        router.push('/review');
-      } catch (err) {
-        alert('리뷰 등록에 실패하였습니다');
-      }
-    } else {
-      formData.append('address', userDataInput.address);
-      formData.append('serviceDate', userDataInput.serviceDate);
-      formData.append('name', userDataInput.name);
+    //   try {
+    //     await postReviewAutoData(reservationId, formData);
+    //     router.push('/review');
+    //   } catch (err) {
+    //     alert('리뷰 등록에 실패하였습니다');
+    //   }
+    // } else {
+    //   formData.append('address', userDataInput.address);
+    //   formData.append('serviceDate', userDataInput.serviceDate);
+    //   formData.append('name', userDataInput.name);
 
-      try {
-        await postReviewManual(formData);
-        router.push('/review');
-      } catch (err) {
-        alert('리뷰 등록에 실패하였습니다');
-      }
-    }
+    //   try {
+    //     await postReviewManual(formData);
+    //     router.push('/review');
+    //   } catch (err) {
+    //     alert('리뷰 등록에 실패하였습니다');
+    //   }
+    // }
+
+    router.push('/review');
   };
 
   return (
@@ -249,7 +256,7 @@ function ReviewCreate() {
           users={users}
           page={page}
           autoModeOff={autoModeOff}
-          getUserList={getUserList}
+          // getUserList={getUserList}
           setModalOpen={setModalOpen}
           onSelectUser={onSelectUser}
           onPaging={onPaging}
