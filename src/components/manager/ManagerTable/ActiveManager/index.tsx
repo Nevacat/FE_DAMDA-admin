@@ -8,25 +8,21 @@ import { ManagerType } from '@/types/manager';
 import { managerDummyData } from '@/constants/managerDummyData';
 import { ManagerDummyDataType } from '@/types/managerDummyData';
 
-interface ActiveManagerProps {
-  activeManagers: ManagerType[];
-}
+// interface ActiveManagerProps {
+//   activeManagers: ManagerType[];
+// }
 
-function ActiveManager({ activeManagers }: ActiveManagerProps) {
+function ActiveManager() {
   return (
     <M.ManagerTableContainer>
       <G.Table>
         <colgroup>
           <col width="5%" />
-          <col width="11%" />
-          <col width="14%" />
-          <col width="1%" />
-          <col width="3%" />
-          <col width="1%" />
-          <col width="2%" />
-          <col width="1%" />
-          <col width="1%" />
-          <col width="1%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="15%" />
+          <col width="15%" />
+          <col width="10%" />
         </colgroup>
 
         <G.Thead>
