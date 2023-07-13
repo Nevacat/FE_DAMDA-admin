@@ -17,6 +17,7 @@ export interface FAQResponse extends FAQData {
 
 export interface CenterDataDummy {
   id: number;
+  contents?: string;
   title: string;
   type: string;
 }

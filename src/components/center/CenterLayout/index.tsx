@@ -58,6 +58,7 @@ function CenterLayout() {
                 <FAQItem
                   key={data.id}
                   id={data.id}
+                  contents={data.contents}
                   index={index}
                   title={data.title}
                   type={data.type}

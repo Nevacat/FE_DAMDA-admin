@@ -11,10 +11,11 @@ interface FAQItemProps {
   id: number;
   title: string;
   type: string;
+  contents?: string;
   deleteFAQHandler: (id: number) => void;
 }
 
-function FAQItem({ id, index, title, type, deleteFAQHandler }: FAQItemProps) {
+function FAQItem({ id, index, title, type, contents, deleteFAQHandler }: FAQItemProps) {
   const [isFaqClicked, setIsFaqClicked] = useState(false);
   const router = useRouter();
 
@@ -52,7 +53,9 @@ function FAQItem({ id, index, title, type, deleteFAQHandler }: FAQItemProps) {
           </StateButton>
         </G.Td>
       </G.Tr>
-      {isFaqClicked && <Modal faq="faq" qnaId={id} setIsFaqClicked={setIsFaqClicked} />}
+      {isFaqClicked && (
+        <Modal faq="faq" id={id} title={title} type={type} contents={contents} setIsFaqClicked={setIsFaqClicked} />
+      )}
     </>
   );
 }
