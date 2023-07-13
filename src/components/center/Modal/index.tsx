@@ -12,8 +12,8 @@ import * as S from './style';
 import { FAQData } from '@/types/api/center';
 
 interface ModalProps {
-  id: number;
-  type: string;
+  id?: number;
+  type?: string;
   title?: string;
   contents?: string;
   description?: string;

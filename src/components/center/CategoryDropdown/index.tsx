@@ -6,7 +6,7 @@ import * as S from './style';
 interface CategoryDropdownProps {
   size?: string;
   qnaCategory?: string;
-  defaultType: string;
+  defaultType?: string;
   isDropdownOpen: boolean;
   setIsDropdownOpen: (isOpen: boolean) => void;
   selectedCategory: string | undefined;
