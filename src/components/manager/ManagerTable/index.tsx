@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from 'react-js-pagination';
-import { managerDummyData } from '@/constants/managerDummyData';
+import { inactiveDummyData, managerDummyData, pendingDummyData } from '@/constants/managerDummyData';
 
 import ManagerItem from './ManagerItem';
 import { PaginationContainer } from '@/components/common/PaginationContainer/style';
@@ -41,7 +41,7 @@ function ManagerTable({
 
   let content;
   if (
-    (waiting && category === 'all') ||
+    category === 'all' ||
     (waiting && category === 'waiting') ||
     (pending && category === 'pending') ||
     (inactive && category === 'inactive')
@@ -50,9 +50,11 @@ function ManagerTable({
       <>
         <colgroup>
           <col width="5%" />
-          <col width="11%" />
-          <col width="14%" />
-          <col width="1%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="10%" />
+          <col width="15%" />
+          <col width="10%" />
         </colgroup>
 
         <G.Thead>
@@ -157,29 +159,90 @@ function ManagerTable({
                 inactive?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
 
               {/* ---------------------- 매니저 신청 관리 ----------------------*/}
-              {category === 'waiting' && <ActiveManager />}
 
-              {waiting && category === 'waiting' && (
-                <PaginationContainer style={{ position: 'absolute', right: '24px' }}>
-                  <Pagination
-                    hideFirstLastPages={true}
-                    linkClassPrev="prev"
-                    linkClassNext="next"
-                    activePage={1}
-                    itemsCountPerPage={3}
-                    totalItemsCount={3}
-                    pageRangeDisplayed={Math.ceil(3 / 10)}
-                    onChange={waitingPageHandler}
+              <G.Table>
+                <colgroup>
+                  <col width="5%" />
+                  <col width="15%" />
+                  <col width="30%" />
+                  <col width="10%" />
+                  <col width="15%" />
+                  <col width="10%" />
+                </colgroup>
+
+                {category === 'waiting' && (
+                  <G.Thead>
+                    <tr>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        이름
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        연락처
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        활동지역
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        레벨
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        자격증
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        운전여부
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        지원 폼
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        예약 내역
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        상태
+                      </M.ManagerTh>
+                      <M.ManagerTh scope="col" style={{ textAlign: 'left' }}>
+                        메모
+                      </M.ManagerTh>
+                    </tr>
+                  </G.Thead>
+                )}
+
+                {category === 'waiting' && (
+                  <ManagerItem
+                    data={{
+                      name: '노길동',
+                      phoneNumber: '010-7777-2222',
+                      activityRegion: ['서울 강북구', '경기 광명시'],
+                      level: 3,
+                      certificate: '1급 (off)',
+                      vehicle: '가능',
+                      status: '대기',
+                    }}
                   />
-                </PaginationContainer>
-              )}
+                )}
+
+                {waiting && category === 'waiting' && (
+                  <PaginationContainer style={{ position: 'absolute', right: '24px' }}>
+                    <Pagination
+                      hideFirstLastPages={true}
+                      linkClassPrev="prev"
+                      linkClassNext="next"
+                      activePage={1}
+                      itemsCountPerPage={3}
+                      totalItemsCount={3}
+                      pageRangeDisplayed={Math.ceil(3 / 10)}
+                      onChange={waitingPageHandler}
+                    />
+                  </PaginationContainer>
+                )}
+              </G.Table>
               {/* ---------------------- 보류 매니저 ----------------------*/}
               <G.Table>
                 <colgroup>
                   <col width="5%" />
                   <col width="15%" />
                   <col width="30%" />
-                  <col width="15%" />
+                  <col width="10%" />
                   <col width="15%" />
                   <col width="10%" />
                 </colgroup>
@@ -227,8 +290,8 @@ function ManagerTable({
                   </tr>
                 )}
                 {category === 'pending' &&
-                  managerDummyData.map((data: ManagerDummyDataType, index: number) => (
-                    <ActiveManagerItem key={index} activeManager={data} />
+                  pendingDummyData.map((data: ManagerDummyDataType, index: number) => (
+                    <ManagerItem key={index} data={data} />
                   ))}
 
                 {/* 예비 매니저 */}
@@ -237,8 +300,8 @@ function ManagerTable({
                     <S.Title colSpan={11}>예비 매니저</S.Title>
                   </tr>
                 )}
-                {category === 'pending' &&
-                  prevWaitingPending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)}
+                {/* {category === 'pending' &&
+                  prevWaitingPending?.map((manager: any, index: number) => <ManagerItem key={index} data={manager} />)} */}
               </G.Table>
 
               {pending && category === 'pending' && (
@@ -262,7 +325,7 @@ function ManagerTable({
                   <col width="5%" />
                   <col width="15%" />
                   <col width="30%" />
-                  <col width="15%" />
+                  <col width="10%" />
                   <col width="15%" />
                   <col width="10%" />
                 </colgroup>
@@ -311,8 +374,8 @@ function ManagerTable({
                   </tr>
                 )}
                 {category === 'inactive' &&
-                  managerDummyData.map((data: ManagerDummyDataType, index: number) => (
-                    <ActiveManagerItem key={index} activeManager={data} />
+                  inactiveDummyData.map((data: ManagerDummyDataType, index: number) => (
+                    <ManagerItem key={index} data={data} />
                   ))}
 
                 {/* 예비 매니저 */}

@@ -5,4 +5,5 @@ export interface ManagerDummyDataType {
   level: number;
   certificate: string;
   vehicle: string;
+  status?: string;
 }
