@@ -6,7 +6,6 @@
 | :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 |          <img src="https://avatars.githubusercontent.com/u/112364408?v=4" style="width: 200px; height: 200px;" />          |  <img src="https://avatars.githubusercontent.com/u/97926993?v=4" style="width: 200px; height: 200px;" />   |    <img src="https://avatars.githubusercontent.com/u/110139098?v=4" style="width: 200px; height: 200px;" />     |               <img src="https://avatars.githubusercontent.com/u/92071025?v=4" style="width: 200px; height: 200px;" />                |
 |                                  [tmdgp0212](https://github.com/tmdgp0212)                                  |                         [BeeMOre32](https://github.com/BeeMOre32)                         |                         [Nevacat](https://github.com/Nevacat)                          |                                      [pyozz](https://github.com/pyozz)                                      |
-| - 로그인 기능 <br /> - 고객 관리 <br /> - 고객후기 관리  <br /> - 고객후기 작성 <br /> - 공통레이아웃  | - 고객예약 폼 | - 예약관리  | - 매니저 관리 <br /> - 고객센터 <br /> - QnA 작성 |
 
 
 ---
